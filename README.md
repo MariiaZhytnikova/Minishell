@@ -47,3 +47,35 @@ Bonus Features (if applicable for 42 project):
         Implement a history mechanism for recalling previous commands.
     Tab Completion:
         Implement basic tab completion for commands or file paths.
+
+## Git Workflow for the Project
+
+### Branching Strategy:
+
+   You can follow a simple Git branching model to ensure smooth collaboration between two people.
+
+   - Main branch (main): This is the stable version of your project. Only merge into main when everything works and is tested.
+
+   - Feature branches: For each new task, create a separate branch. This allows you to work on different features simultaneously without interfering with each other’s code.  
+        Example: feature/input-parsing, feature/redirection, feature/pipes, feature/builtins.
+
+   - Merge requests: When one of you finishes a task on a feature branch, create a Pull Request (PR) to merge into the main branch. The other team member should review the code and test it.
+
+### Task Distribution Using Git:
+
+   - Create a new branch for each task: Start a branch when you begin working on a task. Each task corresponds to a Git branch (e.g., feature/input-parsing or feature/redirection).
+
+   - Commit frequently: Make small, frequent commits with meaningful commit messages, such as:
+        Implemented input parsing for basic commands
+        Fixed bug in redirection for stdin
+
+   - Pull regularly: Pull the latest changes from the main branch to keep your local branch up to date.
+
+### Example Git Workflow:
+
+   - Create the repository and initialize the main branch.
+   - Create feature branches for different tasks.
+   - Commit your work frequently with clear commit messages.
+   - Push changes to the remote repository.
+   - Open pull requests (PR) and have the other teammate review the changes before merging into the main branch.
+   - Merge and test the code in the main branch when both features are working.
