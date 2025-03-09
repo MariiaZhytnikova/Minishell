@@ -38,16 +38,6 @@ Error Handling:
    - Implement error messages for invalid commands and arguments.
    - Handle memory allocation errors or process failures.
 
-Bonus Features (if applicable for 42 project):
-
-    Job Control:
-        Implement background jobs with &.
-        Implement fg, bg, and jobs built-in commands.
-    History:
-        Implement a history mechanism for recalling previous commands.
-    Tab Completion:
-        Implement basic tab completion for commands or file paths.
-
 ## Git Workflow for the Project
 
 ### Branching Strategy:
