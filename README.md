@@ -1,6 +1,11 @@
 # Minishell
-The objective of this project is for you to create a simple shell. 
 
+The objective of this project is for you to create a simple shell. 
+Usefull resources:
+https://harm-smits.github.io/42docs/projects/minishell
+https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
+
+### Shell should:
 Run simple commands with absolute, relative path (e.g. /bin/ls, ../bin/ls)  
 Run simple commands without a path (e.g. ls, cat, grep, etc…)  
 Have a working history (you can navigate through commands with up/down arrows)  
