@@ -1,7 +1,7 @@
 # Minishell
 
 The objective of this project is for you to create a simple shell.   
-Usefull resources:
+Usefull resources:  
 https://harm-smits.github.io/42docs/projects/minishell
 https://m4nnb3ll.medium.com/minishell-building-a-mini-bash-a-42-project-b55a10598218
 
