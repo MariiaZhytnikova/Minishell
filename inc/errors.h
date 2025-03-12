@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/25 22:56:35 by apuchill          #+#    #+#             */
-/*   Updated: 2025/03/12 11:09:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/12 17:48:25 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,29 @@
 
 # include "minishell.h"
 
-# define USAGE "usage: ./minishell"
-# define EXCLUSION "Handling of special charactters like ';', '\\' or \
-unclosed quotes are not implemented"
+# define ERR_USAGE "Usage: ./minishell"
+# define ERR_EXCL "Handling of special characters like ';', '\\', '{}', '()', '[]', '&' is not supported"
+# define ERR_QUOTES "Quotes are not closed correctly"
+
+# define ERR_BASH "Minishell: "
+# define ERR_PIPE "Pipe creation failed"
+# define ERR_FORK "Fork failed"
+# define ERR_CMD ": command not found"
+# define ERR_PERM ": Permission denied"
+# define ERR_NOFILE ": No such file or directory"
+
+# define ERR_MALLOC: "Memory allocation failed"
+# define ERR_DUP "dup2 function has failed"
+# define ERR_CLOSE "close function has failed"
+# define ERR_EXECVE "execve function has failed"
+# define ERR_SPLIT "ft_split function has failed"
+
+# define ERR_MANY_ARGS ": too many arguments provided" // If a built-in command like exit or cd receives more arguments than expected. (bash: cd: too many arguments)
+# define ERR_ENV_NOT_FOUND ": unbound variable" // (bash: UNSET_VAR: unbound variable)
+# define ERR_EXIT_USAGE "exit: numeric argument required" // VAR="hello" exit $VAR (bash: exit: hello: numeric argument required)
+# define ERR_REDIR_SYNTAX "Syntax error: Unexpected token after redirection" // E.g., echo hello > without specifying a file.
+# define ERR_REDIR_PERM "Redirection error: Permission denied" // If attempting to redirect to a file without proper permissions.
+# define ERR_SIGNAL: "Failed to handle signal" // If sigaction() or related functions fail.
+
 
 #endif
