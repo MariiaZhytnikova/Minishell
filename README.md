@@ -100,7 +100,7 @@ Error Handling:
 
 ### Allowed functions:
 
-   - readline -  readline will read a line from the terminal and return it, using  prompt as a prompt.  If prompt is NULL or the empty string, no prompt is issued.  The line returned is allocated with malloc(3); the caller must free it                     when finished.  The line returned has the final newline removed, so only the text of the line remains.
+   - # readline # -  readline will read a line from the terminal and return it, using  prompt as a prompt.  If prompt is NULL or the empty string, no prompt is issued.  The line returned is allocated with malloc(3); the caller must                            free it when finished.  The line returned has the final newline removed, so only the text of the line remains.
    - rl_clear_history - The rl_clear_line() function clears the history list by deleting all of the entries. The rl_clear_line() function frees data that the readline library saves in the histroy list.
    - rl_on_new_line - Tell the update routines that we have moved onto a new (empty) line, usually after ouputting a newline. 
    - rl_replace_line - Replace the contents of rl_line_buffer with text. 
