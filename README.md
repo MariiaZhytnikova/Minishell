@@ -100,35 +100,35 @@ Error Handling:
 
 ### Allowed functions:
 
-   - # readline # -  readline will read a line from the terminal and return it, using  prompt as a prompt.  If prompt is NULL or the empty string, no prompt is issued.  The line returned is allocated with malloc(3); the caller must                            free it when finished.  The line returned has the final newline removed, so only the text of the line remains.
-   - rl_clear_history - The rl_clear_line() function clears the history list by deleting all of the entries. The rl_clear_line() function frees data that the readline library saves in the histroy list.
-   - rl_on_new_line - Tell the update routines that we have moved onto a new (empty) line, usually after ouputting a newline. 
-   - rl_replace_line - Replace the contents of rl_line_buffer with text. 
-   - rl_redisplay - The rl_redisplay() change what's displayed on the screen to reflect the current contents of rl_line_buffer.
-   - add_history -  Saves the line passed as parameter in the history so it can be retrieved later in the terminal (like pressing the up arrow in bash).
-   - wait3, wait4 - These functions are obsolete; use waitpid(2) in new programs. 
-   - signal - signal is obsolete; use sigaction.
-   - sigaction - The sigaction() system call is used to change the action taken by a process on receipt of a specific signal.
-   - sigemptyset -  Initialises the signal set pointed to by set, such that all signals defined in this document are excluded.  Return 0 on success and -1 on error. 
-   - sigaddset - Adds the individual signal specified by the signo to the signal set pointed to by set. Applications must call sigemptyset() at least once for each object of type sigset_t prior to any other use of that object.
-   - getcwd - Place an absolute pathname of the current working directory in the array pointed to by buf, and return buf. The pathname copied to the array shall contain no components that are symbolic links.
-   - chdir - Changes the current working directory of the calling process to the directory specified in path.
-   - stat, stat, fstat - These functions return information about a file, in the buffer pointed to by statbuf.  No permissions are required on the file itself, but—in the case of stat(), fstatat(), and lstat()—execute (search)                               permission is required on all of the directories in pathname that lead to the file. stat() retrieve information about the file pointed to by pathname; lstat() is identical to stat(), except that if pathname is a                         symbolic link, then it returns information about the link itself, not the file that the link refers to. fstat() is identical to stat(), except that the file about which information is to be retrieved is specified                        by the file descriptor fd.
-   - unlink - Deletes a name from the filesystem.  If that name was the last link to a file and no processes have the file open, the file is deleted and the space it was using is made available for reuse.
-   - opendir -  The opendir() function opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream. The stream is positioned at the first entry in the directory.
-   - readdir - returns a pointer to a dirent structure representing the next directory entry in the directory stream pointed to by dirp.  It returns NULL on reaching the end of the directory stream or if an error occurred.
-   - closedir - closes the directory stream associated with dirp.  A successful call to closedir() also closes the underlying file descriptor associated with dirp. The directory stream descriptor dirp is not available after this call.
-   - isatty - Tests whether fd is an open file descriptor referring to a terminal.
-   - ttyname -  The function ttyname() returns a pointer to the null-terminated pathname of the terminal device that is open on the file descriptor fd, or NULL on error (for example, if fd is not connected to a terminal)
-   - ttyslot - finds the slot of the current user's terminal in some file
-   - ioctl - Ioctl in Linux stands for Input Output Control. It is a system call used to talk to device drivers. Most Linux drivers support the ioctl system. Ioctl is used in cases where the kernel does not support a system call for                         the driver or does not have a default system call to communicate with the driver.
-   - tcsetattr - Shall set the parameters associated with the terminal referred to by the open file descriptor fildes from the termios structure referenced by termios_p
-   - tcgetattr - The tcgetattr() function shall get the parameters associated with with the terminal reffered to by fildes and store them in the termios structure referenced by termios_p.
-   - tgetent - Loads the entry for name. It returns 1 on success, 0 if there is no such entry, and -1 if the terminfo database could not be found. The emulation ignores the buffer pointer bp. 
-   - tgetflag-  Gets the boolean entry for id, or zero if it is not available. 
-   - tgetnum - Gets the numeric entry for id, or -1 if it is not available. 
-   - tgetstr - Returns the string entry for id, or zero if it is not available. 
-   - tgoto - Instantiates the parameters into the given capability. The output from this routine is to be passed to tputs. 
-   - tputs - applies padding information to the string str and outputs it.
+   - **readline** -  readline will read a line from the terminal and return it, using  prompt as a prompt.  If prompt is NULL or the empty string, no prompt is issued.  The line returned is allocated with malloc(3); the caller must                            free it when finished.  The line returned has the final newline removed, so only the text of the line remains.
+   - **rl_clear_history** - The rl_clear_line() function clears the history list by deleting all of the entries. The rl_clear_line() function frees data that the readline library saves in the histroy list.
+   - **rl_on_new_line** - Tell the update routines that we have moved onto a new (empty) line, usually after ouputting a newline. 
+   - **rl_replace_line** - Replace the contents of rl_line_buffer with text. 
+   - **rl_redisplay** - The rl_redisplay() change what's displayed on the screen to reflect the current contents of rl_line_buffer.
+   - **add_history** -  Saves the line passed as parameter in the history so it can be retrieved later in the terminal (like pressing the up arrow in bash).
+   - **wait3, wait4** - These functions are obsolete; use waitpid(2) in new programs. 
+   - **signal** - signal is obsolete; use sigaction.
+   - **sigaction** - The sigaction() system call is used to change the action taken by a process on receipt of a specific signal.
+   - **sigemptyset** -  Initialises the signal set pointed to by set, such that all signals defined in this document are excluded.  Return 0 on success and -1 on error. 
+   - **sigaddset** - Adds the individual signal specified by the signo to the signal set pointed to by set. Applications must call sigemptyset() at least once for each object of type sigset_t prior to any other use of that object.
+   - **getcwd** - Place an absolute pathname of the current working directory in the array pointed to by buf, and return buf. The pathname copied to the array shall contain no components that are symbolic links.
+   - **chdir** - Changes the current working directory of the calling process to the directory specified in path.
+   - **stat, stat, fstat** - These functions return information about a file, in the buffer pointed to by statbuf.  No permissions are required on the file itself, but—in the case of stat(), fstatat(), and lstat()—execute (search)                               permission is required on all of the directories in pathname that lead to the file. stat() retrieve information about the file pointed to by pathname; lstat() is identical to stat(), except that if pathname is                           a symbolic link, then it returns information about the link itself, not the file that the link refers to. fstat() is identical to stat(), except that the file about which information is to be retrieved is                                 specified by the file descriptor fd.
+   - **unlink** - Deletes a name from the filesystem.  If that name was the last link to a file and no processes have the file open, the file is deleted and the space it was using is made available for reuse.
+   - **opendir** -  The opendir() function opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream. The stream is positioned at the first entry in the directory.
+   - **readdir** - returns a pointer to a dirent structure representing the next directory entry in the directory stream pointed to by dirp.  It returns NULL on reaching the end of the directory stream or if an error occurred.
+   - **closedir** - closes the directory stream associated with dirp.  A successful call to closedir() also closes the underlying file descriptor associated with dirp. The directory stream descriptor dirp is not available after this                         call.
+   - **isatty** - Tests whether fd is an open file descriptor referring to a terminal.
+   - **ttyname** -  The function ttyname() returns a pointer to the null-terminated pathname of the terminal device that is open on the file descriptor fd, or NULL on error (for example, if fd is not connected to a terminal)
+   - **ttyslot** - finds the slot of the current user's terminal in some file
+   - **ioctl** - Ioctl in Linux stands for Input Output Control. It is a system call used to talk to device drivers. Most Linux drivers support the ioctl system. Ioctl is used in cases where the kernel does not support a system call                      for the driver or does not have a default system call to communicate with the driver.
+   - **tcsetattr** - Shall set the parameters associated with the terminal referred to by the open file descriptor fildes from the termios structure referenced by termios_p
+   - **tcgetattr** - The tcgetattr() function shall get the parameters associated with with the terminal reffered to by fildes and store them in the termios structure referenced by termios_p.
+   - **tgetent** - Loads the entry for name. It returns 1 on success, 0 if there is no such entry, and -1 if the terminfo database could not be found. The emulation ignores the buffer pointer bp. 
+   - **tgetflag** -  Gets the boolean entry for id, or zero if it is not available. 
+   - **tgetnum** - Gets the numeric entry for id, or -1 if it is not available. 
+   - **tgetstr** - Returns the string entry for id, or zero if it is not available. 
+   - **tgoto** - Instantiates the parameters into the given capability. The output from this routine is to be passed to tputs. 
+   - **tputs** - applies padding information to the string str and outputs it.
 
-   - printf, malloc, free, write, access, open, read, close, fork, wait, waitpid, exit, kill, dup, dup2, pipe, execve, perror, strerror, getenv
+   - **printf, malloc, free, write, access, open, read, close, fork, wait, waitpid, exit, kill, dup, dup2, pipe, execve, perror, strerror, getenv**
