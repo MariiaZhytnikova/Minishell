@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/12 16:29:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/13 17:03:59 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,10 @@ typedef struct s_list
 typedef	struct s_command
 {
 	int			id;					// ID for the command (used to identify commands)
+	char		**envp;
 	char		*command;			// The actual command (e.g., "ls", "grep")
 	char		*delimiter;			// Delimiter between commands
-	char		*args;				// Arguments for the command (e.g., ["-al"], ["foo"])
+	char		**args;				// Arguments for the command (e.g., ["-al"], ["foo"])
 	char		*input_redirect;	// Input redirection (if any)
 	char		*output_redirect;	// Output redirection (if any, e.g., "> output.txt")
 	char		*error_redirect;	// redirect error file?
