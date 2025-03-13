@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/10 09:29:40 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:08:00 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ size_t	ft_strlen(const char *str)
 	while (str[counter++] != '\0')
 		;
 	return (counter);
-}
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	if (!str)
-		return ;
-	write(fd, str, ft_strlen(str));
 }
 
 void	free_arr(char **arr)
@@ -92,4 +85,50 @@ char	*ft_strjoin(char *s1, char *s2)
 		res[i++] = *s2++;
 	res[i] = '\0';
 	return (res);
+}
+
+size_t	word_count(char *str)
+{
+	size_t	count;
+	size_t	in_word;
+
+	count = 0;
+	in_word = 0;
+	while (*str)
+	{
+		if (*str != ' ' && in_word == 0)
+		{
+			in_word = 1;
+			count++;
+		}
+		else if (*str == ' ')
+			in_word = 0;
+		str++;
+	}
+	return (count);
+}
+
+void	split_input(char **res, char *args, int k)
+{
+	int	i;
+	int	start;
+	int	end;
+
+	start = 0;
+	while (args[start] && args[start] == ' ')
+		start++;
+	if (!args[start])
+		return ;
+	end = start;
+	while (args[end] && args[end] != ' ')
+		end++;
+	res[k] = (char *)ft_calloc(end - start + 1, sizeof(char));
+	if (!res[k])
+		return (free_arr(res));
+	i = 0;
+	while (start < end)
+		res[k][i++] = args[start++];
+	res[k][i] = 0;
+	if (args[end])
+		split_args(res, &args[end], k + 1);
 }
