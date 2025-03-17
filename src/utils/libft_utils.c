@@ -6,11 +6,22 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/13 12:08:00 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:46:41 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	skip_whitespace(const char *str, int i)
+{
+	if (!str)
+		return (0);
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\r')
+	{
+		i++;
+	}
+	return (i);
+}
 
 size_t	ft_strlen(const char *str)
 {
@@ -58,6 +69,23 @@ void	*ft_calloc(size_t num, size_t size)
 	return ((void *)object);
 }
 
+int	ft_strncmp(const char *str1, const char *str2, size_t num)
+{
+	size_t	i;
+
+	i = 0;
+	if (!str1 && !str2)
+		return (0);
+	while (i < num && str1[i] != '\0' && str2[i] != '\0')
+	{
+		if (str1[i] != str2[i])
+			return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+		i++;
+	}
+	if (i < num)
+		return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+	return (0);
+}
 
 char	*ft_strjoin(char *s1, char *s2)
 {
@@ -108,27 +136,45 @@ size_t	word_count(char *str)
 	return (count);
 }
 
-void	split_input(char **res, char *args, int k)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int	i;
-	int	start;
-	int	end;
+	char	*res;
+	size_t	i;
 
-	start = 0;
-	while (args[start] && args[start] == ' ')
-		start++;
-	if (!args[start])
-		return ;
-	end = start;
-	while (args[end] && args[end] != ' ')
-		end++;
-	res[k] = (char *)ft_calloc(end - start + 1, sizeof(char));
-	if (!res[k])
-		return (free_arr(res));
+	if (!s)
+		return (NULL);
+	i = ft_strlen(s);
+	if (start >= i)
+	{
+		res = (char *)malloc(1);
+		if (res)
+			res[0] = '\0';
+		return (res);
+	}
+	res = (char *)malloc(sizeof(char) * (len + 1));
+	if (res == NULL)
+		return (NULL);
 	i = 0;
-	while (start < end)
-		res[k][i++] = args[start++];
-	res[k][i] = 0;
-	if (args[end])
-		split_args(res, &args[end], k + 1);
+	while (i < len && s[start + i] != '\0')
+	{
+		res[i] = s[start + i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
+char	*ft_strchr(const char *str, int c)
+{
+	if (str == NULL)
+		return (NULL);
+	while (*str)
+	{
+		if (*str == (unsigned char)c)
+			return ((char *)str);
+		str++;
+	}
+	if (c == '\0')
+		return ((char *)str);
+	return (NULL);
 }
