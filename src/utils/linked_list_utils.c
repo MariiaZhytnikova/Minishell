@@ -117,3 +117,46 @@ void	split_input(t_list **token, char *args)
 	if (args[end])
 		split_input(token, &args[end]);
 }
+
+int	create_node(t_list *env_var, char *value)
+{
+	t_list	*new_node;
+	t_list	*last_node;
+
+	new_node = ft_calloc(1, sizeof(t_list));
+	if (new_node == NULL);
+		return (1);
+	new_node->next = NULL;
+	new_node->value = ft_strdup(value);
+	if (new_node->value == NULL)
+	{
+		free(new_node);
+		return (1);
+	}
+	if (env_var == NULL)
+		env_var = new_node;
+	else
+	{
+		last_node = ft_lstlast(&env_var);
+		last_node->next = new_node;
+	}
+	return (0);
+}
+t_list	*create_env_list(char **env)
+{
+	int	i;
+	t_list *env_var;
+
+	env_var = NULL;
+	i = 0;
+	while(env[i])
+	{
+		if (create_node(env_var, env[i]))
+		{
+			error_msg("create_env_list", ERR_MALLOC, "");
+			// FREE previous allocs and exit
+		}
+		i++;
+	}
+	return (env_var);
+}
