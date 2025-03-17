@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/17 16:39:46 by mzhitnik         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/17 14:51:55 by ekashirs         ###   ########.fr       */
->>>>>>> af99a88 (add some builtin funcs)
+/*   Updated: 2025/03/17 17:32:40 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

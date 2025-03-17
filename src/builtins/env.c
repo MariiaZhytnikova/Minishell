@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.h                                     :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 17:33:08 by ekashirs         ###   ########.fr       */
+/*   Created: 2025/03/13 14:17:32 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/17 16:48:31 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZATION_H
-# define TOKENIZATION_H
+#include "minishell.h"
 
-# include "minishell.h"
+void	env_builtin(t_command *cmd)
+{
+	t_list	*current;
 
-void	promt(t_session *session);
-void	lexical_analyzer(t_session *session);
-
-#endif
+	if(cmd->args[0])
+	{
+		error_msg (ERR_ENV, cmd->args[0], ERR_NOFILE);
+		cmd->status = EXIT_FAILURE;
+		return ;
+	}
+	current = cmd->envp;
+	while(current)
+	{
+		if(ft_strchr(current->content, '='))
+			printf("%s\n", current->content);
+		current = current->next;
+	}
+	cmd->status = EXIT_SUCCESS;
+}

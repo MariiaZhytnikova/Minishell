@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*   Updated: 2025/03/17 16:39:16 by mzhitnik         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/17 14:36:53 by ekashirs         ###   ########.fr       */
->>>>>>> af99a88 (add some builtin funcs)
-=======
-/*   Updated: 2025/03/17 16:48:38 by ekashirs         ###   ########.fr       */
->>>>>>> 8e9793e (update builtin)
+/*   Created: 2025/03/17 17:32:51 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/17 17:32:56 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

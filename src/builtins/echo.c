@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.h                                     :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 17:33:08 by ekashirs         ###   ########.fr       */
+/*   Created: 2025/03/13 14:16:47 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/17 12:13:41 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZATION_H
-# define TOKENIZATION_H
+#include "minishell.h"
 
-# include "minishell.h"
-
-void	promt(t_session *session);
-void	lexical_analyzer(t_session *session);
-
-#endif
+void	echo_builtin()
+{
+	
+}

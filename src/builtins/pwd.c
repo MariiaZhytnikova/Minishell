@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.h                                     :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 17:33:08 by ekashirs         ###   ########.fr       */
+/*   Created: 2025/03/13 15:14:49 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/17 14:24:29 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENIZATION_H
-# define TOKENIZATION_H
+#include "minishell.h"
 
-# include "minishell.h"
+void	pwd_builtin(t_command *cmd)
+{
+	char	*cur_dir;
 
-void	promt(t_session *session);
-void	lexical_analyzer(t_session *session);
-
-#endif
+	cur_dir = getcwd(cur_dir, LEN_PATH);
+	if (cur_dir == NULL)
+	{
+		error_msg(ERR_GETCWD, "", ERR_NOFILE);
+		cmd->status = EXIT_FAILURE;
+		return ;
+	}
+	else
+	{
+		cmd->status = EXIT_SUCCESS;
+		printf("%s\n", cur_dir);
+	}
+}
