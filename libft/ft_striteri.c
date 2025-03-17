@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/07/17 15:14:38 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/11/07 13:35:49 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	unsigned int	i;
+
+	if (!s || !f)
+		return ;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		f(i, &s[i]);
+		i++;
+	}
 }

@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/07/17 15:14:38 by mzhitnik          #+#    #+#             */
+/*   Updated: 2025/02/15 13:26:18 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	unsigned int	i;
+	char			*res;
+
+	if (!s || !f)
+		return (NULL);
+	i = ft_strlen(s);
+	res = (char *)ft_calloc((i + 1), sizeof(char));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		res[i] = f(i, s[i]);
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
 }

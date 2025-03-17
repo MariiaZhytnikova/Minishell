@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex.h                                              :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 11:02:13 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/12 11:05:30 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/11/06 11:36:21 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/11/07 13:42:44 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-// Utils
-void	error_msg(char *msg);
-size_t	ft_strlen(const char *str);
-
-// Parsing
-void	promt(t_session *session);
-TokenType	lexical_analyzer(t_session *session);
+int	ft_isascii(int c)
+{
+	return (c >= 0 && c <= 127);
+}

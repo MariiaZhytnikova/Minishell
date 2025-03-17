@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/12 16:29:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:39:16 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,6 @@ typedef enum
 }	arguments;
 
 
-typedef struct s_list
-{
-	char	*value;
-	t_list	*next;
-}	t_list;
-
 typedef	struct s_command
 {
 	int			id;					// ID for the command (used to identify commands)
@@ -99,6 +93,7 @@ typedef	struct s_command
 	char		*input_redirect;	// Input redirection (if any)
 	char		*output_redirect;	// Output redirection (if any, e.g., "> output.txt")
 	char		*error_redirect;	// redirect error file?
+	t_list		*env_var;
 	int			nbr_cmds;
 	int			status;
 	//int		background;			// Flag for background execution (if any)
@@ -106,9 +101,9 @@ typedef	struct s_command
 
 typedef struct	s_history
 {
-	char		*cmd_line;	// Stores the actual command entered by the user.
-	t_history	*prev;		// Pointer to the previous command in the history (linked list).
-	t_history	*next;		// Pointer to the next command in the history (linked list).
+	char				*cmd_line;	// Stores the actual command entered by the user.
+	struct	s_history	*prev;		// Pointer to the previous command in the history (linked list).
+	struct	s_history	*next;		// Pointer to the next command in the history (linked list).
 }	t_history;
 
 typedef struct	s_session

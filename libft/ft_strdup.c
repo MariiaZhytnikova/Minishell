@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/07/09 18:26:18 by mzhitnik          #+#    #+#             */
+/*   Updated: 2025/02/15 13:25:41 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+char	*ft_strdup(const char *src)
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	char	*dest;
+	size_t	len;
+	size_t	i;
+
+	if (!src)
+		return (NULL);
+	len = ft_strlen(src);
+	dest = (char *)ft_calloc((len + 1), sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

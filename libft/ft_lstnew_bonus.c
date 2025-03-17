@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/11/08 13:05:19 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/11/13 09:21:34 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+t_list	*ft_lstnew(void *content)
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	t_list	*new;
+
+	new = (t_list *)malloc(sizeof(*new));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }

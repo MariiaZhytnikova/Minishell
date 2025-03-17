@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/06/30 18:36:58 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/11/15 16:39:02 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	unsigned char		*d;
+	const unsigned char	*s;
+
+	if (!dest)
+		return (NULL);
+	if (!src)
+		return (dest);
+	d = (unsigned char *)dest;
+	s = (unsigned const char *)src;
+	if (d < s)
+	{
+		while (n--)
+			*d++ = *s++;
+	}
+	else
+	{
+		d += n;
+		s += n;
+		while (n--)
+			*--d = *--s;
+	}
+	return (dest);
 }

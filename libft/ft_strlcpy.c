@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/11/02 21:00:08 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/11/15 16:41:02 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+size_t	ft_strlcpy(char *dest, const char *src, unsigned int size)
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	size_t	i;
+	size_t	len;
+
+	len = ft_strlen(src);
+	i = 0;
+	if (size > 0)
+	{
+		while ((i < (size - 1)) && src[i] != '\0')
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = '\0';
+	}
+	return (len);
 }

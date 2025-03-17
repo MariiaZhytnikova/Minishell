@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/06/29 08:47:11 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/11/13 17:49:26 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+void	ft_putnbr_fd(int nb, int fd)
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	if (nb == -2147483648)
+	{
+		write(fd, "-2147483648", 11);
+		return ;
+	}
+	if (nb < 0)
+	{
+		ft_putchar_fd('-', fd);
+		nb = -nb;
+	}
+	if (nb >= 10)
+		ft_putnbr_fd(nb / 10, fd);
+	ft_putchar_fd(nb % 10 + '0', fd);
 }

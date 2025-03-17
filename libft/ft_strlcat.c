@@ -1,24 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/07/01 17:45:47 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/11/16 11:54:41 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	size_t	i;
+	size_t	dest_l;
+	size_t	src_l;
+
+	if (!dst)
+		dest_l = 0;
+	else
+		dest_l = ft_strlen(dst);
+	src_l = ft_strlen(src);
+	if (size <= dest_l)
+		return (src_l + size);
+	i = 0;
+	while ((dest_l + i) < (size - 1) && src[i] != '\0')
+	{
+		dst[dest_l + i] = src[i];
+		i++;
+	}
+	dst[dest_l + i] = '\0';
+	return (dest_l + src_l);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/12 17:48:25 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:39:46 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define ERR_PERM ": Permission denied"
 # define ERR_NOFILE ": No such file or directory"
 
-# define ERR_MALLOC: "Memory allocation failed"
+# define ERR_MALLOC "Memory allocation failed"
 # define ERR_DUP "dup2 function has failed"
 # define ERR_CLOSE "close function has failed"
 # define ERR_EXECVE "execve function has failed"
@@ -37,7 +37,7 @@
 # define ERR_EXIT_USAGE "exit: numeric argument required" // VAR="hello" exit $VAR (bash: exit: hello: numeric argument required)
 # define ERR_REDIR_SYNTAX "Syntax error: Unexpected token after redirection" // E.g., echo hello > without specifying a file.
 # define ERR_REDIR_PERM "Redirection error: Permission denied" // If attempting to redirect to a file without proper permissions.
-# define ERR_SIGNAL: "Failed to handle signal" // If sigaction() or related functions fail.
+# define ERR_SIGNAL "Failed to handle signal" // If sigaction() or related functions fail.
 
 
 #endif

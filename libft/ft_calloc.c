@@ -1,24 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/07/09 18:26:18 by mzhitnik          #+#    #+#             */
+/*   Updated: 2024/11/15 12:13:14 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
+#include <stdint.h>
 
-void	error_msg(char *beginning, char *details, char *error)
+void	*ft_calloc(size_t num, size_t size)
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	size_t			byte_size;
+	size_t			i;
+	unsigned char	*object;
+
+	if (size != 0 && num > (SIZE_MAX / size))
+		return (NULL);
+	byte_size = num * size;
+	if (byte_size == 0)
+		return (NULL);
+	object = malloc(byte_size);
+	if (!object)
+		return (NULL);
+	i = 0;
+	while (i < byte_size)
+	{
+		object[i] = 0;
+		i++;
+	}
+	return ((void *)object);
 }

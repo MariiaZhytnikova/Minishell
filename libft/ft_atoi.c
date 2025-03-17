@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 17:08:29 by mzhitnik         ###   ########.fr       */
+/*   Created: 2024/11/02 20:48:56 by yuritkachen       #+#    #+#             */
+/*   Updated: 2025/02/06 10:50:13 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **env) 
+int	ft_atoi(const char *str)
 {
-	t_session	session;
-	
-	(void)env;
-	(void)argv;
-	if (argc != 1)
-		return (error_msg(ERR_USAGE, NULL, NULL), 1);
-	while (1)
-	{
-		promt(&session);
-		printf("%s%s%s\n", RED, session.input, RESET);
-		lexical_analyzer(&session); // I'm create tokens
-		//parse_tokens(tokens);
-		//free(session.input);
-	}
-	return (0);
-}
+	size_t		i;
+	int			sign;
+	long long	num;
 
-	//char *path = getenv("PATH");
+	num = 0;
+	sign = 1;
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] == ' ' || (str[i] >= '\t' && str[i] <= '\r'))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		num = num * 10 + (str[i] - '0');
+		i++;
+	}
+	return ((int)(num * sign));
+}
