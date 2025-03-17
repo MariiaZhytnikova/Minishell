@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/17 14:04:44 by ekashirs         ###   ########.fr       */
->>>>>>> af99a88 (add some builtin funcs)
+/*   Created: 2025/03/13 14:17:17 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/17 12:17:05 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_msg(char *beginning, char *details, char *error)
+void	unset_builtin(t_command *cmd)
 {
-	if (beginning)
-		write(2, beginning, ft_strlen(beginning));
-	if (details)
-		write(2, details, ft_strlen(details));
-	if (error)
-		write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
+	
 }

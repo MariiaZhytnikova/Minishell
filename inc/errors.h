@@ -6,7 +6,11 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/17 16:39:46 by mzhitnik         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/17 14:51:55 by ekashirs         ###   ########.fr       */
+>>>>>>> af99a88 (add some builtin funcs)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +24,7 @@
 # define ERR_QUOTES "Quotes are not closed correctly"
 
 # define ERR_BASH "Minishell: "
+# define ERR_ENV "env: "
 # define ERR_PIPE "Pipe creation failed"
 # define ERR_FORK "Fork failed"
 # define ERR_CMD ": command not found"
@@ -31,6 +36,7 @@
 # define ERR_CLOSE "close function has failed"
 # define ERR_EXECVE "execve function has failed"
 # define ERR_SPLIT "ft_split function has failed"
+# define ERR_GETCWD "pwd: error retrieving current directory: getcwd: cannot access parent directories"
 
 # define ERR_MANY_ARGS ": too many arguments provided" // If a built-in command like exit or cd receives more arguments than expected. (bash: cd: too many arguments)
 # define ERR_ENV_NOT_FOUND ": unbound variable" // (bash: UNSET_VAR: unbound variable)

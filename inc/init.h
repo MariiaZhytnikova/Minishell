@@ -6,7 +6,11 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/03/17 16:39:16 by mzhitnik         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/17 14:36:53 by ekashirs         ###   ########.fr       */
+>>>>>>> af99a88 (add some builtin funcs)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +91,10 @@ typedef enum
 typedef	struct s_command
 {
 	int			id;					// ID for the command (used to identify commands)
+<<<<<<< HEAD
+=======
+	t_list		*envp;
+>>>>>>> af99a88 (add some builtin funcs)
 	char		*command;			// The actual command (e.g., "ls", "grep")
 	char		*delimiter;			// Delimiter between commands
 	char		*args;				// Arguments for the command (e.g., ["-al"], ["foo"])
