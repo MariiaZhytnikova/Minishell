@@ -10,12 +10,58 @@
 /*   Updated: 2024/11/13 09:21:38 by mzhitnik         ###   ########.fr       */
 =======
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
+<<<<<<< HEAD:libft/ft_lstsize_bonus.c
 /*   Updated: 2025/03/17 15:51:24 by ekashirs         ###   ########.fr       */
 >>>>>>> af99a88 (add some builtin funcs):src/linked_list_utils.c
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+=======
+/*   Updated: 2025/03/17 16:48:57 by ekashirs         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+t_list	*ft_lstnew(void *content)
+{
+	t_list	*new;
+
+	new = (t_list *)malloc(sizeof(*new));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
+}
+
+t_list	*ft_lstlast(t_list *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	t_list	*last;
+
+	last = *lst;
+	if (new == NULL)
+		return ;
+	if (lst == NULL || *lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new;
+}
+>>>>>>> 8e9793e (update builtin):src/linked_list_utils.c
 
 int	ft_lstsize(t_list *lst)
 {
@@ -30,6 +76,61 @@ int	ft_lstsize(t_list *lst)
 	return (cnt);
 }
 
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
+{
+	if (!del || !lst)
+		return ;
+	(*del)(lst->content);
+	free(lst);
+}
+
+void	free_linked_list(t_list *head)
+{
+	t_list	*current;
+	t_list	*next;
+
+	current = head;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current->content);
+		free(current);
+		current = next;
+	}
+}
+
+void	print_linked_list(t_list *lst)
+{
+	t_list	*current;
+
+	current = lst;
+	while (current != NULL)
+	{
+		printf("%s\n", current->content);
+		current = current->next;
+	}
+}
+
+void	split_input(t_list **token, char *args)
+{
+	int	i;
+	int	start;
+	int	end;
+	t_list	*new_token;
+
+	start = 0;
+	start = skip_whitespace(&args[start], 0);
+	if (!args[start])
+		return ;
+	end = start;
+	while (args[end] && !(args[end] == ' ' || args[end] == '\t' || args[end] == '\n' || args[end] == '\r'))
+		end++;
+	new_token = ft_lstnew(ft_substr(args, start, end));
+	ft_lstadd_back(token, new_token);
+	if (args[end])
+		split_input(token, &args[end]);
+}
+
 int	create_node(t_list *env_var, char *value)
 {
 	t_list	*new_node;
@@ -39,8 +140,8 @@ int	create_node(t_list *env_var, char *value)
 	if (new_node == NULL);
 		return (1);
 	new_node->next = NULL;
-	new_node->value = ft_strdup(value);
-	if (new_node->value == NULL)
+	new_node->content = ft_strdup(value);
+	if (new_node->content == NULL)
 	{
 		free(new_node);
 		return (1);

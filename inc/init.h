@@ -7,10 +7,14 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2025/03/17 16:39:16 by mzhitnik         ###   ########.fr       */
 =======
 /*   Updated: 2025/03/17 14:36:53 by ekashirs         ###   ########.fr       */
 >>>>>>> af99a88 (add some builtin funcs)
+=======
+/*   Updated: 2025/03/17 16:48:38 by ekashirs         ###   ########.fr       */
+>>>>>>> 8e9793e (update builtin)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +92,15 @@ typedef enum
 }	arguments;
 
 
+<<<<<<< HEAD
+=======
+typedef struct s_list
+{
+	char	*content;
+	t_list	*next;
+}	t_list;
+
+>>>>>>> 8e9793e (update builtin)
 typedef	struct s_command
 {
 	int			id;					// ID for the command (used to identify commands)
