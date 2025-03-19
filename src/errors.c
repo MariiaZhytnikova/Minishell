@@ -6,11 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:24:22 by mzhitnik          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/03/17 16:41:20 by mzhitnik         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/17 14:04:44 by ekashirs         ###   ########.fr       */
->>>>>>> af99a88 (add some builtin funcs)
+/*   Updated: 2025/03/19 13:28:40 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

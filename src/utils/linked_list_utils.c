@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:52:31 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:40:01 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,3 +102,32 @@ t_list	*create_env_list(char **env)
 	}
 	return (env_var);
 }
+
+void	delete_node_by_content(t_list **list, char *variable, int flag) // usually flag is 0, i use flag = 1 for checing = sign after the variable
+{
+	t_list	*current;
+	t_list	*prev;
+	size_t	len;
+
+	current = *list;
+	prev = NULL;
+	if (flag == 0)
+		len = longer(current->content, variable); // sayy to Jane
+	else
+		len = ft_strlen(variable); 
+	while (current)
+	{
+		if (!strncmp(current->content, variable, len) 
+			&& (!flag || current->content[len] == '='))
+		{
+			if (prev == NULL)
+				*list = current->next;
+			else
+				prev->next = current->next;
+			return (free(current->content), free(current));
+		}
+		prev = current;
+		current = current->next;
+	}
+}
+

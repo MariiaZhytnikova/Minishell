@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/17 17:32:40 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/19 14:27:10 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@
 # define ERR_EXCL "Handling of special characters like ';', '\\', '{}', '()', '[]', '&' is not supported"
 # define ERR_QUOTES "Quotes are not closed correctly"
 
-# define ERR_BASH "Minishell: "
+# define ERR_BASH "minishell: "
 # define ERR_ENV "env: "
+# define ERR_CD "minishell: cd: "
 # define ERR_PIPE "Pipe creation failed"
 # define ERR_FORK "Fork failed"
 # define ERR_CMD ": command not found"
 # define ERR_PERM ": Permission denied"
 # define ERR_NOFILE ": No such file or directory"
+# define ERR_NUM ": numeric argument required"
 
 # define ERR_MALLOC "Memory allocation failed"
 # define ERR_DUP "dup2 function has failed"

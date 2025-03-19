@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 17:32:51 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/17 17:32:56 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:47:47 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,32 +84,18 @@ typedef enum
 }	arguments;
 
 
-<<<<<<< HEAD
-=======
-typedef struct s_list
-{
-	char	*content;
-	t_list	*next;
-}	t_list;
-
->>>>>>> 8e9793e (update builtin)
 typedef	struct s_command
 {
-	int			id;					// ID for the command (used to identify commands)
-<<<<<<< HEAD
-=======
-	t_list		*envp;
->>>>>>> af99a88 (add some builtin funcs)
+	int			pid;					// ID for the command (used to identify commands)
 	char		*command;			// The actual command (e.g., "ls", "grep")
 	char		*delimiter;			// Delimiter between commands
-	char		*args;				// Arguments for the command (e.g., ["-al"], ["foo"])
+	char		**args;				// Arguments for the command (e.g., ["-al"], ["foo"])
 	char		*input_redirect;	// Input redirection (if any)
 	char		*output_redirect;	// Output redirection (if any, e.g., "> output.txt")
 	char		*error_redirect;	// redirect error file?
-	t_list		*env_var;
 	int			nbr_cmds;
 	int			status;
-	//int		background;			// Flag for background execution (if any)
+	t_command	*next;
 } t_command;
 
 typedef struct	s_history
@@ -126,9 +112,9 @@ typedef struct	s_session
 	size_t		prompt_len; // ?? do we need after tokenization 
 	bool		is_history;
 	t_history	*history;
-	char		**env_dup;
 	t_command	**command_tree;
 	int			status_last;
+	t_list		*env_var;
 	// terminating things
 }	t_session;
 

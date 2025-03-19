@@ -5,23 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-<<<<<<< HEAD:libft/ft_lstsize_bonus.c
-/*   Created: 2024/11/08 13:05:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/11/13 09:21:38 by mzhitnik         ###   ########.fr       */
-=======
-/*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-<<<<<<< HEAD:libft/ft_lstsize_bonus.c
-/*   Updated: 2025/03/17 15:51:24 by ekashirs         ###   ########.fr       */
->>>>>>> af99a88 (add some builtin funcs):src/linked_list_utils.c
+/*   Created: 2025/03/18 17:52:19 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/18 17:52:24 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-=======
-/*   Updated: 2025/03/17 16:48:57 by ekashirs         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 t_list	*ft_lstnew(void *content)

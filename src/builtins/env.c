@@ -6,13 +6,13 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:32 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/17 16:48:31 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:51:51 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_builtin(t_command *cmd)
+void	env_builtin(t_session *session, t_command *cmd)
 {
 	t_list	*current;
 
@@ -22,7 +22,7 @@ void	env_builtin(t_command *cmd)
 		cmd->status = EXIT_FAILURE;
 		return ;
 	}
-	current = cmd->envp;
+	current = session->env_var;
 	while(current)
 	{
 		if(ft_strchr(current->content, '='))

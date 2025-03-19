@@ -6,18 +6,37 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:17 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/17 17:23:12 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:55:17 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	unset_builtin(t_command *cmd)
+t_list	*search_in_env(t_list *env_var, char *variable)
+{
+	size_t	len;
+	t_list	*current;
+
+	if (env_var == NULL)
+		return (NULL);
+	current = env_var;
+	len = ft_strlen(variable);
+	while (current)
+	{
+		if (!ft_strncmp(current->content, variable, len))
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+void	unset_builtin(t_session *session, t_command *cmd)
 {
 	t_list	*var_to_unset;
+	t_list	*tmp;
 	int		i;
 
-	if	(!cmd->args[0])
+	if	(!cmd->args || !cmd->args[0])
 	{
 		cmd->status = EXIT_SUCCESS;
 		return ;
@@ -25,13 +44,11 @@ void	unset_builtin(t_command *cmd)
 	i = 0;
 	while (cmd->args[i])
 	{
-		var_to_unset = search_in_env(cmd->envp, cmd->args[i]);
-		if (var_to_unset == NULL)
-		{
-			cmd->status = EXIT_SUCCESS;
-			return ;
-		}
-		else
-			delete_node();
+		tmp = session->env_var;
+		var_to_unset = search_in_env(tmp, cmd->args[i]);
+		if (var_to_unset)
+			delete_node_by_content(&(session->env_var), cmd->args[i], 1);
+		i++;
 	}
+	cmd->status = EXIT_SUCCESS;
 }
