@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/03/17 17:11:43 by mzhitnik         ###   ########.fr        #
+#    Updated: 2025/03/20 12:21:58 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS_PATH	:= ./obj
 LIBFT_PATH	:= ./libft
 LIBFT		:= $(LIBFT_PATH)/libft.a
 
-#BUILTINS = cd echo env exit export pwd unset
+BUILTINS = cd echo env exit export pwd unset
 
 #ENV = env get_env sort_env shlvl
 
@@ -36,7 +36,8 @@ UTILS = utils linked_list_utils
 
 SRCS := $(addsuffix .c, $(addprefix src/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix src/tokenization/, $(TOKENS))) \
-	  $(addsuffix .c, $(addprefix src/utils/, $(UTILS)))
+	  $(addsuffix .c, $(addprefix src/utils/, $(UTILS))) \
+	  $(addsuffix .c, $(addprefix src/builtins/, $(BUILTINS)))
 
 OBJS	:= $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 

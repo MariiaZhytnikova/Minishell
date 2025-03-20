@@ -6,13 +6,13 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:00 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/19 18:13:12 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:58:45 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*find_prev_pwd(t_list *env_var)
+static char	*find_prev_pwd(t_list *env_var)
 {
 	t_list	*current;
 	char	*prev_pwd;
@@ -31,7 +31,7 @@ char	*find_prev_pwd(t_list *env_var)
 	return (prev_pwd);
 }
 
-void	update_oldpwd(t_list *env_var, t_command *cmd)
+static void	update_oldpwd(t_list *env_var, t_command *cmd)
 {
 	t_list	*current;
 	char	*prev_pwd;
@@ -49,7 +49,7 @@ void	update_oldpwd(t_list *env_var, t_command *cmd)
 			current->content = ft_strjoin("OLDPWD=", prev_pwd + 4);
 			if (current->content == NULL)
 			{
-				error_msg(ERR_BASH, "", ERR_MALLOC);
+				error_msg(ERR_BASH, "", "", ERR_MALLOC);
 				cmd->status = EXIT_FAILURE;
 			}
 			return;
@@ -57,7 +57,7 @@ void	update_oldpwd(t_list *env_var, t_command *cmd)
 		current = current->next;
 	}
 }
-void	update_pwd(t_list *env_var, t_command *cmd, char *cur_dir)
+static void	update_pwd(t_list *env_var, t_command *cmd, char *cur_dir)
 {
 	t_list *current;
 
@@ -71,7 +71,7 @@ void	update_pwd(t_list *env_var, t_command *cmd, char *cur_dir)
 			current->content = ft_strjoin("PWD=", cur_dir);
 			if (current->content == NULL)
 			{
-				error_msg(ERR_BASH, "", ERR_MALLOC);
+				error_msg(ERR_BASH, "", "", ERR_MALLOC);
 				cmd->status = EXIT_FAILURE;
 			}
 			return ;
@@ -79,13 +79,13 @@ void	update_pwd(t_list *env_var, t_command *cmd, char *cur_dir)
 		current = current->next;
 	}
 }
-void	update_env(t_list *env_var, t_command *cmd)
+static void	update_env(t_list *env_var, t_command *cmd)
 {
 	char	cur_dir[LEN_PATH];
 
 	if (!getcwd(cur_dir, LEN_PATH))
 	{
-		error_msg(ERR_GETCWD, "", ERR_NOFILE);
+		error_msg(ERR_GETCWD, "", "", ERR_NOFILE);
 		cmd->status = EXIT_FAILURE;
 		return ;
 	}
@@ -106,7 +106,7 @@ void	cd_builtin(t_session *session, t_command *cmd)
 	}
 	if (chdir(cmd->args[0]) == -1)
 	{
-		error_msg(ERR_CD, cmd->args[0], strerror(errno));
+		error_msg(ERR_CD, cmd->args[0], ": ", strerror(errno));
 		cmd->status = EXIT_FAILURE;
 		return ;
 	}

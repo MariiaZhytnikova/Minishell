@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/18 17:52:19 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/20 12:29:47 by ekashirs         ###   ########.fr       */
+/*   Created: 2025/03/20 11:34:31 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/20 15:23:36 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 
-int	ft_lstsize(t_list *lst)
-{
-	size_t	cnt;
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-	cnt = 0;
-	while (lst)
-	{
-		cnt++;
-		lst = lst->next;
-	}
-	return (cnt);
-}
+# include "minishell.h"
 
+void	cd_builtin(t_session *session, t_command *cmd);
+void	env_builtin(t_session *session, t_command *cmd);
+void	exit_builtin(t_command *cmd);
+void	pwd_builtin(t_command *cmd);
+void	unset_builtin(t_session *session, t_command *cmd);
+void	echo_builtin(t_command *cmd);
+
+#endif

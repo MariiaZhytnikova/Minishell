@@ -1,5 +1,5 @@
 
-NAME		= libft.a
+NAME	= libft.a
 CC		= cc
 FLAGS  = -Wall -Wextra -Werror
 
@@ -71,4 +71,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY:	all clean fclean re`
+.PHONY:	all clean fclean re

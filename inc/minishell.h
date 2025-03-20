@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:22:59 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 17:12:15 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:39:38 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
 # include "libft.h"
 # include "init.h"
 # include "utils.h"
 # include "tokenization.h"
 # include "errors.h"
+# include "builtins.h"
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 17:32:51 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/19 15:47:47 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/20 12:40:49 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ typedef	struct s_command
 	char		*error_redirect;	// redirect error file?
 	int			nbr_cmds;
 	int			status;
-	t_command	*next;
+	//t_command	*next;
 } t_command;
 
 typedef struct	s_history

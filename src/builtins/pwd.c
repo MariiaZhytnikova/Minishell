@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 15:14:49 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/19 13:39:30 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:57:33 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ void	pwd_builtin(t_command *cmd)
 {
 	char	cur_dir[LEN_PATH];
 
-	cur_dir = getcwd(cur_dir, LEN_PATH);
-	if (cur_dir == NULL)
+	if (!getcwd(cur_dir, LEN_PATH))
 	{
-		error_msg(ERR_GETCWD, "", ERR_NOFILE);
+		error_msg(ERR_GETCWD, "", "", ERR_NOFILE);
 		cmd->status = EXIT_FAILURE;
 	}
 	else

@@ -6,13 +6,13 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:17 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/19 15:55:17 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/20 11:38:58 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*search_in_env(t_list *env_var, char *variable)
+static t_list	*search_in_env(t_list *env_var, char *variable)
 {
 	size_t	len;
 	t_list	*current;

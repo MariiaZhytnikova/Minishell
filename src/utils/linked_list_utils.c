@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/18 17:40:01 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/20 14:59:49 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	split_input(t_list **token, char *args)
 		split_input(token, &args[end]);
 }
 
-int	create_node(t_list *env_var, char *value)
+int	create_node(t_list **env_var, char *value)
 {
 	t_list	*new_node;
 	t_list	*last_node;
@@ -74,33 +74,30 @@ int	create_node(t_list *env_var, char *value)
 		free(new_node);
 		return (1);
 	}
-	if (env_var == NULL)
-		env_var = new_node;
+	if (*env_var == NULL)
+		*env_var = new_node;
 	else
 	{
-		last_node = ft_lstlast(env_var);
+		last_node = ft_lstlast(*env_var);
 		last_node->next = new_node;
 	}
 	return (0);
 }
 
-t_list	*create_env_list(char **env)
+void	create_env_list(t_list **env_var, char **env)
 {
 	int	i;
-	t_list *env_var;
 
-	env_var = NULL;
 	i = 0;
 	while(env[i])
 	{
 		if (create_node(env_var, env[i]))
 		{
-			error_msg("create_env_list", NULL, NULL);
+			error_msg("create_env_list", NULL, NULL, NULL);
 			// FREE previous allocs and exit
 		}
 		i++;
 	}
-	return (env_var);
 }
 
 void	delete_node_by_content(t_list **list, char *variable, int flag) // usually flag is 0, i use flag = 1 for checing = sign after the variable
@@ -111,14 +108,14 @@ void	delete_node_by_content(t_list **list, char *variable, int flag) // usually 
 
 	current = *list;
 	prev = NULL;
-	if (flag == 0)
-		len = longer(current->content, variable); // sayy to Jane
-	else
-		len = ft_strlen(variable); 
+	// if (flag == 0)
+	//	len = longer(current->content, variable); // sayy to Jane
+	//else
+	len = ft_strlen(variable); 
 	while (current)
 	{
-		if (!strncmp(current->content, variable, len) 
-			&& (!flag || current->content[len] == '='))
+		if (!strncmp(current->content, variable, len)
+			&& (!flag || ((char *)current->content)[len] == '='))
 		{
 			if (prev == NULL)
 				*list = current->next;

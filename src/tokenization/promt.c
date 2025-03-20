@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:50:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:00:39 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,24 @@ static int	exclusion_check(char *str) // if c == ';' ||  c == '\' || or Unclosed
 	if (!str)
 		return (1);
 	if (!if_single_balanced(str))
-		return (error_msg(ERR_QUOTES, NULL, NULL), 1);
+		return (error_msg(ERR_QUOTES, NULL, NULL, NULL), 1);
 	if (!if_double_balanced(str))
-		return (error_msg(ERR_QUOTES, NULL, NULL), 1);
+		return (error_msg(ERR_QUOTES, NULL, NULL, NULL), 1);
 	printf("check excl\n");
 	while (str[i])
 	{
 		if (str[i] == ';' || str[i] == '\\')
-			return (error_msg(ERR_EXCL, NULL, NULL), 1);
+			return (error_msg(ERR_EXCL, NULL, NULL, NULL), 1);
 		else if (str[i] == '(' || str[i] == ')')
-			return (error_msg(ERR_EXCL, NULL, NULL), 1);
+			return (error_msg(ERR_EXCL, NULL, NULL, NULL), 1);
 		else if (str[i] == '{' || str[i] == '}')
-			return (error_msg(ERR_EXCL, NULL, NULL), 1);
+			return (error_msg(ERR_EXCL, NULL, NULL, NULL), 1);
 		else if (str[i] == '[' || str[i] == ']')
-			return (error_msg(ERR_EXCL, NULL, NULL), 1);
+			return (error_msg(ERR_EXCL, NULL, NULL, NULL), 1);
 		else if (str[i] == '&' && str[i + 1] == '&')
 			i++;
 		else if (str[i] == '&' && str[i + 1] != '&')
-			return (error_msg(ERR_EXCL, NULL, NULL), 1);
+			return (error_msg(ERR_EXCL, NULL, NULL, NULL), 1);
 		i++;
 	}
 	return (0);
@@ -186,7 +186,7 @@ void	lexical_analyzer(t_session *session)
 	t_list	*token;
 
 	if (exclusion_check(session->input))
-		return (error_msg("Something wrong", NULL, NULL));
+		return (error_msg("Something wrong", NULL, NULL, NULL));
 	token_num = word_count(session->input);
 	token = NULL;
 	split_input(&token, session->input);
@@ -234,5 +234,5 @@ void	promt(t_session *session)
 	if (session->input && *session->input)
 		add_history(session->input);
 	if (!session->input)
-		error_msg("Something wrong", NULL, NULL);
+		error_msg("Something wrong", NULL, NULL, NULL);
 }
