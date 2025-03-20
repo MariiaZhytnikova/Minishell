@@ -6,13 +6,13 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:10 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/17 12:15:32 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:42:48 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_builtin(t_command *cmd)
+void	export_builtin(t_session *session, t_command *cmd)
 {
 	
 }
