@@ -22,19 +22,18 @@ OBJS_PATH	:= ./obj
 LIBFT_PATH	:= ./libft
 LIBFT		:= $(LIBFT_PATH)/libft.a
 
-#BUILTINS = cd echo env exit export pwd unset
-
-#ENV = env get_env sort_env shlvl
+BUILTINS = cd echo env exit export export2 pwd unset
 
 #EXEC = bin builtin exec
 
 MAIN = main errors
 
-TOKENS = promt
+TOKENS = promt quotes token_check here_doc delimiters tokens_parsing numbers redirection
 
 UTILS = utils linked_list_utils free
 
 SRCS := $(addsuffix .c, $(addprefix src/, $(MAIN))) \
+	  $(addsuffix .c, $(addprefix src/builtins/, $(BUILTINS))) \
 	  $(addsuffix .c, $(addprefix src/tokenization/, $(TOKENS))) \
 	  $(addsuffix .c, $(addprefix src/utils/, $(UTILS)))
 
@@ -45,7 +44,7 @@ NORM	:= norminette
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline
+	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline -fsanitize=address
 	@echo "$(NAME) building completed ..."
 
 $(OBJS_PATH):

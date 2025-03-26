@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:21:38 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:54:14 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,28 @@ void	add_new_var(t_session *session, t_command *cmd, char *val)
 		return ;
 	}
 	ft_lstadd_back(&session->env_var, new);
+}
+
+int	split_input(t_list **token, char *args, int size)
+{
+	int		i;
+	char	temp[size + 1];
+	t_list	*new_token;
+
+	ft_memset(temp, 0, size + 1);
+	i = skip_whitespace(args);
+	if (!args[i])
+		return (1);
+	if (handle_quotes(temp, args, &i) < 0)
+		return (-1);
+	new_token = ft_lstnew(ft_strdup(temp));
+	if (!new_token)
+		return (-1);
+	ft_lstadd_back(token, new_token);
+	if (args[i])
+	{
+		if (split_input(token, &args[i], ft_strlen(&args[i])) < 0)
+			return (-1);
+	}
+	return (1);
 }

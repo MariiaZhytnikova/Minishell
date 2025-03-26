@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 10:22:01 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:51:40 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	commands(t_session *session, t_list **token)
 	int		i;
 
 	if (numbers(token, &cnt) < 0)
-		return (error_msg("Something wrong numbers", NULL, NULL), -1);
+		return (error_msg("Something wrong numbers", NULL, NULL, NULL), -1);
 	session->count = &cnt;
 	if (allocate_struct(session, &cnt, 0) < 0)
-		return (error_msg("Something wrong with alloc", NULL, NULL), -1);
+		return (error_msg("Something wrong with alloc", NULL, NULL, NULL), -1);
 	curr = *token;
 	i = 0;
 	while (curr)
@@ -32,7 +32,7 @@ int	commands(t_session *session, t_list **token)
 		if (is_del(curr->content) == false)
 		{
 			if (handle_command(session->cmds[i], &curr, 0) < 0)
-				return (error_msg("wrong with strdup\n", NULL, NULL), -1);
+				return (error_msg("wrong with strdup\n", NULL, NULL, NULL), -1);
 			if (curr && is_del(curr->content) == true)
 				get_delimiter(session->cmds[i++], curr);
 		}
@@ -109,13 +109,13 @@ int	lexical_analyzer(t_session *session)
 
 	token = NULL;
 	if (split_and_check(&token, session->input) < 0)
-		return (free_linked_list(&token), -1);
+		return (ft_lstclear(&token, free), -1);
 	printf("\nNow tokens are:\n");
 	print_linked_list(token);
 	printf("-------------\n");
 	if (commands(session, &token) < 0)
-		return (error_msg("Something wrong commands", NULL, NULL), -1);
-	free_linked_list(&token);
+		return (error_msg("Something wrong commands", NULL, NULL, NULL), -1);
+	ft_lstclear(&token, free);
 	return (1);
 }
 
@@ -137,5 +137,5 @@ void	promt(t_session *session)
 	if (session->input && *session->input)
 		add_history(session->input);
 	if (!session->input)
-		error_msg("Something wrong", NULL, NULL);
+		error_msg("Something wrong", NULL, NULL, NULL);
 }

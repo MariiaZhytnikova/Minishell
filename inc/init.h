@@ -87,21 +87,9 @@ typedef struct	s_command
 typedef struct	s_history
 {
 	char				*cmd_line;	// Stores the actual command entered by the user.
-	t_history	*prev;		// Pointer to the previous command in the history (linked list).
-	t_history	*next;		// Pointer to the next command in the history (linked list).
+	struct	s_history	*prev;		// Pointer to the previous command in the history (linked list).
+	struct	s_history	*next;		// Pointer to the next command in the history (linked list).
 }	t_history;
-
-typedef	struct s_count
-{
-	int	cmd_nb;
-	int	*args_nb;
-	int	delimiter_nb;
-	int	*red_in_nb;
-	int	*red_out_nb;
-	int	*red_app_nb;
-	int	*red_h_doc_nb;
-	int	here_doc;
-}	t_count;
 
 typedef struct	s_session
 {

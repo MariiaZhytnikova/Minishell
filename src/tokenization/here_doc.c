@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/25 14:44:12 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:47:59 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	here_doc_lim_inp(t_list **token, t_list *current)
 			ft_strlcat(buffer, "\n", new_size);
 		buffer = reall(buffer, old_size, new_size);
 		if (!buffer)
-			return (error_msg("Something wrong with realloc here_doc_lim_inp", NULL, NULL), -1);
+			return (error_msg("Something wrong with realloc here_doc_lim_inp", NULL, NULL, NULL), -1);
 		ft_strlcat(buffer, line, new_size);
 		old_size = new_size;
 		free(line);

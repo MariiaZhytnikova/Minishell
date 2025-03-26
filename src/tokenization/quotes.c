@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:26:32 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/22 17:28:28 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:48:29 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	skip_single_quotes(char *temp, char *args, int *i, int *j)
 		}
 	}
 	if (is_closed == 0)
-		return (error_msg("Single quotes not closed quotes.c", NULL, NULL), -1);
+		return (error_msg("Single quotes not closed quotes.c", NULL, NULL, NULL), -1);
 	return (1);
 }
 
@@ -52,7 +52,7 @@ static int	skip_double_quotes(char *temp, char *args, int *i, int *j)
 		}
 	}
 	if (is_closed == 0)
-		return (error_msg("Double quotes not closed quotes_utils", NULL, NULL), -1);
+		return (error_msg("Double quotes not closed quotes_utils", NULL, NULL, NULL), -1);
 	return (1);
 }
 
@@ -87,7 +87,7 @@ int	handle_quotes(char *temp, char *args, int *i)
 		else
 		{
 			if (args[*i] == '\\' || args[*i] == ';')
-				return (error_msg(ERR_EXCL, NULL, NULL), -1);
+				return (error_msg(ERR_EXCL, NULL, NULL, NULL), -1);
 			temp[j++] = args[(*i)++];
 		}
 	}
