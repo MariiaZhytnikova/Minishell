@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/25 16:30:18 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:16:37 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef	struct s_count
 	int			here_doc;
 }	t_count;
 
-typedef	struct s_command
+typedef struct	s_command
 {
 	int			pid;
 	char		*command;
@@ -87,9 +87,21 @@ typedef	struct s_command
 typedef struct	s_history
 {
 	char				*cmd_line;	// Stores the actual command entered by the user.
-	struct	s_history	*prev;		// Pointer to the previous command in the history (linked list).
-	struct	s_history	*next;		// Pointer to the next command in the history (linked list).
+	t_history	*prev;		// Pointer to the previous command in the history (linked list).
+	t_history	*next;		// Pointer to the next command in the history (linked list).
 }	t_history;
+
+typedef	struct s_count
+{
+	int	cmd_nb;
+	int	*args_nb;
+	int	delimiter_nb;
+	int	*red_in_nb;
+	int	*red_out_nb;
+	int	*red_app_nb;
+	int	*red_h_doc_nb;
+	int	here_doc;
+}	t_count;
 
 typedef struct	s_session
 {

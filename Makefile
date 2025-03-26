@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/03/17 17:11:43 by mzhitnik         ###   ########.fr        #
+#    Updated: 2025/03/26 13:12:38 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ MAIN = main errors
 
 TOKENS = promt
 
-UTILS = utils linked_list_utils
+UTILS = utils linked_list_utils free
 
 SRCS := $(addsuffix .c, $(addprefix src/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix src/tokenization/, $(TOKENS))) \

@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:22:59 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:20:13 by ekashirs         ###   ########.fr       */
+/*   Created: 2025/03/13 14:17:32 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/25 15:00:45 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdbool.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "libft.h"
-# include "init.h"
-# include "utils.h"
-# include "tokenization.h"
-# include "errors.h"
-# include "builtins.h"
-//# include "expansion.h"
-
-#endif
+void	env_builtin(t_session *session, t_command *cmd)
+{
+	if (cmd->args[1])
+	{
+		error_msg (ERR_ENV, cmd->args[1], ERR_NOFILE, NULL);
+		cmd->status = EXIT_FAILURE;
+		return ;
+	}
+	print_linked_list(session->env_var);
+	cmd->status = EXIT_SUCCESS;
+}

@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:52:31 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:21:38 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_linked_list(t_list *head)
-{
-	t_list	*current;
-	t_list	*next;
-
-	current = head;
-	while (current != NULL)
-	{
-		next = current->next;
-		free(current->content);
-		free(current);
-		current = next;
-	}
-}
 
 void	print_linked_list(t_list *lst)
 {
@@ -39,27 +24,7 @@ void	print_linked_list(t_list *lst)
 	}
 }
 
-void	split_input(t_list **token, char *args)
-{
-	int	i;
-	int	start;
-	int	end;
-	t_list	*new_token;
-
-	start = 0;
-	start = skip_whitespace(&args[start], 0);
-	if (!args[start])
-		return ;
-	end = start;
-	while (args[end] && !(args[end] == ' ' || args[end] == '\t' || args[end] == '\n' || args[end] == '\r'))
-		end++;
-	new_token = ft_lstnew(ft_substr(args, start, end));
-	ft_lstadd_back(token, new_token);
-	if (args[end])
-		split_input(token, &args[end]);
-}
-
-int	create_node(t_list *env_var, char *value)
+int	create_node(t_list **env_var, char *value)
 {
 	t_list	*new_node;
 	t_list	*last_node;
@@ -74,31 +39,74 @@ int	create_node(t_list *env_var, char *value)
 		free(new_node);
 		return (1);
 	}
-	if (env_var == NULL)
-		env_var = new_node;
+	if (*env_var == NULL)
+		*env_var = new_node;
 	else
 	{
-		last_node = ft_lstlast(env_var);
+		last_node = ft_lstlast(*env_var);
 		last_node->next = new_node;
 	}
 	return (0);
 }
 
-t_list	*create_env_list(char **env)
+void	create_env_list(t_list **env_var, char **env)
 {
 	int	i;
-	t_list *env_var;
 
-	env_var = NULL;
 	i = 0;
 	while(env[i])
 	{
 		if (create_node(env_var, env[i]))
 		{
-			error_msg("create_env_list", NULL, NULL);
+			error_msg("create_env_list", NULL, NULL, NULL);
 			// FREE previous allocs and exit
 		}
 		i++;
 	}
-	return (env_var);
+}
+
+void	delete_node_by_content(t_list **list, char *variable)
+{
+	t_list	*current;
+	t_list	*prev;
+	size_t	len;
+
+	current = *list;
+	prev = NULL;
+	len = ft_strlen(variable); 
+	while (current)
+	{
+		if (!strncmp(current->content, variable, len)
+			&& ((char *)current->content)[len] == '=')
+		{
+			if (prev == NULL)
+				*list = current->next;
+			else
+				prev->next = current->next;
+			return (free(current->content), free(current));
+		}
+		prev = current;
+		current = current->next;
+	}
+}
+
+void	swap_content(t_list *a, t_list *b)
+{
+	void *temp = a->content;
+	a->content = b->content;
+	b->content = temp;
+}
+
+void	add_new_var(t_session *session, t_command *cmd, char *val)
+{
+	t_list	*new;
+
+	new = ft_lstnew(val);
+	if (!new)
+	{
+		error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL);
+		cmd->status = EXIT_FAILURE;
+		return ;
+	}
+	ft_lstadd_back(&session->env_var, new);
 }
