@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/17 16:39:16 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:30:18 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # ifndef LEN_PATH
 # define LEN_PATH 4096
+# define MAX_PROMT 131072
 #endif
 
 // Text Colors
@@ -41,63 +42,47 @@
 // Structures
 
 // [char *delimiter] Indicates what is separating this cmd table from the next
-// ** - delimiter = "\0" (last command table)
-// ** - delimiter = ";" (consecutive execution of the next cmd table)
-// ** - delimiter = "||" (execution of the next cmd table only if the previous has
-// ** - delimiter = "&&"" (execution of the next cmd table only if the previous has
-// ** a truthy exit_status)
-// ** - ">"  - redirect stdout (for files: also overwrite file's content)
-// ** - ">>" - redirect stdout (for files: also append to file's content)
-// ** - "<"  - redirect stdin
-// ** - "<<" - here doc
 
 typedef enum
 {
-	REDIRECT_OUTPUT,
-	REDIRECT_INPUT,
-	REDIRECT_OUTPUT_APPEND,
-	HEREDOC,
-}	redirect;
-
-typedef enum
-{
+	NONE,
 	PIPE,
-	AND,		// "&&" (execution of the next cmd table only if the previous has a truthy exit_status)
-	OR,			// "||" (execution of the next cmd table only if the previous has
-	// BACKGROUND, // "&" at the end of a command, it causes the command to run in the background
-	// // execute as fork() -> child, In parent process, do not wait for the child
-	NONE, // or use end
-	END // ??
+	AND,							// "&&" (execution of the next cmd table only if the previous has a truthy exit_status)
+	OR,								// "||" (execution of the next cmd table only if the previous has
 }	delimiter;
 
-typedef enum
-{
-	COMMAND,
-	ARGUMENT,
-	WILDCARD,	// Expand with value
-	// O_PARENT,	// Should be closed // # Error: Missing closing parenthesis
-	// C_PARENT,
-	// // Square brackets [] are used for conditional tests (in the same way as the test command). They 
-	// 	//evaluate an expression and return a success or failure status based on the condition inside the brackets.
-	// // [ -z ] // # Error: Missing argument to -z
-	// // {}, () run only with one arg, it need ";" for more args, check if closed
-}	arguments;
+// typedef enum
+// {
+// 	REDIRECT_INPUT,					// "<"  - redirect stdin
+// 	REDIRECT_OUTPUT, 				// ">"  - redirect stdout (for files: also overwrite file's content)
+// 	REDIRECT_OUTPUT_APPEND, 		// ">>" - redirect stdout (for files: also append to file's content)
+// 	HEREDOC,						//"<<" - here doc
+// }	redirect;
 
+typedef	struct s_count
+{
+	int			cmd_nb;
+	int			*args_nb;
+	int			delimiter_nb;
+	int			*red_in_nb;
+	int			*red_out_nb;
+	int			*red_app_nb;
+	int			*red_h_doc_nb;
+	int			here_doc;
+}	t_count;
 
 typedef	struct s_command
 {
-	int			id;					// ID for the command (used to identify commands)
-	char		*command;			// The actual command (e.g., "ls", "grep")
-	char		*delimiter;			// Delimiter between commands
-	char		*args;				// Arguments for the command (e.g., ["-al"], ["foo"])
-	char		*input_redirect;	// Input redirection (if any)
-	char		*output_redirect;	// Output redirection (if any, e.g., "> output.txt")
-	char		*error_redirect;	// redirect error file?
-	t_list		*env_var;
-	int			nbr_cmds;
+	int			pid;
+	char		*command;
+	char		**args;		// need NULL teminate
+	char		**in;		// need NULL teminate
+	char		**out;		// need NULL teminate
+	char		**out_app;	// need NULL teminate
+	char		**h_doc;	// need NULL teminate
+	delimiter	type;
 	int			status;
-	//int		background;			// Flag for background execution (if any)
-} t_command;
+}	t_command;
 
 typedef struct	s_history
 {
@@ -108,15 +93,16 @@ typedef struct	s_history
 
 typedef struct	s_session
 {
-	char		*input; // ?? do we need after tokenization
+	char		*input; 			// ?? do we need after tokenization
 	size_t		len_input;
-	size_t		prompt_len; // ?? do we need after tokenization 
+	size_t		prompt_len;			// ?? do we need after tokenization 
 	bool		is_history;
 	t_history	*history;
-	char		**env_dup;
-	t_command	**command_tree;
+	t_command	**cmds;
 	int			status_last;
-	// terminating things
+	t_list		*env_var;
+	t_count		*count;
+									// terminating things
 }	t_session;
 
 #endif
