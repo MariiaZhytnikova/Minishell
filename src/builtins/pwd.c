@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/09 14:22:59 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:20:13 by ekashirs         ###   ########.fr       */
+/*   Created: 2025/03/13 15:14:49 by ekashirs          #+#    #+#             */
+/*   Updated: 2025/03/24 14:23:20 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdbool.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+void	pwd_builtin(t_command *cmd)
+{
+	char	cur_dir[LEN_PATH];
 
-# include "libft.h"
-# include "init.h"
-# include "utils.h"
-# include "tokenization.h"
-# include "errors.h"
-# include "builtins.h"
-//# include "expansion.h"
-
-#endif
+	if (!getcwd(cur_dir, LEN_PATH))
+	{
+		error_msg(ERR_GETCWD, ERR_NOFILE, NULL, NULL);
+		cmd->status = EXIT_FAILURE;
+	}
+	else
+	{
+		cmd->status = EXIT_SUCCESS;
+		printf("%s\n", cur_dir);
+	}
+}
