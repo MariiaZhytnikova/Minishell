@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/17 16:39:46 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:22:19 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "minishell.h"
 
 # define ERR_USAGE "Usage: ./minishell"
-# define ERR_EXCL "Handling of special characters like ';', '\\', '{}', '()', '[]', '&' is not supported"
+# define ERR_EXCL "Handling of special characters like ';', '\\', '&' is not supported"
 # define ERR_QUOTES "Quotes are not closed correctly"
 
 # define ERR_BASH "Minishell: "
