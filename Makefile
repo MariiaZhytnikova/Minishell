@@ -6,7 +6,7 @@
 #    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/03/26 13:12:38 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/03/26 15:30:09 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFT		:= $(LIBFT_PATH)/libft.a
 
 BUILTINS = cd echo env exit export export2 pwd unset
 
-#EXEC = bin builtin exec
+EXEC = exec
 
 MAIN = main errors
 
@@ -33,6 +33,7 @@ TOKENS = promt quotes token_check here_doc delimiters tokens_parsing numbers red
 UTILS = utils linked_list_utils free
 
 SRCS := $(addsuffix .c, $(addprefix src/, $(MAIN))) \
+	  $(addsuffix .c, $(addprefix src/execution/, $(EXEC))) \
 	  $(addsuffix .c, $(addprefix src/builtins/, $(BUILTINS))) \
 	  $(addsuffix .c, $(addprefix src/tokenization/, $(TOKENS))) \
 	  $(addsuffix .c, $(addprefix src/utils/, $(UTILS)))

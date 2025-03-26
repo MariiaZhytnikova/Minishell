@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:49:19 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/26 15:49:20 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	alloc_check(t_command *cmd, t_count *c, int i)
 
 int	allocate_struct(t_session *s, t_count *c, int i)
 {
-	s->cmds = (t_command **)ft_calloc(c->cmd_nb, sizeof(t_command *));
+	s->cmds = (t_command **)ft_calloc(c->cmd_nb + 1, sizeof(t_command *));
 	if (!s->cmds)
 		return (error_msg("Command tree alloc failed", NULL, NULL, NULL), -1);
 	while (i < c->cmd_nb)

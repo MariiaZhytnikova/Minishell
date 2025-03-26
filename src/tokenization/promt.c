@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   promt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:51:40 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:28:38 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,18 +122,19 @@ int	lexical_analyzer(t_session *session)
 void	promt(t_session *session)
 {
 	char	cwd[1024];
+	char	*temp;
+	char	*prompt;
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		session->len_input = ft_strlen(cwd);
-		printf("%s%s%s$ %s", GREEN, BOLD, cwd, RESET);
+		temp = ft_strjoin(GREEN BOLD, cwd);
+		prompt = ft_strjoin(temp, "$ " RESET);
+		free(temp);
 	}
 	else
-	{
-		session->len_input = ft_strlen("minishell$ ");
-		printf("%s%sminishell$ %s", GREEN, BOLD, RESET);
-	}
-	session->input = readline("");
+		prompt = ft_strdup(GREEN BOLD "minishell$ " RESET);
+	session->input = readline(prompt);
+	free(prompt);
 	if (session->input && *session->input)
 		add_history(session->input);
 	if (!session->input)

@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/25 17:49:25 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:51:10 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static void	free_count(t_count *count)
 		free(count->red_app_nb);
 	if (count->red_h_doc_nb)
 		free(count->red_h_doc_nb);
-	free(count);
 }
 
 void	free_session(t_session *session)
@@ -83,10 +82,8 @@ void	free_session(t_session *session)
 
 	if (!session)
 		return ;
-	if (session->input)
-		free(session->input);
-	if (session->history)
-		free_history(session->history);
+	// if (session->history)
+	// 	free_history(session->history);
 	if (session->cmds)
 	{
 		i = 0;
@@ -101,5 +98,4 @@ void	free_session(t_session *session)
 		ft_lstclear(&session->env_var, free);
 	if (session->count)
 		free_count(session->count);
-	free(session);
 }
