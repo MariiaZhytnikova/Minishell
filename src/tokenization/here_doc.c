@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:47:59 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:47:09 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	here_doc_inp(t_list **token)
 	char	*line;
 	char	*input;
 
-	line = readline("> ");
+	line = readline(">");
 	while (1)
 	{
 		if (line[0])
@@ -25,7 +25,7 @@ static int	here_doc_inp(t_list **token)
 		else
 		{
 			free (line);
-			line = readline("> ");
+			line = readline(">");
 		}
 	}
 	if (split_and_check(token, line) < 0)
@@ -101,6 +101,7 @@ int	here_doc_lim(t_list **token)
 	{
 		if (ft_strncmp(curr->content, "<<", longer(curr->content, "<<")) == 0)
 		{
+			printf("i am reading\n");
 			if (here_doc_lim_inp(token, curr) < 0)
 				return (-1);
 			curr = curr->next;
