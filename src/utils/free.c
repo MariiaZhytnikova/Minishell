@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/31 16:17:52 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/01 13:17:31 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ void	free_session(t_session *session)
 		}
 		free(session->cmds);
 	}
-	if (session->env_var)
-		ft_lstclear(&session->env_var, free);
 	if (session->count)
 		free_count(session->count);
 }
