@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:25:56 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:48:59 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:05:39 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	consecutive_delimiters(t_list *token)
 	t_list	*curr;
 
 	curr = token;
-	while (curr)
+	while (curr && curr->next)
 	{
 		if (is_del(curr->content) && is_del(curr->next->content))
 			return (error_msg("syntax error near unexpected token `last valid token'", NULL, NULL, NULL), true);

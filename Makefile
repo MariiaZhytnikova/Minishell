@@ -6,7 +6,7 @@
 #    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/03/26 15:30:09 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/03/31 16:30:38 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ EXEC = exec
 
 MAIN = main errors
 
-TOKENS = promt quotes token_check here_doc delimiters tokens_parsing numbers redirection
+TOKENS = prompt quotes token_check here_doc delimiters tokens_parsing numbers redirection
 
 UTILS = utils linked_list_utils free
 

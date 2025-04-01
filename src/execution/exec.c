@@ -6,27 +6,38 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/26 15:30:45 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:30:00 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec(t_session *session)
+int exec(t_session *session)
 {
-	if (!strcmp((*session->cmds)->command, "exit"))
-		exit_builtin(session, *session->cmds);
-	else if (!strcmp((*session->cmds)->command,"cd"))
-		cd_builtin(session, *session->cmds);
-	else if (!strcmp((*session->cmds)->command, "env"))
-		env_builtin(session, *session->cmds);
-	else if (!strcmp((*session->cmds)->command, "pwd"))
-		pwd_builtin(*session->cmds);
-	else if (!strcmp((*session->cmds)->command, "unset"))
-		unset_builtin(session, *session->cmds);
-	else if (!strcmp((*session->cmds)->command, "echo"))
-		echo_builtin(*session->cmds);
-	else if (!strcmp((*session->cmds)->command, "export"))
-		export_builtin(session , *session->cmds);
+	t_command *cmd;
+
+	cmd = *session->cmds;
+	if (cmd->command == NULL)
+	{
+		printf("Command is null\n");
+		return (0);
+	}
+	if (!ft_strncmp(cmd->command, "exit", ft_strlen("exit")))
+		exit_builtin(session, cmd);
+	else if (!ft_strncmp(cmd->command, "cd", ft_strlen("cd")))
+		cd_builtin(session, cmd);
+	else if (!ft_strncmp(cmd->command, "env", ft_strlen("env")))
+		env_builtin(session, cmd);
+	else if (!ft_strncmp(cmd->command, "pwd", ft_strlen("pwd")))
+		pwd_builtin(cmd);
+	else if (!ft_strncmp(cmd->command, "unset", ft_strlen("unset")))
+		unset_builtin(session, cmd);
+	else if (!ft_strncmp(cmd->command, "echo", ft_strlen("echo")))
+		echo_builtin(cmd);
+	else if (!ft_strncmp(cmd->command, "export", ft_strlen("export")))
+		export_builtin(session, cmd);
+	else
+		printf("Command not found\n");
+
 	return (0);
 }

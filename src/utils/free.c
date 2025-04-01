@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/26 16:51:10 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/31 16:17:52 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ void	free_session(t_session *session)
 
 	if (!session)
 		return ;
-	// if (session->history)
-	// 	free_history(session->history);
 	if (session->cmds)
 	{
 		i = 0;

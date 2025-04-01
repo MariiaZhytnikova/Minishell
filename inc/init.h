@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:16:37 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:53:23 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # define CYAN		"\033[36m"
 # define WHITE		"\033[37m"
 # define BOLD		"\033[1m"
+
+#define PROMPT	"\001" GREEN BOLD "\002minishell$ \001" RESET "\002"
 
 // Keys
 # define DEL	127
