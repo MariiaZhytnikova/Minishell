@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
 /*   Updated: 2025/03/31 17:27:29 by mzhitnik         ###   ########.fr       */
@@ -17,7 +17,7 @@ static int	here_doc_inp(t_session *session, t_list **token)
 	char	*line;
 	char	*input;
 
-	line = readline("> ");
+	line = readline(">");
 	while (1)
 	{
 		if (line[0])
@@ -25,7 +25,7 @@ static int	here_doc_inp(t_session *session, t_list **token)
 		else
 		{
 			free (line);
-			line = readline("> ");
+			line = readline(">");
 		}
 	}
 	if (split_and_check(session, token, line) < 0)

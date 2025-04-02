@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
 /*   Updated: 2025/04/02 10:35:40 by mzhitnik         ###   ########.fr       */

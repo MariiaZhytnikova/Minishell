@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
 /*   Updated: 2025/04/01 13:27:08 by mzhitnik         ###   ########.fr       */
@@ -46,7 +46,7 @@ int		allocate_struct(t_session *s, t_count *c, int i);
 int		handle_command(t_command *command, t_list **current, int i);
 int		commands(t_session *session, t_list **token);
 int		lexical_analyzer(t_session *session);
-void	promt(t_session *session);
+int		prompt(t_session *session);
 
 int		wild(t_list **token);
 
