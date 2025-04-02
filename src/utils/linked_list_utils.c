@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 11:21:12 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/02 17:36:42 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	create_env_list(t_list **env_var, char **env)
 	int	i;
 
 	i = 0;
+	if (!env)
+		create_node(env_var, NULL);
 	while(env[i])
 	{
 		if (create_node(env_var, env[i]))

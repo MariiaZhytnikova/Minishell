@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 12:53:30 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:29:03 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ void	free_session(t_session *session)
 
 	if (!session)
 		return ;
+	if (session->input)
+		free(session->input);
+	if (session->history_pipe)
+		free(session->history_pipe);
 	if (session->cmds)
 	{
 		i = 0;

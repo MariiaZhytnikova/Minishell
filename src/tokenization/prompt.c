@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 15:10:55 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:35:57 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ static char	*create_prompt(void)
 
 int	prompt(t_session *session)
 {
+	char	*prompt;
+
 	session->history_pipe = ft_calloc(1, sizeof(char *));
-	session->input = readline(create_prompt());
+	prompt = create_prompt();
+	session->input = readline(prompt);
+	free(prompt);
 	if (!session->input || *session->input == '\0')
 		return (1);
 	return (0);

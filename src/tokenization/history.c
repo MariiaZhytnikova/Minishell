@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:05:01 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 15:29:56 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:16:54 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	add_pipe_history(t_session *session, char *line)
 	free(temp);
 	if (!session->history_pipe)
 		return (-1);
+	return (0);
 }
 
 static int	is_unfinished(char *input)

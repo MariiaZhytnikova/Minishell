@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:41 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/01 13:23:45 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:57:35 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,4 @@ void	exit_builtin(t_session *session, t_command *cmd)
 	}
 	exit_with_code(session, cmd);
 }
+
