@@ -1,0 +1,6 @@
+{
+   leak _rl_init_terminal_io
+   Memcheck:Leak
+   ...
+   fun:readline
+}

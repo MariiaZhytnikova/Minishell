@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 15:49:20 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 10:35:40 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	allocate_struct(t_session *s, t_count *c, int i)
 	{
 		s->cmds[i] = ft_calloc(1, sizeof(t_command));
 		if (!s->cmds)
-			return (error_msg("Command tree alloc failed", NULL, NULL, NULL), -1);
+			return (error_msg("Comm tree alloc failed", NULL, NULL, NULL), -1);
 		if (c->args_nb[i] > 0)
 			s->cmds[i]->args = ft_calloc(c->args_nb[i] + 1, sizeof(char *));
 		if (c->red_in_nb[i] > 0)
@@ -96,9 +96,11 @@ int	allocate_struct(t_session *s, t_count *c, int i)
 		if (c->red_out_nb[i] > 0)
 			s->cmds[i]->out = ft_calloc(c->red_out_nb[i] + 1, sizeof(char *));
 		if (c->red_app_nb[i] > 0)
-			s->cmds[i]->out_app = ft_calloc(c->red_app_nb[i] + 1, sizeof(char *));
+			s->cmds[i]->out_app = ft_calloc(c->red_app_nb[i] + 1, \
+				sizeof(char *));
 		if (c->red_h_doc_nb[i] > 0)
-			s->cmds[i]->h_doc = ft_calloc(c->red_h_doc_nb[i] + 1, sizeof(char *));
+			s->cmds[i]->h_doc = ft_calloc(c->red_h_doc_nb[i] + 1, \
+				sizeof(char *));
 		if (alloc_check(s->cmds[i], c, i) < 0)
 			return (error_msg("Smthg wrong allocate_struct", NULL, NULL, NULL), -1);
 		i++;

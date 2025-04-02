@@ -6,13 +6,13 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/31 17:47:09 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:27:29 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	here_doc_inp(t_list **token)
+static int	here_doc_inp(t_session *session, t_list **token)
 {
 	char	*line;
 	char	*input;
@@ -28,12 +28,12 @@ static int	here_doc_inp(t_list **token)
 			line = readline(">");
 		}
 	}
-	if (split_and_check(token, line) < 0)
+	if (split_and_check(session, token, line) < 0)
 		return (-1);
 	return (1);
 }
 
-static int	replace_token(t_list **token, t_list *current, char *buffer)
+static int	replace_token(t_session *session, t_list *current, char *buffer)
 {
 	t_list	*new_token;
 
@@ -44,11 +44,16 @@ static int	replace_token(t_list **token, t_list *current, char *buffer)
 	free(current->next->content);
 	if (!buffer || !buffer[0])
 		buffer = ft_calloc(1, sizeof(char));
+	if (!buffer)
+		return (-1);
+	if (ft_strchr(buffer, '$'))
+		if (expansion_two(session, &buffer) < 0)
+			return (-1);
 	current->next->content = buffer;
 	return (1);
 }
 
-static int	here_doc_lim_inp(t_list **token, t_list *current)
+static int	here_doc_lim_inp(t_session *session, t_list *current)
 {
 	char	*line;
 	char	*buffer;
@@ -74,10 +79,10 @@ static int	here_doc_lim_inp(t_list **token, t_list *current)
 		old_size = new_size;
 		free(line);
 	}
-	return (replace_token(token, current, buffer));
+	return (replace_token(session, current, buffer));
 }
 
-int	here_doc_no_lim(t_list **token)
+int	here_doc_no_lim(t_session *session, t_list **token)
 {
 	t_list	*last;
 
@@ -86,13 +91,13 @@ int	here_doc_no_lim(t_list **token)
 		|| (ft_strncmp(last->content, "||", longer(last->content, "||")) == 0)
 		|| (ft_strncmp(last->content, "&&", longer(last->content, "&&")) == 0))
 	{
-		if (here_doc_inp(token) < 0)
+		if (here_doc_inp(session, token) < 0)
 			return (-1);
 	}
 	return (1);
 }
 
-int	here_doc_lim(t_list **token)
+int	here_doc_lim(t_session *session, t_list **token)
 {
 	t_list	*curr;
 
@@ -101,8 +106,7 @@ int	here_doc_lim(t_list **token)
 	{
 		if (ft_strncmp(curr->content, "<<", longer(curr->content, "<<")) == 0)
 		{
-			printf("i am reading\n");
-			if (here_doc_lim_inp(token, curr) < 0)
+			if (here_doc_lim_inp(session, curr) < 0)
 				return (-1);
 			curr = curr->next;
 		}

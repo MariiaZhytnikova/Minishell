@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 10:06:16 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/02 10:20:04 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,64 +35,66 @@ bool	is_delim_or_red(char *str)
 	return (false);
 }
 
-static bool	check_two(char *str, int *i)
+static bool	check_two(char *str, int i)
 {
-	if ((ft_strlen(str) >= 2 && str[*i] == '|' && str[*i + 1] == '|')
-		|| (ft_strlen(str) >= 2 && str[*i] == '&' && str[*i + 1] == '&')
-		|| ft_strlen(str) >= 2 && str[*i] == '<' && str[*i + 1] == '<'
-		|| (ft_strlen(str) >= 2 && str[*i] == '>' && str[*i + 1] == '>'))
+	if ((ft_strlen(str) >= 2 && str[i] == '|' && str[i + 1] == '|')
+		|| (ft_strlen(str) >= 2 && str[i] == '&' && str[i + 1] == '&')
+		|| ft_strlen(str) >= 2 && str[i] == '<' && str[i + 1] == '<'
+		|| (ft_strlen(str) >= 2 && str[i] == '>' && str[i + 1] == '>'))
 		return (true);
 	return (false);
 }
 
-void	copy_delimeter(char *temp, char *str, int *i, int *j)
+static void	copy_delimeter(t_temp *thing, char *str)
 {
-	if (ft_strlen(str) >= 3 && str[*i] == '<' && str[*i + 1] == '<'
-		&& str[*i + 2] == '<')
+	if (ft_strlen(str) >= 3 && str[thing->i] == '<' && str[thing->i + 1] == '<'
+		&& str[thing->i + 2] == '<')
 	{
-		temp[(*j)++] = ' ';
-		temp[(*j)++] = str[(*i)++];
-		temp[(*j)++] = str[(*i)++];
-		temp[(*j)++] = str[(*i)++];
-		temp[(*j)++] = ' ';
+		thing->temp[thing->j++] = ' ';
+		thing->temp[thing->j++] = str[thing->i++];
+		thing->temp[thing->j++] = str[thing->i++];
+		thing->temp[thing->j++] = str[thing->i++];
+		thing->temp[thing->j++] = ' ';
 	}
-	else if (check_two(str, i) == true)
+	else if (check_two(str, thing->i) == true)
 	{
-		temp[(*j)++] = ' ';
-		temp[(*j)++] = str[(*i)++];
-		temp[(*j)++] = str[(*i)++];
-		temp[(*j)++] = ' ';
+		thing->temp[thing->j++] = ' ';
+		thing->temp[thing->j++] = str[thing->i++];
+		thing->temp[thing->j++] = str[thing->i++];
+		thing->temp[thing->j++] = ' ';
 	}
-	else if (str[*i] == '|' || str[*i] == '&' || str[*i] == '<' \
-		|| str[*i] == '>')
+	else if (str[thing->i] == '|' || str[thing->i] == '&' \
+		|| str[thing->i] == '<' || str[thing->i] == '>')
 	{
-		temp[(*j)++] = ' ';
-		temp[(*j)++] = str[(*i)++];
-		temp[(*j)++] = ' ';
+		thing->temp[thing->j++] = ' ';
+		thing->temp[thing->j++] = str[thing->i++];
+		thing->temp[thing->j++] = ' ';
 	}
 }
 
-char	*add_spaces(char *input)
+char	*add_spaces(t_session *session, char *input)
 {
-	int		i;
-	int		j;
-	char	temp[MAX_PROMT];
+	t_temp	thing;
 	char	*result;
 
-	ft_memset(temp, 0, MAX_PROMT);
-	i = 0;
-	j = 0;
-	while (input[i])
+	ft_memset(thing.temp, 0, MAX_PROMT);
+	thing.i = 0;
+	thing.j = 0;
+	while (input[thing.i])
 	{
-		if (if_quotes(temp, input, &i, &j) < 0)
-			return (NULL);
-		else if (is_delim_or_red(&input[i]))
-			copy_delimeter(temp, input, &i, &j);
-		else if (input[i])
-			temp[j++] = input[(i)++];
+		if (input[thing.i] == '\'' || input[thing.i] == '\"')
+		{
+			if (if_quotes(NULL, &thing, input) < 0)
+				return (NULL);
+			continue ;
+		}
+		if (is_delim_or_red(&input[thing.i]))
+			copy_delimeter(&thing, input);
+		else if (input[thing.i])
+			thing.temp[(thing.j)++] = input[(thing.i)++];
 	}
-	temp[j] = 0;
-	result = ft_strdup(temp);
+	thing.temp[thing.j] = 0;
+	result = ft_strdup(thing.temp);
 	if (!*result || !result[0])
 		return (NULL);
 	return (result);
