@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/31 17:27:29 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:36:11 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	here_doc_inp(t_session *session, t_list **token)
 	char	*line;
 	char	*input;
 
-	line = readline(">");
+	line = readline("BWA HA HA >");
 	while (1)
 	{
 		if (line[0])

@@ -3,25 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/31 16:30:00 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:53:48 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int exec(t_session *session)
+void	run_cmd(t_session *session, t_command *cmd)
 {
-	t_command *cmd;
-
-	cmd = *session->cmds;
-	if (cmd->command == NULL)
-	{
-		printf("Command is null\n");
-		return (0);
-	}
 	if (!ft_strncmp(cmd->command, "exit", ft_strlen("exit")))
 		exit_builtin(session, cmd);
 	else if (!ft_strncmp(cmd->command, "cd", ft_strlen("cd")))
@@ -37,7 +29,26 @@ int exec(t_session *session)
 	else if (!ft_strncmp(cmd->command, "export", ft_strlen("export")))
 		export_builtin(session, cmd);
 	else
-		printf("Command not found\n");
+		printf("To be done...\n");
+}
 
+int exec(t_session *session)
+{
+	t_command *cmd;
+	int	i;
+
+	cmd = *session->cmds;
+	i = 0;
+	// while (session->cmds[i])
+	// {
+	// 	if (session->cmds[i]->type == PIPE)
+	// 		run_pipe(session->cmds[i], session->cmds[i + 1]);
+	// 	if (session->cmds[i]->type == AND)
+	// 		run_and(session->cmds[i], session->cmds[i + 1]);
+	// 	if (session->cmds[i]->type == OR)
+	// 		run_or(session->cmds[i], session->cmds[i + 1]);
+	// 	run_cmd(session, session->cmds[i]);
+	// 	i++;
+	// }
 	return (0);
 }

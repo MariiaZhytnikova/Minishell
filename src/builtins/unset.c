@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:17 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/25 15:15:12 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:24:39 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_list	*search_in_env(t_list *env_var, char *variable)
+t_list	*search_in_env(t_list *env_var, char *variable)
 {
 	size_t	len;
 	t_list	*current;

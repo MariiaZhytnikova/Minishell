@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/01 13:01:31 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:51:58 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static char	*create_prompt(void)
 	prompt = NULL;
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		temp = ft_strjoin("\001" GREEN BOLD "\002", cwd);
-		prompt = ft_strjoin(temp, "\001" GREEN BOLD "\002$ \001" RESET "\002");
+		temp = ft_strjoin("\001" CYAN BOLD "\002", cwd);
+		prompt = ft_strjoin(temp, "\001" CYAN BOLD "\002$ \001" RESET "\002");
 		free(temp);
 	}
 	else
@@ -103,7 +103,7 @@ int	prompt(t_session *session)
 	session->input = readline(prompt_str);
 	free(prompt_str);
 	if (!session->input || *session->input == '\0')
-		return (-1);
+		return (1);
 	status = read_multiline_input(session);
 	if (status < 0)
 		return (-1);

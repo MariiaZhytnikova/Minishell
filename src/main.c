@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/31 18:34:22 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:55:34 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ int	main(int argc, char **argv, char **env)
 			error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL);
 			continue ;
 		}
+		if (!session.input || *session.input == '\0')
+			continue ;
 		printf("%s%s%s\n", RED, session.input, RESET);
-		if (session.input && *session.input)
-			if (lexical_analyzer(&session) > 0)
-				if (exec(&session) < 0)
-					continue ;
+		if (lexical_analyzer(&session) < 0)
+			continue ;
+		if (exec(&session) < 0)
+			printf("Oh no....\n");
+		free_session(&session);
 	}
-	ft_lstclear(&session.env_var, free);
 	return (0);
 }

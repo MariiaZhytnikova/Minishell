@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/01 13:17:31 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:53:30 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@ void	free_arr(char **arr)
 		i++;
 	}
 	free(arr);
-}
-
-static void	free_history(t_history *history)
-{
-	t_history	*tmp;
-
-	tmp = NULL;
-	while (history)
-	{
-		tmp = history->next;
-		free(history->cmd_line);
-		free(history);
-		history = tmp;
-	}
 }
 
 static void	free_command(t_command *cmd)
@@ -74,6 +60,7 @@ static void	free_count(t_count *count)
 		free(count->red_app_nb);
 	if (count->red_h_doc_nb)
 		free(count->red_h_doc_nb);
+	free(count);
 }
 
 void	free_session(t_session *session)

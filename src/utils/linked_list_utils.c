@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:54:14 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/02 11:21:12 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,26 +111,26 @@ void	add_new_var(t_session *session, t_command *cmd, char *val)
 	ft_lstadd_back(&session->env_var, new);
 }
 
-int	split_input(t_list **token, char *args, int size)
+int	split_input(t_session *session, t_list **token, char *args)
 {
-	int		i;
-	char	temp[size + 1];
 	t_list	*new_token;
+	t_temp	thing;
 
-	ft_memset(temp, 0, size + 1);
-	i = skip_whitespace(args);
-	if (!args[i])
+	ft_memset(thing.temp, 0, MAX_PROMT);
+	thing.i = skip_whitespace(args);;
+	thing.j = 0;
+	if (!args[thing.i])
 		return (1);
-	if (handle_quotes(temp, args, &i) < 0)
+	if (handle_quotes(session, &thing, args) < 0)
 		return (-1);
-	new_token = ft_lstnew(ft_strdup(temp));
+	new_token = ft_lstnew(ft_strdup(thing.temp));
 	if (!new_token)
-		return (-1);
+		return (-2);
 	ft_lstadd_back(token, new_token);
-	if (args[i])
+	if (args[thing.i])
 	{
-		if (split_input(token, &args[i], ft_strlen(&args[i])) < 0)
-			return (-1);
+		if (split_input(session, token, &args[thing.i]) < 0)
+			return (-2);
 	}
 	return (1);
 }
