@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 12:53:10 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:02:12 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 
 typedef enum
 {
+	NONE,
 	PIPE,
 	AND,							// "&&" (execution of the next cmd table only if the previous has a truthy exit_status)
 	OR,								// "||" (execution of the next cmd table only if the previous has a false exit_status)
@@ -69,7 +70,7 @@ typedef struct	s_session
 	char		*input; 			// ?? do we need after tokenization
 	size_t		len_input;
 	size_t		prompt_len;			// ?? do we need after tokenization 
-	bool		is_history;
+	char		*history_pipe;
 	t_command	**cmds;
 	int			status_last;
 	t_list		*env_var;

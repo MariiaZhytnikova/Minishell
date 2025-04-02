@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 12:55:34 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/02 15:19:29 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	main(int argc, char **argv, char **env)
 			continue ;
 		printf("%s%s%s\n", RED, session.input, RESET);
 		if (lexical_analyzer(&session) < 0)
+		{
+			history(&session);
+			continue ;
+		}
+		if (history(&session) < 0)
 			continue ;
 		if (exec(&session) < 0)
 			printf("Oh no....\n");
