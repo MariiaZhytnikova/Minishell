@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 17:39:40 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/03 19:19:41 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ int	main(int argc, char **argv, char **env)
 		return (error_msg(ERR_USAGE, NULL, NULL, NULL), 1);
 	session.env_var = NULL;
 	create_env_list(&session.env_var, env);
+	setup_signals();
 	while (1)
 	{
 		if(prompt(&session) < 0)
 		{
-			if (session.input)
-				free(session.input);
-			error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL);
-			continue ;
+			ft_lstclear(&session.env_var, free);
+			rl_clear_history();
+			printf(" exit\n");
+			exit(0);
+			// bash-3.2$ cat | ^D
+			//> bash: syntax error: unexpected end of file
 		}
-		if (!session.input || *session.input == '\0')
+		if (session.input[0] == '\0')
 			continue ;
 		printf("%s%s%s\n", RED, session.input, RESET);
 		if (lexical_analyzer(&session) < 0)
