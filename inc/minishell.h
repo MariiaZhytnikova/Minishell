@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:22:59 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 11:25:41 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/04 16:29:09 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <errno.h>
 # include <dirent.h>
+# include <signal.h>
 
 # include "libft.h"
 # include "init.h"
@@ -31,5 +32,7 @@
 # include "builtins.h"
 # include "expansion.h"
 # include "execution.h"
+# include "signals.h"
+
 
 #endif

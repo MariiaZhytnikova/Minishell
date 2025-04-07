@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 11:35:57 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/07 16:47:41 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ int	commands(t_session *session, t_list **token)
 int	split_and_check(t_session *session, t_list **token, char *src)
 {
 	char	*input;
+	int		status;
 
 	input = add_spaces(session, src);
 	if (!input)
@@ -145,10 +146,16 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 		return (error_msg("Something wrong delimiter_wrong_pos", NULL, NULL, NULL), -1);
 	if (consecutive_delimiters(*token) == true)
 		return (error_msg("Something wrong consecutive_delimiters", NULL, NULL, NULL), -1);
-	if (here_doc_lim(session, token) < 0)
+	status = here_doc_lim(session, token);
+	if (status < 0)
 		return (error_msg("Herre doc no lim problem", NULL, NULL, NULL), -1);
-	if (here_doc_no_lim(session, token) < 0)
+	if (status == 2)
+		return (2);
+	status = here_doc_no_lim(session, token);
+	if (status < 0)
 		return (error_msg("Herre doc lim problem", NULL, NULL, NULL), -1);
+	if (status == 2)
+		return (2);
 	if (wild(token) < 0)
 		return (error_msg("Wild problem", NULL, NULL, NULL), -1);
 	return (1);
@@ -157,15 +164,24 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 int	lexical_analyzer(t_session *session)
 {
 	t_list	*token;
+	int		status;
 
 	token = NULL;
-	if (split_and_check(session, &token, session->input) < 0)
+	status = split_and_check(session, &token, session->input);
+	if (status < 0)
 	{
 		free(session->input);
 		if (token)
 			ft_lstclear(&token, free);
 		return (error_msg("Something wrong split_input", NULL, NULL, NULL), -1);
 	}
+	if (signalnum == 2)
+	{
+		free(session->input);
+		if (token)
+			ft_lstclear(&token, free);
+		return (-1);
+	}	
 	if (commands(session, &token) < 0)
 	{
 		ft_lstclear(&token, free);

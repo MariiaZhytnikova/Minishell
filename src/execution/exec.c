@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 16:31:10 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/04 15:37:25 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,13 @@ int exec(t_session *session)
 		// 	run_and(session->cmds[i], session->cmds[i + 1]);
 		// if (session->cmds[i]->type == OR)
 		// 	run_or(session->cmds[i], session->cmds[i + 1]);
+		if (cmd->command == NULL)
+		{
+			printf("command is NULL\n");
+			break ;
+		}
 		run_cmd(session, session->cmds[i]);
+		
 		i++;
 	}
 	return (0);

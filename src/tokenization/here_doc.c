@@ -6,25 +6,43 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 15:27:41 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:04:55 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	here_doc_inp(t_session *session, t_list **token)
+static int here_doc_inp(t_session *session, t_list **token)
 {
-	char	*line;
-	char	*input;
+	char *line;
+	char *input;
+	int stdin_copy;
 
+	setup_heredoc_signals();
+
+	stdin_copy = dup(STDIN_FILENO);
+	if (stdin_copy == -1) 
+	{
+		perror("dup");
+		return (-1);
+	}
 	line = readline("> ");
 	while (1)
 	{
+		if (!line && signalnum == 2)
+		{
+			if (dup2(stdin_copy, STDIN_FILENO) == -1) 
+				perror("dup2");
+			close(stdin_copy);
+			return (2);
+		}
+		if (!line)
+			return (3);
 		if (line[0])
-			break ;
+			break;
 		else
 		{
-			free (line);
+			free(line);
 			line = readline("> ");
 		}
 	}
@@ -35,9 +53,9 @@ static int	here_doc_inp(t_session *session, t_list **token)
 	return (1);
 }
 
-static int	replace_token(t_session *session, t_list *current, char *buffer)
+static int replace_token(t_session *session, t_list *current, char *buffer)
 {
-	t_list	*new_token;
+	t_list *new_token;
 
 	free(current->content);
 	current->content = ft_strdup("<<<");
@@ -55,22 +73,37 @@ static int	replace_token(t_session *session, t_list *current, char *buffer)
 	return (1);
 }
 
-static int	here_doc_lim_inp(t_session *session, t_list *current)
+static int here_doc_lim_inp(t_session *session, t_list *current)
 {
-	char	*line;
-	char	*buffer;
-	int		new_size;
-	int		old_size;
+	char *line;
+	char *buffer;
+	int new_size;
+	int old_size;
+	int stdin_copy;
 
 	new_size = 0;
 	old_size = 0;
 	buffer = NULL;
+	setup_heredoc_signals();
+	stdin_copy = dup(STDIN_FILENO);
 	while (1)
-	{
+	{		
 		line = readline("> ");
-		if ((line && *line) && ft_strncmp(line, current->next->content, \
-			longer(line, current->next->content)) == 0)
-			break ;
+		if (!line && signalnum == 2)
+		{
+			if (dup2(stdin_copy, STDIN_FILENO) == -1) 
+				perror("dup2");
+			close(stdin_copy);
+			return (2);
+		}
+		if (!line)
+		{
+			close(stdin_copy);
+			return (3);
+		}
+		if ((line && *line) && ft_strncmp(line, current->next->content,
+								longer(line, current->next->content)) == 0)
+			break;
 		new_size = old_size + ft_strlen(line) + 1;
 		if (buffer)
 			ft_strlcat(buffer, "\n", new_size);
@@ -84,32 +117,51 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 	return (replace_token(session, current, buffer));
 }
 
-int	here_doc_no_lim(t_session *session, t_list **token)
+int here_doc_no_lim(t_session *session, t_list **token)
 {
-	t_list	*last;
+	t_list *last;
+	int status;
 
 	last = ft_lstlast(*token);
-	if ((ft_strncmp(last->content, "|", longer(last->content, "|")) == 0)
-		|| (ft_strncmp(last->content, "||", longer(last->content, "||")) == 0)
-		|| (ft_strncmp(last->content, "&&", longer(last->content, "&&")) == 0))
+	status = 0;
+	if ((ft_strncmp(last->content, "|", longer(last->content, "|")) == 0) || (ft_strncmp(last->content, "||", longer(last->content, "||")) == 0) || (ft_strncmp(last->content, "&&", longer(last->content, "&&")) == 0))
 	{
-		if (here_doc_inp(session, token) < 0)
+		status = here_doc_inp(session, token);
+		if (status == -1)
 			return (-1);
+		if (status == 2)
+			return (5); // ??
+		if (status == 3)
+		{
+			ft_lstclear(token, free);
+			error_msg(ERR_BASH, ERR_SYNT_END, NULL, NULL);
+			exit_signal(session, 2);
+		}
 	}
 	return (1);
 }
 
-int	here_doc_lim(t_session *session, t_list **token)
+int here_doc_lim(t_session *session, t_list **token)
 {
-	t_list	*curr;
+	t_list *curr;
+	int status;
 
+	status = 0;
 	curr = *token;
 	while (curr->next)
 	{
 		if (ft_strncmp(curr->content, "<<", longer(curr->content, "<<")) == 0)
 		{
-			if (here_doc_lim_inp(session, curr) < 0)
+			status = here_doc_lim_inp(session, curr);
+			if (status < 0)
 				return (-1);
+			if (status == 2)
+				return (2);
+			if (status == 3)
+			{
+				error_msg(ERR_BASH, ERR_EOF_HEREDOC, NULL, NULL);
+				return (-1);
+			}
 			curr = curr->next;
 		}
 		if (curr->next)

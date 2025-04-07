@@ -6,7 +6,7 @@
 #    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/02 17:36:06 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/04/04 13:16:42 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ BUILTINS = cd echo env exit export export2 pwd unset
 
 EXEC = exec
 
-MAIN = main errors
+MAIN = main errors signals
 
 TOKENS = prompt parsing quotes token_check here_doc delimiters tokens_parsing numbers redirection expansion wild_cards history
 
@@ -45,7 +45,7 @@ NORM	:= norminette
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline -fsanitize=address
+	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
 	@echo "$(NAME) building completed ..."
 
 $(OBJS_PATH):
