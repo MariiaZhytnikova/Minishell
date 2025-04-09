@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/07 16:47:34 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:52:42 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_session	session;
-	
+	int status;
+
 	(void)argv;
 	if (argc != 1)
 		return (error_msg(ERR_USAGE, NULL, NULL, NULL), 1);
@@ -30,9 +31,10 @@ int	main(int argc, char **argv, char **env)
 		if (session.input[0] == '\0')
 			continue ;
 		printf("%s%s%s\n", RED, session.input, RESET);
-		if (lexical_analyzer(&session) < 0)
+		status = lexical_analyzer(&session);
+		if (status < 0 || status == 3)
 		{
-			if (signalnum == 2)
+			if (signalnum == 2 || status == 3)
 			{
 				free(session.history_pipe);
 				continue ;

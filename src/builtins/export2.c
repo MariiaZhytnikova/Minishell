@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:26:21 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/25 16:16:12 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:22:06 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	export_content(t_session *s, t_command *cmd, char *val, char *var)
 		ptr = ptr->next;
 	}
 	add_new_var(s, cmd, val);
-	if (cmd->status == EXIT_FAILURE)
+	if (cmd->status == 1)
 		return ;
 }
 
@@ -61,11 +61,11 @@ static void	prepare_add_var(t_session *session, t_command *cmd, char *var)
 	if (!new_value)
 	{
 		error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL);
-		cmd->status = EXIT_FAILURE;
+		cmd->status = 1;
 		return ;
 	}
 	export_content(session, cmd, new_value, var);
-	if (cmd->status == EXIT_FAILURE)
+	if (cmd->status == 1)
 	{
 		free(new_value);
 		return ;
@@ -82,16 +82,16 @@ void	handle_args(t_session *session, t_command *cmd)
 		if (var_name_validation(cmd->args[i]))
 		{
 			prepare_add_var(session, cmd, cmd->args[i]);
-			if (cmd->status == EXIT_FAILURE)
+			if (cmd->status == 1)
 				return ;
 		}
 		else
 		{
 			error_msg(ERR_BASH, ERR_EXPORT, cmd->args[i], ERR_IDEN);
-			cmd->status = EXIT_FAILURE;
+			cmd->status = 1;
 			return ;
 		}
 		i++;
 	}
-	cmd->status = EXIT_SUCCESS;
+	cmd->status = 0;
 }

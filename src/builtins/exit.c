@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:41 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 16:57:35 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/10 00:56:46 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	exit_builtin(t_session *session, t_command *cmd)
 	if (cmd->args[2])
 	{
 		error_msg(ERR_BASH, cmd->command, ERR_MANY_ARGS, NULL);
-		cmd->status = EXIT_FAILURE;
+		cmd->status = 1;
 		return ;
 	}
 	exit_with_code(session, cmd);

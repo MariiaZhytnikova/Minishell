@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:01:37 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/07 16:15:09 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/10 00:57:06 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void heredoc_handle_sigint(int signo)
 	}
 }
 
-void	setup_heredoc_signals() {
+void	setup_heredoc_signals() 
+{
 	signal(SIGINT, heredoc_handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 }

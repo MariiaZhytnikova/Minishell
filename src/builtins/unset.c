@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:17 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 11:24:39 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:22:24 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	unset_builtin(t_session *session, t_command *cmd)
 
 	if (!cmd->args || !cmd->args[1])
 	{
-		cmd->status = EXIT_SUCCESS;
+		cmd->status = 0;
 		return ;
 	}
 	i = 1;
@@ -51,5 +51,5 @@ void	unset_builtin(t_session *session, t_command *cmd)
 			delete_node_by_content(&(session->env_var), cmd->args[i]);
 		i++;
 	}
-	cmd->status = EXIT_SUCCESS;
+	cmd->status = 0;
 }

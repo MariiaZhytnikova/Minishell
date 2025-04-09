@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiters.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 10:20:04 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:48:42 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ char	*add_spaces(t_session *session, char *input)
 	ft_memset(thing.temp, 0, MAX_PROMT);
 	thing.i = 0;
 	thing.j = 0;
+	if (!input || !input[0])
+	{
+		printf("Error: empty input\n");
+		return (NULL);
+	}
+		
 	while (input[thing.i])
 	{
 		if (input[thing.i] == '\'' || input[thing.i] == '\"')
@@ -95,7 +101,7 @@ char	*add_spaces(t_session *session, char *input)
 	}
 	thing.temp[thing.j] = 0;
 	result = ft_strdup(thing.temp);
-	if (!*result || !result[0])
+	if (!result || !result[0])
 		return (NULL);
 	return (result);
 }

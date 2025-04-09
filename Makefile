@@ -6,7 +6,7 @@
 #    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/04 13:16:42 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/04/08 15:25:43 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ EXEC = exec
 
 MAIN = main errors signals
 
-TOKENS = prompt parsing quotes token_check here_doc delimiters tokens_parsing numbers redirection expansion wild_cards history
+TOKENS = prompt parsing quotes token_check here_doc here_doc_lim delimiters tokens_parsing numbers redirection expansion wild_cards history
 
 UTILS = utils linked_list_utils free
 
@@ -45,7 +45,7 @@ NORM	:= norminette
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
+	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline -fsanitize=address
 	@echo "$(NAME) building completed ..."
 
 $(OBJS_PATH):

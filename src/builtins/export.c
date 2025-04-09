@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:10 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/25 17:27:24 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:21:48 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	export_builtin(t_session *session, t_command *cmd)
 		if (copy == NULL)
 		{
 			error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL);
-			cmd->status = EXIT_FAILURE;
+			cmd->status = 1;
 			return ;
 		}
 		sort_export(copy);
@@ -108,8 +108,8 @@ void	export_builtin(t_session *session, t_command *cmd)
 	else
 	{
 		handle_args(session, cmd);
-		if (cmd->status == EXIT_FAILURE)
+		if (cmd->status == 1)
 			return ;
 	}
-	cmd->status = EXIT_SUCCESS;
+	cmd->status = 0;
 }

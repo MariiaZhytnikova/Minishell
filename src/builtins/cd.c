@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:00 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 17:55:04 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:20:52 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	update_oldpwd(t_list *env_var, t_command *cmd)
 			if (current->content == NULL)
 			{
 				error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL);
-				cmd->status = EXIT_FAILURE;
+				cmd->status = 1;
 			}
 			return ;
 		}
@@ -73,7 +73,7 @@ static void	update_pwd(t_list *env_var, t_command *cmd, char *cur_dir)
 			if (current->content == NULL)
 			{
 				error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL);
-				cmd->status = EXIT_FAILURE;
+				cmd->status = 1;
 			}
 			return ;
 		}
@@ -88,14 +88,14 @@ static void	update_env(t_list *env_var, t_command *cmd)
 	if (!getcwd(cur_dir, LEN_PATH))
 	{
 		error_msg(ERR_GETCWD, ERR_NOFILE, NULL, NULL);
-		cmd->status = EXIT_FAILURE;
+		cmd->status = 1;
 		return ;
 	}
 	update_oldpwd(env_var, cmd);
-	if (cmd->status == EXIT_FAILURE)
+	if (cmd->status == 1)
 		return ;
 	update_pwd(env_var, cmd, cur_dir);
-	if (cmd->status == EXIT_FAILURE)
+	if (cmd->status == 1)
 		return ;
 }
 
@@ -103,17 +103,17 @@ void	cd_builtin(t_session *session, t_command *cmd)
 {
 	if (!cmd->args[1])
 	{
-		cmd->status = EXIT_SUCCESS;
+		cmd->status = 0;
 		return ;
 	}
 	if (chdir(cmd->args[1]) == -1)
 	{
 		error_msg(ERR_CD, cmd->args[1], ": ", strerror(errno));
-		cmd->status = EXIT_FAILURE;
+		cmd->status = 1;
 		return ;
 	}
 	update_env(session->env_var, cmd);
-	if (cmd->status == EXIT_FAILURE)
+	if (cmd->status == 1)
 		return ;
-	cmd->status = EXIT_SUCCESS;
+	cmd->status = 0;
 }

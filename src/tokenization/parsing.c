@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/07 16:47:41 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:55:26 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,13 +149,13 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 	status = here_doc_lim(session, token);
 	if (status < 0)
 		return (error_msg("Herre doc no lim problem", NULL, NULL, NULL), -1);
-	if (status == 2)
+	if (status == 2 || status == 3)
 		return (2);
 	status = here_doc_no_lim(session, token);
 	if (status < 0)
 		return (error_msg("Herre doc lim problem", NULL, NULL, NULL), -1);
-	if (status == 2)
-		return (2);
+	if (status > 0)
+		return (status);
 	if (wild(token) < 0)
 		return (error_msg("Wild problem", NULL, NULL, NULL), -1);
 	return (1);
@@ -175,9 +175,18 @@ int	lexical_analyzer(t_session *session)
 			ft_lstclear(&token, free);
 		return (error_msg("Something wrong split_input", NULL, NULL, NULL), -1);
 	}
+	if (status == 3)
+	{
+		if (session->input)
+			free(session->input);
+		if (token)
+			ft_lstclear(&token, free);
+		return (3);
+	}
 	if (signalnum == 2)
 	{
-		free(session->input);
+		if (session->input)
+			free(session->input);
 		if (token)
 			ft_lstclear(&token, free);
 		return (-1);

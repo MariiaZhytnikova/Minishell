@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:22:59 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/04 16:29:09 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:23:01 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <dirent.h>
 # include <signal.h>
+# include <string.h> 
 
 # include "libft.h"
 # include "init.h"

@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 17:36:42 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/08 15:24:09 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	delete_node_by_content(t_list **list, char *variable)
 	len = ft_strlen(variable); 
 	while (current)
 	{
-		if (!strncmp(current->content, variable, len)
+		if (!ft_strncmp(current->content, variable, len)
 			&& ((char *)current->content)[len] == '=')
 		{
 			if (prev == NULL)
