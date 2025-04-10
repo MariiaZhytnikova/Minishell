@@ -6,29 +6,25 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/08 18:43:28 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:04:44 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	here_doc_inp_process(t_session *session, t_list **token, char **line, int stdin_copy)
+static int	here_doc_process(t_list **token, char **line, int stdin)
 {
 	*line = readline("> ");
 	while (1)
 	{
 		if (!*line && signalnum == 2)
 		{
-			if (dup2(stdin_copy, STDIN_FILENO) == -1)
+			if (dup2(stdin, STDIN_FILENO) == -1)
 				error_msg(ERR_DUP, NULL, NULL, NULL);
-			close(stdin_copy);
 			return (2);
 		}
 		if (!*line)
-		{
-			close(stdin_copy);
-			return (3);
-		}
+			return (4);
 		if ((*line)[0])
 			break ;
 		else
@@ -55,10 +51,10 @@ static int	here_doc_inp(t_session *session, t_list **token)
 		error_msg(ERR_DUP, NULL, NULL, NULL);
 		return (-1);
 	}
-	status = here_doc_inp_process(session, token, &line, stdin_copy);
+	status = here_doc_process(token, &line, stdin_copy);
+	close (stdin_copy);
 	if (status != 0)
 		return (status);
-	close(stdin_copy);
 	if (add_pipe_history(session, line) < 0)
 		return (-1);
 	if (split_and_check(session, token, line) < 0)
@@ -78,15 +74,13 @@ int	here_doc_no_lim(t_session *session, t_list **token)
 		|| (ft_strncmp(last->content, "&&", longer(last->content, "&&")) == 0))
 	{
 		status = here_doc_inp(session, token);
-		if (status == -1)
-			return (-1);
-		if (status == 2)
-			return (2);
-		if (status == 3)
+		if (status == 4)
 		{
 			error_msg(ERR_BASH, ERR_SYNT_END, NULL, NULL);
-			return (3);
+			return (4);
 		}
+		if (status != 0)
+			return (status);
 	}
 	return (1);
 }

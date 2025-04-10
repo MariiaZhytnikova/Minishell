@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 15:28:05 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/10 15:32:25 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		split_and_check(t_session *session, t_list **token, char *src);
 
 int		redirection_in(t_command *command, t_list *current);
 int		redirection_out(t_command *command, t_list *current);
+int		array_size(char **array);
 
 void	get_delimiter(t_command *command, t_list *current);
 int		allocate_struct(t_session *s, t_count *c, int i);

@@ -6,7 +6,7 @@
 #    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/08 15:25:43 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/04/10 12:39:18 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ NORM	:= norminette
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline -fsanitize=address
+	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline
 	@echo "$(NAME) building completed ..."
 
 $(OBJS_PATH):
