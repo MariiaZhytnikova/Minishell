@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 18:26:26 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:45:51 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,6 @@ int	main(int argc, char **argv, char **env)
 		status = lexical_analyzer(&session);
 		if (status != 1)
 		{
-			if (signalnum == 2 || status == 3 || status == -1)
-			{
-				history(&session);
-				free_session(&session);
-				continue ;
-			}
 			if (status == 4)
 			{
 				ft_lstclear(&session.env_var, free);
@@ -54,6 +48,7 @@ int	main(int argc, char **argv, char **env)
 				exit(2);
 			}
 			history(&session);
+			free_session(&session);
 			continue ;
 		}
 		if (history(&session) < 0)
