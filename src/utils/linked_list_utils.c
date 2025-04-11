@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linked_list_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 11:21:12 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:28:43 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,27 @@ int	split_input(t_session *session, t_list **token, char *args)
 			return (-2);
 	}
 	return (1);
+}
+
+char	**list_to_arr(t_list *list)
+{
+	char	**arr;
+	int		i;
+	t_list	*current;
+
+	i = 0;
+	current = list;
+	arr = malloc(sizeof(char *) * (ft_lstsize(list) + 1));
+	if (!arr)
+		return (NULL);
+	while (current)
+	{
+		arr[i] = ft_strdup(current->content);
+		if (!arr[i])
+			return (NULL);
+		current = current->next;
+		i++;
+	}
+	arr[i] = NULL;
+	return (arr);
 }

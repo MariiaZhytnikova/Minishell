@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/10 16:30:57 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:26:51 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	print_me(t_session *session)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-static int	handle_command(t_command *command, t_list **current, int i)
+int	handle_command(t_command *command, t_list **current, int i)
 {
 	while (*current && is_del((*current)->content) == false)
 	{
@@ -139,7 +139,7 @@ static int	red_struct_alloc(t_session *session)
 	return (1);
 }
 
-static int	commands(t_session *session, t_list **token)
+int	commands(t_session *session, t_list **token)
 {
 	t_list	*curr;
 	int		i;
@@ -167,6 +167,7 @@ static int	commands(t_session *session, t_list **token)
 int	split_and_check(t_session *session, t_list **token, char *src)
 {
 	char	*input;
+	int		status;
 
 	input = add_spaces(session, src);
 	if (!input)
@@ -178,10 +179,16 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 		return (error_msg("Something wrong delimiter_wrong_pos", NULL, NULL, NULL), -1);
 	if (consecutive_delimiters(*token) == true)
 		return (error_msg("Something wrong consecutive_delimiters", NULL, NULL, NULL), -1);
-	if (here_doc_lim(session, token) < 0)
+	status = here_doc_lim(session, token);
+	if (status < 0)
 		return (error_msg("Herre doc no lim problem", NULL, NULL, NULL), -1);
-	if (here_doc_no_lim(session, token) < 0)
+	if (status == 2 || status == 4)
+		return (status);
+	status = here_doc_no_lim(session, token);
+	if (status < 0)
 		return (error_msg("Herre doc lim problem", NULL, NULL, NULL), -1);
+	if (status > 0)
+		return (status);
 	return (1);
 }
 
@@ -189,13 +196,30 @@ int	lexical_analyzer(t_session *session)
 {
 	t_list	*token;
 	t_count	*cnt;
+	int		status;
 
 	token = NULL;
-	if (split_and_check(session, &token, session->input) < 0)
+	status = split_and_check(session, &token, session->input);
+	if (status < 0)
 	{
+		free(session->input);
 		if (token)
 			ft_lstclear(&token, free);
 		return (error_msg("Something wrong split_input", NULL, NULL, NULL), -1);
+	}
+	if (status == 3 || status == 4)
+	{
+		if (token)
+			ft_lstclear(&token, free);
+		return (status);
+	}
+	if (signalnum == 2)
+	{
+		if (session->input)
+			free(session->input);
+		if (token)
+			ft_lstclear(&token, free);
+		return (-1);
 	}
 	cnt = ft_calloc(1, sizeof(t_count));
 	if (!cnt)

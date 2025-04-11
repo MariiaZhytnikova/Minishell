@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 11:23:27 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:28:55 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	create_env_list(t_list **env_var, char **env);
 void	swap_content(t_list *a, t_list *b);
 void	add_new_var(t_session *session, t_command *cmd, char *val);
 int		split_input(t_session *session, t_list **token, char *args);
+char	**list_to_arr(t_list *list);
 
 #endif

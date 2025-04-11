@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/26 13:15:45 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:06:37 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define ERR_USAGE "Usage: ./minishell"
 # define ERR_EXCL "Handling of special characters like ';', '\\', '{}', '()', '[]', '&' is not supported"
 # define ERR_QUOTES "Quotes are not closed correctly"
+# define ERR_SYNT_END "syntax error: unexpected end of file"
+# define ERR_EOF_HEREDOC "warning: here-document delimited by end-of-file"
 
 # define ERR_BASH "minishell: "
 # define ERR_ENV "env: "
@@ -44,6 +46,7 @@
 # define ERR_REDIR_SYNTAX "Syntax error: Unexpected token after redirection" // E.g., echo hello > without specifying a file.
 # define ERR_REDIR_PERM "Redirection error: Permission denied" // If attempting to redirect to a file without proper permissions.
 # define ERR_SIGNAL "Failed to handle signal" // If sigaction() or related functions fail.
+
 
 
 #endif

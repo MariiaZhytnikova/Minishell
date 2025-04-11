@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:41 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/01 13:23:45 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:03:17 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	exit_with_code(t_session *session, t_command *cmd)
 	{
 		if (!ft_isdigit(cmd->args[1][i]))
 		{
-			error_msg(ERR_BASH, cmd->command, ERR_NUM, NULL);
+			error_msg(ERR_BASH, cmd->args[0], ERR_NUM, NULL);
 			ft_lstclear(&session->env_var, free);
 			rl_clear_history();
 			free_session(session);
@@ -53,8 +53,8 @@ void	exit_builtin(t_session *session, t_command *cmd)
 	}
 	if (cmd->args[2])
 	{
-		error_msg(ERR_BASH, cmd->command, ERR_MANY_ARGS, NULL);
-		cmd->status = EXIT_FAILURE;
+		error_msg(ERR_BASH,  cmd->args[0], ERR_MANY_ARGS, NULL);
+		cmd->status = 1;
 		return ;
 	}
 	exit_with_code(session, cmd);

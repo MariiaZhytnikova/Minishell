@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 12:53:48 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:22:03 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	run_cmd(t_session *session, t_command *cmd)
 {
-	if (!ft_strncmp(cmd->command, "exit", ft_strlen("exit")))
+	if (!ft_strncmp(cmd->args[0], "exit", ft_strlen("exit")))
 		exit_builtin(session, cmd);
-	else if (!ft_strncmp(cmd->command, "cd", ft_strlen("cd")))
+	else if (!ft_strncmp(cmd->args[0], "cd", ft_strlen("cd")))
 		cd_builtin(session, cmd);
-	else if (!ft_strncmp(cmd->command, "env", ft_strlen("env")))
+	else if (!ft_strncmp(cmd->args[0], "env", ft_strlen("env")))
 		env_builtin(session, cmd);
-	else if (!ft_strncmp(cmd->command, "pwd", ft_strlen("pwd")))
+	else if (!ft_strncmp(cmd->args[0], "pwd", ft_strlen("pwd")))
 		pwd_builtin(cmd);
-	else if (!ft_strncmp(cmd->command, "unset", ft_strlen("unset")))
+	else if (!ft_strncmp(cmd->args[0], "unset", ft_strlen("unset")))
 		unset_builtin(session, cmd);
-	else if (!ft_strncmp(cmd->command, "echo", ft_strlen("echo")))
+	else if (!ft_strncmp(cmd->args[0], "echo", ft_strlen("echo")))
 		echo_builtin(cmd);
-	else if (!ft_strncmp(cmd->command, "export", ft_strlen("export")))
+	else if (!ft_strncmp(cmd->args[0], "export", ft_strlen("export")))
 		export_builtin(session, cmd);
 	else
 		printf("To be done...\n");

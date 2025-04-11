@@ -6,7 +6,7 @@
 #    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/02 15:06:45 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/04/11 14:30:17 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,10 @@ BUILTINS = cd echo env exit export export2 pwd unset
 
 EXEC = exec
 
-MAIN = main errors
+MAIN = main errors signals
 
-TOKENS = prompt parsing quotes token_check here_doc delimiters tokens_parsing numbers redirection expansion wild_cards history
+TOKENS = prompt parsing quotes token_check here_doc here_doc_lim skip_quotes\
+			delimiters tokens_parsing numbers redirection expansion wild_cards wild_utils history
 
 UTILS = utils linked_list_utils free
 

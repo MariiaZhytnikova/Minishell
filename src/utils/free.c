@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 12:53:30 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:24:32 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static void	free_command(t_command *cmd)
 {
 	if (!cmd)
 		return ;
-	if (cmd->command)
-		free(cmd->command);
 	if (cmd->args)
 		free_arr(cmd->args);
 	if (cmd->in)
