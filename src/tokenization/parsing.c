@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 14:26:51 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:32:27 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,28 +72,28 @@ void	print_me(t_session *session)
 		{
 			printf("IN FILES %d\n", session->count->red_in_nb[i]);
 			while (session->cmds[i]->in[j])
-				printf("%s: %s\n", session->cmds[i]->args[0], session->cmds[i]->in[j++]);
+				printf("%s\n", session->cmds[i]->in[j++]);
 		}
 		j = 0;
 		if (session->count->red_h_doc_nb[i] > 0)
 		{
 			printf("IN HERE_DOC %d\n", session->count->red_h_doc_nb[i]);
 			while (session->cmds[i]->h_doc[j])
-				printf("%s: %s\n", session->cmds[i]->args[0], session->cmds[i]->h_doc[j++]);
+				printf("%s\n", session->cmds[i]->h_doc[j++]);
 		}
 		j = 0;
 		if (session->count->red_out_nb[i] > 0)
 		{
 			printf("OUT FILES %d\n", session->count->red_out_nb[i]);
 			while (session->cmds[i]->out[j])
-				printf("%s: %s\n", session->cmds[i]->args[0], session->cmds[i]->out[j++]);
+				printf("%s\n", session->cmds[i]->out[j++]);
 		}
 		j = 0;
 		if (session->count->red_app_nb[i] > 0)
 		{
 			printf("OUT APPEND FILES %d\n", session->count->red_app_nb[i]);
 			while (session->cmds[i]->out_app[j])
-				printf("%s: %s\n", session->cmds[i]->args[0], session->cmds[i]->out_app[j++]);
+				printf("%s\n", session->cmds[i]->out_app[j++]);
 		}
 		i++;
 	}
@@ -192,6 +192,33 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 	return (1);
 }
 
+static int	handle_tokenization(t_session *session, t_list **token)
+{
+	int	status;
+
+	status = split_and_check(session, token, session->input);
+	if (status < 0)
+	{
+		if (*token)
+			ft_lstclear(token, free);
+		return (error_msg("Something wrong split_input", NULL, NULL, NULL), -1);
+	}
+	if (status == 3 || status == 4)
+	{
+		if (*token)
+			ft_lstclear(token, free);
+		return (status);
+	}
+	if (signalnum == 2)
+	{
+		if (*token)
+			ft_lstclear(token, free);
+		session->status_last = 130;
+		return (-1);
+	}
+	return (1);
+}
+
 int	lexical_analyzer(t_session *session)
 {
 	t_list	*token;
@@ -199,28 +226,9 @@ int	lexical_analyzer(t_session *session)
 	int		status;
 
 	token = NULL;
-	status = split_and_check(session, &token, session->input);
-	if (status < 0)
-	{
-		free(session->input);
-		if (token)
-			ft_lstclear(&token, free);
-		return (error_msg("Something wrong split_input", NULL, NULL, NULL), -1);
-	}
-	if (status == 3 || status == 4)
-	{
-		if (token)
-			ft_lstclear(&token, free);
+	status = handle_tokenization(session, &token);
+	if (status != 1)
 		return (status);
-	}
-	if (signalnum == 2)
-	{
-		if (session->input)
-			free(session->input);
-		if (token)
-			ft_lstclear(&token, free);
-		return (-1);
-	}
 	cnt = ft_calloc(1, sizeof(t_count));
 	if (!cnt)
 		return (-1);

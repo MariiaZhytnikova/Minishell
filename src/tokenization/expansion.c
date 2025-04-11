@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/01 13:19:03 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:46:48 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,22 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	char	name[MAX_PROMT];
 	char	*env;
 	int		len_name;
+	char	*status_str;
+	int		k;
 
 	ft_memset(name, 0, MAX_PROMT);
+	if (str[thing->i + 1] == '?')
+	{
+		status_str = ft_itoa(session->status_last);
+		if (!status_str)
+			return (-1);
+		thing->i += 2; // Skip $ and ?
+		k = 0;
+		while (status_str[k])
+			thing->temp[thing->j++] = status_str[k++];
+		free(status_str);
+		return (1);
+	}
 	if (!str[thing->i + 1] || !ft_isalnum_plus(str[thing->i + 1]))
 	{
 		thing->temp[thing->j++] = str[thing->i++];

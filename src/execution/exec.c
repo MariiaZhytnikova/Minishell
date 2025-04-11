@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/11 14:22:03 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:54:25 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,22 @@ int exec(t_session *session)
 
 	cmd = *session->cmds;
 	i = 0;
-	// while (session->cmds[i])
-	// {
-	// 	if (session->cmds[i]->type == PIPE)
-	// 		run_pipe(session->cmds[i], session->cmds[i + 1]);
-	// 	if (session->cmds[i]->type == AND)
-	// 		run_and(session->cmds[i], session->cmds[i + 1]);
-	// 	if (session->cmds[i]->type == OR)
-	// 		run_or(session->cmds[i], session->cmds[i + 1]);
-	// 	run_cmd(session, session->cmds[i]);
-	// 	i++;
-	// }
+	while (session->cmds[i])
+	{
+		// if (session->cmds[i]->type == PIPE)
+		// 	run_pipe(session->cmds[i], session->cmds[i + 1]);
+		// if (session->cmds[i]->type == AND)
+		// 	run_and(session->cmds[i], session->cmds[i + 1]);
+		// if (session->cmds[i]->type == OR)
+		// 	run_or(session->cmds[i], session->cmds[i + 1]);
+		if ( cmd->args[0] == NULL)
+		{
+			printf("command is NULL\n");
+			break ;
+		}
+		run_cmd(session, session->cmds[i]);
+		i++;
+		session->status_last = cmd->status;
+	}
 	return (0);
 }

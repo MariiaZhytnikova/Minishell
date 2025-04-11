@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 14:03:42 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:26:26 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 		return (error_msg(ERR_USAGE, NULL, NULL, NULL), 1);
 	session.env_var = NULL;
+	session.status_last = 0;
 	create_env_list(&session.env_var, env);
 	setup_signals();
 	while (1)
@@ -40,7 +41,8 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (signalnum == 2 || status == 3 || status == -1)
 			{
-				free(session.history_pipe);
+				history(&session);
+				free_session(&session);
 				continue ;
 			}
 			if (status == 4)
