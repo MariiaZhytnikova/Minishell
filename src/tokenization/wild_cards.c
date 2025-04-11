@@ -6,81 +6,78 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 10:39:49 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/10 14:00:18 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	replace_token_two(t_list *current, char *buffer)
-{
-	t_list	*new_token;
-
-	if (!buffer || !buffer[0])
-		return (1);
-	free(current->content);
-	current->content = ft_strdup(buffer);
-	if (!current->content)
-		return (-1);
-	return (1);
-}
-
-bool	match(const char *str, const char *pattern)
-{
-	if (*pattern == '\0')
-		return (*str == '\0');
-	if (*pattern == '*')
-		return (match(str, pattern + 1) || (*str && match(str + 1, pattern)));
-	if (*str == *pattern)
-		return (match(str + 1, pattern + 1));
-	return (false);
-}
-
-int	check_files(t_list *current)
+int	skip_quotes_ast(char *pattern, t_list **args)
 {
 	struct dirent	*entry;
 	DIR				*stream;
-	t_temp			thing;
+	t_list			*new;
+	int				count;
 
-	ft_memset(thing.temp, 0, MAX_PROMT);
-	thing.i = 0;
-	thing.j = 0;
+	count = 0;
 	stream = opendir(".");
 	if (!stream)
 		return (error_msg("Smthg with opendir wild", NULL, NULL, NULL), -1);
 	entry = readdir(stream);
 	while (entry)
 	{
-		if (match(entry->d_name, current->content) == true)
+		if (match(entry->d_name, pattern) == true)
 		{
-			if (thing.temp[0])
-				ft_strlcat(thing.temp, " ", MAX_PROMT);
-			ft_strlcat(thing.temp, entry->d_name, MAX_PROMT);
+			count++;
+			printf("FILE NAME IS %s\n", entry->d_name);
+			if (create_new(args, new, ft_strdup(entry->d_name)) < 0)
+				return (-1);
 		}
 		entry = readdir(stream);
 	}
 	closedir(stream);
-	if (replace_token_two(current, thing.temp) < 0)
-		return (-1);
+	if (count == 0)
+		if (create_new(args, new, pattern) < 0)
+			return (-1);
 	return (1);
 }
 
-int	wild(t_list **token) // $ echo m*".txt" <- works as m*.txt -< "m.txtx" left as is
+static int	wild_check(char *arg, t_list **args)
 {
-	t_list	*current;
+	t_list	*new;
+
+	if (ft_strchr(arg, '*') && !is_in_quotes(arg))
+	{
+		if (skip_quotes_ast(arg, args) < 0)
+			return (-1);
+	}
+	else
+		if (create_new(args, new, arg) < 0)
+			return (-1);
+	return (1);
+}
+
+int	wild(t_session *session)
+{
+	t_list	*args;
+	int		id;
 	int		i;
 
-	i = 0;
-	current = *token;
-	while (current)
+	id = 0;
+	args = NULL;
+	while (id < session->count->cmd_nb)
 	{
-		if (ft_strchr(current->content, '*') && !ft_strchr(current->content, \
-			'\'') && !ft_strchr(current->content, '\"'))
+		i = 0;
+		while (session->cmds[id]->args[i])
 		{
-			if (check_files(current) < 0)
+			if (wild_check(session->cmds[id]->args[i], &args) < 0)
 				return (-1);
+			i++;
 		}
-		current = current->next;
+		free_arr(session->cmds[id]->args);
+		session->cmds[id]->args = list_to_arr(args);
+		ft_lstclear(&args, free);
+		id++;
 	}
 	return (1);
 }
