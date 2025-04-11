@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 11:35:57 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:30:57 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,28 +72,28 @@ void	print_me(t_session *session)
 		{
 			printf("IN FILES %d\n", session->count->red_in_nb[i]);
 			while (session->cmds[i]->in[j])
-				printf("%s: %s\n", session->cmds[i]->command, session->cmds[i]->in[j++]);
+				printf("%s: %s\n", session->cmds[i]->args[0], session->cmds[i]->in[j++]);
 		}
 		j = 0;
 		if (session->count->red_h_doc_nb[i] > 0)
 		{
 			printf("IN HERE_DOC %d\n", session->count->red_h_doc_nb[i]);
 			while (session->cmds[i]->h_doc[j])
-				printf("%s: %s\n", session->cmds[i]->command, session->cmds[i]->h_doc[j++]);
+				printf("%s: %s\n", session->cmds[i]->args[0], session->cmds[i]->h_doc[j++]);
 		}
 		j = 0;
 		if (session->count->red_out_nb[i] > 0)
 		{
 			printf("OUT FILES %d\n", session->count->red_out_nb[i]);
 			while (session->cmds[i]->out[j])
-				printf("%s: %s\n", session->cmds[i]->command, session->cmds[i]->out[j++]);
+				printf("%s: %s\n", session->cmds[i]->args[0], session->cmds[i]->out[j++]);
 		}
 		j = 0;
 		if (session->count->red_app_nb[i] > 0)
 		{
 			printf("OUT APPEND FILES %d\n", session->count->red_app_nb[i]);
 			while (session->cmds[i]->out_app[j])
-				printf("%s: %s\n", session->cmds[i]->command, session->cmds[i]->out_app[j++]);
+				printf("%s: %s\n", session->cmds[i]->args[0], session->cmds[i]->out_app[j++]);
 		}
 		i++;
 	}
@@ -101,20 +101,53 @@ void	print_me(t_session *session)
 /////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
-int	commands(t_session *session, t_list **token)
+static int	handle_command(t_command *command, t_list **current, int i)
 {
-	t_list	*curr;
-	t_count	*cnt;
+	while (*current && is_del((*current)->content) == false)
+	{
+		if (is_red((*current)->content) == true)
+		{
+			if (get_redirection(command, *current) < 0)
+				return (-1);
+			*current = (*current)->next->next;
+		}
+		else if (*current)
+		{
+			command->args[i] = ft_strdup((*current)->content);
+			if (!command->args[i])
+				return (-1);
+			*current = (*current)->next;
+			i++;
+		}
+	}
+	return (1);
+}
+
+static int	red_struct_alloc(t_session *session)
+{
 	int		i;
 
-	cnt = ft_calloc(1, sizeof(t_count));
-	if (!cnt)
-		return (-1);
-	if (numbers(session, token, cnt) < 0)
-		return (error_msg("Something wrong numbers", NULL, NULL, NULL), -1);
-	session->count = cnt;
-	curr = *token;
 	i = 0;
+	while (i < session->count->cmd_nb)
+	{
+		session->cmds[i]->last_in = ft_calloc(1, sizeof(t_file));
+		session->cmds[i]->last_out = ft_calloc(1, sizeof(t_file));
+		if (!session->cmds[i]->last_in || !session->cmds[i]->last_out)
+			return (error_msg("ft_calloc in commands\n", NULL, NULL, NULL), -1);
+		i++;
+	}
+	return (1);
+}
+
+static int	commands(t_session *session, t_list **token)
+{
+	t_list	*curr;
+	int		i;
+
+	if (red_struct_alloc(session) < 0)
+		return (-1);
+	i = 0;
+	curr = *token;
 	while (curr)
 	{
 		if (is_del(curr->content) == false)
@@ -149,29 +182,32 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 		return (error_msg("Herre doc no lim problem", NULL, NULL, NULL), -1);
 	if (here_doc_no_lim(session, token) < 0)
 		return (error_msg("Herre doc lim problem", NULL, NULL, NULL), -1);
-	if (wild(token) < 0)
-		return (error_msg("Wild problem", NULL, NULL, NULL), -1);
 	return (1);
 }
 
 int	lexical_analyzer(t_session *session)
 {
 	t_list	*token;
+	t_count	*cnt;
 
 	token = NULL;
 	if (split_and_check(session, &token, session->input) < 0)
 	{
-		free(session->input);
 		if (token)
 			ft_lstclear(&token, free);
 		return (error_msg("Something wrong split_input", NULL, NULL, NULL), -1);
 	}
+	cnt = ft_calloc(1, sizeof(t_count));
+	if (!cnt)
+		return (-1);
+	if (numbers(session, &token, cnt) < 0)
+		return (error_msg("Something wrong numbers", NULL, NULL, NULL), -1);
+	session->count = cnt;
 	if (commands(session, &token) < 0)
-	{
-		ft_lstclear(&token, free);
-		free_session(session);
-		return (error_msg("Something wrong commands", NULL, NULL, NULL), -1);
-	}
+		return (ft_lstclear(&token, free), free_session(session), \
+				error_msg("Something wrong commands", NULL, NULL, NULL), -1);
 	ft_lstclear(&token, free);
+	if (skip(session) < 0)
+		return (error_msg("Wild skip problem", NULL, NULL, NULL), -1);
 	return (1);
 }

@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 10:35:40 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/10 16:06:00 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_redirection(t_command *command, t_list *current)
+int	get_redirection(t_command *command, t_list *current)
 {
 	int	size;
 
 	if (redirection_in(command, current) < 0)
-		return (error_msg("wrong with redirection_in\n", NULL, NULL, NULL), -1);
+		return (error_msg("redirection_in in get_redirection\n", NULL, NULL, NULL), -1);
 	if (redirection_out(command, current) < 0)
-		return (error_msg("wrong with redirection_out\n", NULL, NULL, NULL), -1);
+		return (error_msg("redirection_out in get_redirection\n", NULL, NULL, NULL), -1);
 	return (1);
 }
 
@@ -34,34 +34,6 @@ void	get_delimiter(t_command *command, t_list *current)
 	else if ((ft_strncmp(current->content, \
 			"&&", longer(current->content, "&&")) == 0))
 		command->type = AND;
-}
-
-int	handle_command(t_command *command, t_list **current, int i)
-{
-	while (*current && is_del((*current)->content) == false)
-	{
-		if (is_red((*current)->content) == true)
-		{
-			if (get_redirection(command, *current) < 0)
-				return (-1);
-			*current = (*current)->next->next;
-		}
-		else if (*current)
-		{
-			if (!command->command)
-			{
-				command->command = ft_strdup((*current)->content);
-				if (!command->command)
-					return (-1);
-			}
-			command->args[i] = ft_strdup((*current)->content);
-			if (!command->args[i])
-				return (-1);
-			*current = (*current)->next;
-			i++;
-		}
-	}
-	return (1);
 }
 
 static int	alloc_check(t_command *cmd, t_count *c, int i)

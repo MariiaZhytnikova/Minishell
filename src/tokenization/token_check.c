@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:25:56 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 10:30:14 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/10 10:16:55 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	consecutive_delimiters(t_list *token)
 			&& ft_strchr(curr->next->content, ')'))
 			return (error_msg("syntax error near unexpected token `)'", NULL, NULL, NULL), true);
 		if (is_red_mini(curr->content) \
-			&& ft_strchr(curr->next->content, '*'))
+			&& ((char *)curr->next->content)[0] == '*')
 			return (error_msg("bash: curr->next->content: ambiguous redirect", NULL, NULL, NULL), true);
 		if (ft_strncmp(curr->content, "&", 2) == 0)
 			return (error_msg("& operator not implemented", NULL, NULL, NULL), true);

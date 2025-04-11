@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 15:10:55 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:53:23 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,28 @@ static char	*create_prompt(void)
 	prompt = NULL;
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		temp = ft_strjoin("\001" CYAN BOLD "\002", cwd);
-		prompt = ft_strjoin(temp, "\001" CYAN BOLD "\002$ \001" RESET "\002");
+		temp = ft_strjoin("\001" CYAN BOLD "\002", cwd); // CHECK EVERYTHING
+		prompt = ft_strjoin(temp, "\001" CYAN BOLD "\002$ \001" RESET "\002"); // CHECK EVERYTHING
 		free(temp);
 	}
 	else
-		ft_strdup(PROMPT);
+		return (ft_strdup(PROMPT)); // CHECK EVERYTHING
 	return (prompt);
 }
 
 int	prompt(t_session *session)
 {
+	char	*promt;
+
 	session->history_pipe = ft_calloc(1, sizeof(char *));
-	session->input = readline(create_prompt());
-	if (!session->input || *session->input == '\0')
-		return (1);
-	return (0);
+	if (!session->history_pipe)
+		return (-1); // ERROR MSG
+	promt = create_prompt();
+	
+	session->input = readline(promt);
+	free(promt);
+	if (!session->input || !*session->input)
+		return (-1);
+	return (1);
 }
+
