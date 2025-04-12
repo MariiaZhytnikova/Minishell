@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/11 18:47:06 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/04/12 13:47:56 by mzhitnik         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBFT		:= $(LIBFT_PATH)/libft.a
 
 BUILTINS = cd echo env exit export export2 pwd unset
 
-EXEC = exec
+EXEC = exec processing pipe and_or open redirect
 
 MAIN = main errors signals
 

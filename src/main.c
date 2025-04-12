@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 18:45:51 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:46:14 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (history(&session) < 0)
 			continue ;
-		if (exec(&session) < 0)
-			printf("Oh no....\n");
+		exec(&session);
 		free_session(&session);
 	}
 	return (0);
