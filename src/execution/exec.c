@@ -6,49 +6,110 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 12:53:48 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:34:32 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_cmd(t_session *session, t_command *cmd)
+static void	exec_builtin(t_session *session, t_command *cmd)
 {
-	if (!ft_strncmp(cmd->command, "exit", ft_strlen("exit")))
-		exit_builtin(session, cmd);
-	else if (!ft_strncmp(cmd->command, "cd", ft_strlen("cd")))
-		cd_builtin(session, cmd);
-	else if (!ft_strncmp(cmd->command, "env", ft_strlen("env")))
-		env_builtin(session, cmd);
-	else if (!ft_strncmp(cmd->command, "pwd", ft_strlen("pwd")))
-		pwd_builtin(cmd);
-	else if (!ft_strncmp(cmd->command, "unset", ft_strlen("unset")))
-		unset_builtin(session, cmd);
-	else if (!ft_strncmp(cmd->command, "echo", ft_strlen("echo")))
-		echo_builtin(cmd);
-	else if (!ft_strncmp(cmd->command, "export", ft_strlen("export")))
-		export_builtin(session, cmd);
-	else
-		printf("To be done...\n");
+	if (!ft_strncmp(cmd->args[0], "exit", longer(cmd->args[0], "exit")))
+		return (exit_builtin(session, cmd));
+	else if (!ft_strncmp(cmd->args[0], "cd", longer(cmd->args[0], "cd")))
+		return (cd_builtin(session, cmd));
+	else if (!ft_strncmp(cmd->args[0], "env", longer(cmd->args[0], "env")))
+		return (env_builtin(session, cmd));
+	else if (!ft_strncmp(cmd->args[0], "pwd", longer(cmd->args[0], "pwd")))
+		return (pwd_builtin(cmd));
+	else if (!ft_strncmp(cmd->args[0], "unset", longer(cmd->args[0], "unset")))
+		return (unset_builtin(session, cmd));
+	else if (!ft_strncmp(cmd->args[0], "echo", longer(cmd->args[0], "echo")))
+		return (echo_builtin(cmd));
+	else if (!ft_strncmp(cmd->args[0], "export", \
+		longer(cmd->args[0], "export")))
+		return (export_builtin(session, cmd));
 }
 
-int exec(t_session *session)
+static bool	is_builtin(t_command *cmd)
 {
-	t_command *cmd;
-	int	i;
+	if (!ft_strncmp(cmd->args[0], "exit", longer(cmd->args[0], "exit")))
+		return (true);
+	else if (!ft_strncmp(cmd->args[0], "cd", longer(cmd->args[0], "cd")))
+		return (true);
+	else if (!ft_strncmp(cmd->args[0], "env", longer(cmd->args[0], "env")))
+		return (true);
+	else if (!ft_strncmp(cmd->args[0], "pwd", longer(cmd->args[0], "pwd")))
+		return (true);
+	else if (!ft_strncmp(cmd->args[0], "unset", longer(cmd->args[0], "unset")))
+		return (true);
+	else if (!ft_strncmp(cmd->args[0], "echo", longer(cmd->args[0], "echo")))
+		return (true);
+	else if (!ft_strncmp(cmd->args[0], "export", \
+		longer(cmd->args[0], "export")))
+		return (true);
+	return (false);
+}
 
-	cmd = *session->cmds;
-	i = 0;
-	// while (session->cmds[i])
-	// {
-	// 	if (session->cmds[i]->type == PIPE)
-	// 		run_pipe(session->cmds[i], session->cmds[i + 1]);
-	// 	if (session->cmds[i]->type == AND)
-	// 		run_and(session->cmds[i], session->cmds[i + 1]);
-	// 	if (session->cmds[i]->type == OR)
-	// 		run_or(session->cmds[i], session->cmds[i + 1]);
-	// 	run_cmd(session, session->cmds[i]);
-	// 	i++;
-	// }
-	return (0);
+static void	run_builtin(t_session *session, int *id)
+{
+	if (open_files(session, session->cmds[*id], *id) < 0)
+	{
+		session->status_last = session->cmds[*id]->status;
+		return ;
+	}
+	session->in = dup(0);
+	session->out = dup(1);
+	handle_in_out(session->cmds[*id]);
+	exec_builtin(session, session->cmds[*id]);
+	session->status_last = session->cmds[*id]->status;
+	dup2(session->in, 0);
+	dup2(session->out, 1);
+	close(session->in);
+	close(session->out);
+}
+
+void	run_cmd(t_session *session, t_command *cmd)
+{
+	if (!cmd->args[0])
+	{
+		cmd->status = 0;
+		exit (cmd->status);
+	}
+	if (is_builtin(cmd))
+	{
+		exec_builtin(session, cmd);
+		exit (cmd->status);
+	}
+	exec_norm(session, cmd);
+}
+
+void	exec(t_session *session)
+{
+	int	id;
+
+	id = 0;
+	if (session->count->args_nb[0] > 0 \
+		&& is_builtin(session->cmds[id]) == true)
+	{
+		run_builtin(session, &id);
+		session->status_last = session->cmds[id]->status;
+		printf("STATUS OF LAST COMMAND [%d] is: %d\n", id, session->status_last);
+		return ;
+	}
+	run_pipe(session, &id);
+	if (session->cmds[id] && session->cmds[id - 1]->type == AND)
+		run_and(session, &id);
+	if (session->cmds[id] && session->cmds[id - 1]->type == OR)
+		run_or(session, &id);
+	session->status_last = session->cmds[id - 1]->status;
+	////////////////////////////////////////////////////////////////
+	id = 0;
+	while (session->cmds[id])
+	{
+		printf("STATUS OF COMMAND [%d] is: %d\n", id, session->cmds[id]->status);
+		id++;
+	}
+	/////////////////////////////////////////////////////////
+	printf("STATUS OF LAST COMMAND [%d] is: %d\n", id - 1, session->status_last);
 }
