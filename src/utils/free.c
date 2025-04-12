@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 12:53:30 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:56:12 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static void	free_command(t_command *cmd)
 {
 	if (!cmd)
 		return ;
-	if (cmd->command)
-		free(cmd->command);
 	if (cmd->args)
 		free_arr(cmd->args);
 	if (cmd->in)
@@ -43,6 +41,18 @@ static void	free_command(t_command *cmd)
 		free_arr(cmd->out_app);
 	if (cmd->h_doc)
 		free_arr(cmd->h_doc);
+	if (cmd->last_in)
+	{
+		if (cmd->last_in->name)
+			free(cmd->last_in->name);
+		free(cmd->last_in);
+	}
+	if (cmd->last_out)
+	{
+		if (cmd->last_out->name)
+			free(cmd->last_out->name);
+		free(cmd->last_out);
+	}
 	free(cmd);
 }
 
@@ -69,6 +79,10 @@ void	free_session(t_session *session)
 
 	if (!session)
 		return ;
+	if (session->input)
+		free(session->input);
+	if (session->history_pipe)
+		free(session->history_pipe);
 	if (session->cmds)
 	{
 		i = 0;

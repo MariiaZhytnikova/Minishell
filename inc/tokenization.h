@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 15:28:05 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:27:34 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		redirection_in(t_command *command, t_list *current);
 int		redirection_out(t_command *command, t_list *current);
 
 void	get_delimiter(t_command *command, t_list *current);
+int		get_redirection(t_command *command, t_list *current);
 int		allocate_struct(t_session *s, t_count *c, int i);
 int		handle_command(t_command *command, t_list **current, int i);
 int		commands(t_session *session, t_list **token);
@@ -51,7 +52,12 @@ int		prompt(t_session *session);
 int		history(t_session *session);
 int		add_pipe_history(t_session *session, char *line);
 
-int		wild(t_list **token);
+char	*skip_quotes(const char *arg);
+int		skip(t_session *session);
+int		create_new(t_list **args, t_list *new, char *str);
+bool	is_in_quotes(const char *str);
+bool	match(const char *str, const char *pattern);
+int		wild(t_session *session);
 
 ////////////////////////DELETE/////////////
 void	print_me_num(t_count *count);

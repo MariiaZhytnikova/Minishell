@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:12:52 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/10 17:19:17 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:45:14 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	replase_last_out(t_command *command, t_list *current)
 {
 	if (command->last_out->name)
 		free(command->last_out->name);
-	command->last_out->name = ft_strdup(current->content);
+	command->last_out->name = ft_strdup(current->next->content);
 	if (!command->last_out->name)
 		return (error_msg("ft_strdup in replase_last_out\n", NULL, NULL, NULL), -1);
 	return (1);
