@@ -87,7 +87,11 @@ typedef struct	s_session
 	t_command	**cmds;
 	int			status_last;
 	t_list		*env_var;
-	t_count	*count;
+	t_count		*count;
+	int			in;
+	int			out;
+	int			prev_fd;
+	int			pipefd[2];
 }	t_session;
 
 #endif
