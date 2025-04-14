@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 13:11:19 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:40:00 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ int	prompt(t_session *session)
 		return (-1);
 	session->input = readline(promt);
 	free(promt);
-	if (!session->input || !*session->input)
-		return (1); // Im changed because OF
+	if (!session->input)
+		return (-1); 
+	if (*session->input == '\0')
+		return (0);
 	return (1);
 }
 

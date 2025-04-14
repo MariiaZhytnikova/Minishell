@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 12:28:46 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:34:54 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 		// session.history_pipe = NULL;
 		signalnum = 0;
 		if(prompt(&session) < 0)
-			exit_signal(&session, 130);
+			exit_signal(&session, 0);
 		if (session.input[0] == '\0')
 			continue ;
 		// printf("%s%s%s\n", RED, session.input, RESET);

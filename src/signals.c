@@ -6,13 +6,13 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:01:37 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/10 00:57:06 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:28:40 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-sig_atomic_t signalnum = 0;
+sig_atomic_t signalnum;
 
 void	exit_signal(t_session *session, int code)
 {
@@ -43,7 +43,7 @@ void heredoc_handle_sigint(int signo)
 	{
 		signalnum = 2;
 		printf("\n");
-		close(STDIN_FILENO);     // Signal readline to terminate
+		close(STDIN_FILENO);
 	}
 }
 
