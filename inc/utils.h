@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 15:12:32 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:18:50 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ char	**list_to_arr(t_list *list);
 
 // Execution utils
 
-int	num_pipes(t_session *session, int *id)
+int	num_pipes(t_session *session, int *id);
 
 #endif
