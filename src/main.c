@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/12 13:46:14 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:28:46 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ int	main(int argc, char **argv, char **env)
 	setup_signals();
 	while (1)
 	{
-		session.input = NULL;
-		session.cmds = NULL;
-		session.count = NULL;
-		session.history_pipe = NULL;
+		// session.input = NULL;
+		// session.cmds = NULL;
+		// session.count = NULL;
+		// session.history_pipe = NULL;
 		signalnum = 0;
 		if(prompt(&session) < 0)
 			exit_signal(&session, 130);
 		if (session.input[0] == '\0')
 			continue ;
-		printf("%s%s%s\n", RED, session.input, RESET);
+		// printf("%s%s%s\n", RED, session.input, RESET);
 		status = lexical_analyzer(&session);
 		if (status != 1)
 		{
@@ -53,7 +53,8 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (history(&session) < 0)
 			continue ;
-		exec(&session);
+		int	id = 0;
+		exec(&session, &id);
 		free_session(&session);
 	}
 	return (0);

@@ -6,13 +6,13 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/12 12:11:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:23:02 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	child(t_session *session, int *id, int runs)
+static void	child(t_session *session, int *id, int runs, int num)
 {
 	handle_in_out(session->cmds[*id]);
 	if (session->prev_fd != -1) // NOT FIRST PIPE
@@ -20,7 +20,7 @@ static void	child(t_session *session, int *id, int runs)
 		dup2(session->prev_fd, STDIN_FILENO);
 		close(session->prev_fd);
 	}
-	if (runs < session->count->cmd_nb - 1) // IF NOT LAST
+	if (runs < num - 1) // IF NOT LAST
 	{
 		close(session->pipefd[0]);
 		dup2(session->pipefd[1], STDOUT_FILENO); // WRITE TO PIPE
@@ -58,7 +58,7 @@ static void	status_wait(t_session *session, int runs)
 			while (j < session->count->cmd_nb)
 			{
 				if (pid == session->cmds[j]->pid)
-					session->cmds[j]->status = status;
+					session->cmds[j]->status = WEXITSTATUS(status);
 				j++;
 			}
 		}
@@ -66,24 +66,40 @@ static void	status_wait(t_session *session, int runs)
 	}
 }
 
+int	num_pipes(t_session *session, int *id)
+{
+	int	count;
+	int	i;
+
+	i = *id;
+	count = 0;
+	while (session->cmds[i]->type == PIPE)
+	{
+		i++;
+		count++;
+	}
+	return (count);
+}
+
 void	run_pipe(t_session *session, int *id)
 {
-	int		runs;
+	int	runs;
+	int	num;
 
 	runs = 0;
+	num = num_pipes(session, id) + 1;
 	session->prev_fd = -1;
-	while (runs < session->count->cmd_nb && (session->cmds[*id]->type == PIPE \
-			|| session->cmds[*id]->type == NONE))
+	while (runs < num)
 	{
 		if (open_files(session, session->cmds[*id], *id) < 0)
 			return ((*id)++, error_msg("open_files failed", NULL, NULL, NULL));
-		if (runs < session->count->cmd_nb - 1 && pipe(session->pipefd) == -1) // NOT FOR LAST
+		if (runs < num && pipe(session->pipefd) == -1) // NOT FOR LAST
 			return ((*id)++, error_msg("pipe failed", NULL, NULL, NULL));
 		session->cmds[*id]->pid = fork();
 		if (session->cmds[*id]->pid == -1)
 			return ((*id)++, error_msg("fork failed", NULL, NULL, NULL));
 		if (session->cmds[*id]->pid == 0)
-			child(session, id, runs);
+			child(session, id, runs, num);
 		parent(session, id, runs);
 		runs++;
 		(*id)++;

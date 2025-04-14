@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:19:54 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/12 11:45:57 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/13 19:57:32 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	run_pipe(t_session *session, int *id);
 
 void	exec_norm(t_session *session, t_command *cmd);
 void	run_cmd(t_session *session, t_command *cmd);
-void	exec(t_session *session);
+void	exec(t_session *session, int *id);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:38:27 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 16:16:57 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:34:19 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	exec_norm(t_session *session, t_command *cmd)
 	char	*path;
 	char	**env;
 
-	ft_putstr_fd("The command in exec_norm: ", 2);
-	ft_putendl_fd(cmd->args[0], 2);
-	ft_putendl_fd(" ", 2);
+	// ft_putstr_fd("The command in exec_norm: ", 2);
+	// ft_putendl_fd(cmd->args[0], 2);
+	// ft_putendl_fd(" ", 2);
 	path = path_check(cmd, session->env_var);
 	if (!path)
 	{
@@ -102,7 +102,8 @@ void	exec_norm(t_session *session, t_command *cmd)
 		free(path);
 		free_arr(env);
 		ft_lstclear(&session->env_var, free);
-		free_session(session); // NOT everything FREED
+		free_session(session);
+		free(session->history_pipe); // not works in normal free
 		rl_clear_history();
 		return (error_msg("Command not found:  ...", NULL, NULL, NULL));
 		exit (cmd->status);

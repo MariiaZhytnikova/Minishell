@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/12 12:34:32 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:43:30 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,32 +84,35 @@ void	run_cmd(t_session *session, t_command *cmd)
 	exec_norm(session, cmd);
 }
 
-void	exec(t_session *session)
+void	exec(t_session *session, int *id)
 {
-	int	id;
-
-	id = 0;
+	// printf("STATUS is: %d\n", *id);
 	if (session->count->args_nb[0] > 0 \
-		&& is_builtin(session->cmds[id]) == true)
+		&& is_builtin(session->cmds[*id]) == true)
 	{
-		run_builtin(session, &id);
-		session->status_last = session->cmds[id]->status;
-		printf("STATUS OF LAST COMMAND [%d] is: %d\n", id, session->status_last);
+		run_builtin(session, id);
+		session->status_last = session->cmds[*id]->status;
+		// printf("STATUS OF LAST COMMAND [%d] is: %d\n", *id, session->status_last);
 		return ;
 	}
-	run_pipe(session, &id);
-	if (session->cmds[id] && session->cmds[id - 1]->type == AND)
-		run_and(session, &id);
-	if (session->cmds[id] && session->cmds[id - 1]->type == OR)
-		run_or(session, &id);
-	session->status_last = session->cmds[id - 1]->status;
-	////////////////////////////////////////////////////////////////
-	id = 0;
-	while (session->cmds[id])
-	{
-		printf("STATUS OF COMMAND [%d] is: %d\n", id, session->cmds[id]->status);
-		id++;
-	}
-	/////////////////////////////////////////////////////////
-	printf("STATUS OF LAST COMMAND [%d] is: %d\n", id - 1, session->status_last);
+	run_pipe(session, id); // if I have || or && I shouls run exec
+	// printf("ID of next COMMAND is: %d\n", *id);
+	if (session->cmds[*id] && session->cmds[*id - 1]->type == AND)
+		run_and(session, id);
+	if (session->cmds[*id] && session->cmds[*id - 1]->type == OR)
+		run_or(session, id);
+	session->status_last = session->cmds[*id - 1]->status;
+	// //////////////////////////////////////////////////////////////
+	// *id = 0;
+	// while (session->cmds[*id])
+	// {
+	// 	printf("STATUS OF COMMAND [%d] is: %d\n", *id, session->cmds[*id]->status);
+	// 	(*id)++;
+	// }
+	// /////////////////////////////////////////////////////////
+	// printf("STATUS OF LAST COMMAND [%d] is: %d\n", *id - 1, session->status_last);
 }
+
+
+// DEAD
+// env | sort | grep -v SHLVL | grep -v ^_ 

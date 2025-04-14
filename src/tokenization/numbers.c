@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:28:21 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/07 16:01:37 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 11:18:46 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	numbers(t_session *session, t_list **token, t_count *count)
 		return (-1);
 	count_arguments(token, count);
 	count_delim_and_redir(token, count);
-	print_me_num(count);
+	// print_me_num(count);
 	if (allocate_struct(session, count, 0) < 0)
 		return (error_msg("Something wrong with alloc", NULL, NULL, NULL), -1);
 	return (1);
