@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 13:34:54 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:53:17 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,21 @@ int	main(int argc, char **argv, char **env)
 	session.env_var = NULL;
 	session.status_last = 0;
 	create_env_list(&session.env_var, env);
-	setup_signals();
+	setup_signals(0);
 	while (1)
 	{
-		// session.input = NULL;
-		// session.cmds = NULL;
-		// session.count = NULL;
-		// session.history_pipe = NULL;
+		session.input = NULL;
+		session.cmds = NULL;
+		session.count = NULL;
+		session.history_pipe = NULL;
 		signalnum = 0;
 		if(prompt(&session) < 0)
 			exit_signal(&session, 0);
 		if (session.input[0] == '\0')
+		{
+			free_session(&session);
 			continue ;
+		}
 		// printf("%s%s%s\n", RED, session.input, RESET);
 		status = lexical_analyzer(&session);
 		if (status != 1)

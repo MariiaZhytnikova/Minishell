@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:00 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/26 13:47:45 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:08:53 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,12 @@ void	cd_builtin(t_session *session, t_command *cmd)
 	if (!cmd->args[1])
 	{
 		cmd->status = EXIT_SUCCESS;
+		return ;
+	}
+	if (cmd->args[2])
+	{
+		error_msg(ERR_BASH,  cmd->args[0], ERR_MANY_ARGS, NULL);
+		cmd->status = 1;
 		return ;
 	}
 	if (chdir(cmd->args[1]) == -1)

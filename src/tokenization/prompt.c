@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 13:40:00 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:50:22 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ int	prompt(t_session *session)
 	free(promt);
 	if (!session->input)
 		return (-1); 
-	if (*session->input == '\0')
-		return (0);
 	return (1);
 }
 

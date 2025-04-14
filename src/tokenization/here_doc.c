@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/10 18:04:44 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:25:31 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	here_doc_inp(t_session *session, t_list **token)
 	int		stdin_copy;
 	int		status;
 
-	setup_heredoc_signals();
+	setup_signals(1);
 	line = NULL;
 	stdin_copy = dup(STDIN_FILENO);
 	if (stdin_copy == -1)
