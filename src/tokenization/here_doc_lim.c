@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/10 18:07:40 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:22:09 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 
 	buffer = NULL;
 	line = NULL;
-	setup_heredoc_signals();
+	setup_signals(1);
 	stdin_copy = dup(STDIN_FILENO);
 	if (stdin_copy == -1)
 	{

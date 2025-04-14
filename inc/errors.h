@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/11 14:06:37 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:10:33 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define ERR_SPLIT "ft_split function has failed"
 # define ERR_GETCWD "pwd: error retrieving current directory: getcwd: cannot access parent directories"
 
-# define ERR_MANY_ARGS ": too many arguments provided" // If a built-in command like exit or cd receives more arguments than expected. (bash: cd: too many arguments)
+# define ERR_MANY_ARGS ": too many arguments" // If a built-in command like exit or cd receives more arguments than expected. (bash: cd: too many arguments)
 # define ERR_ENV_NOT_FOUND ": unbound variable" // (bash: UNSET_VAR: unbound variable)
 # define ERR_EXIT_USAGE "exit: numeric argument required" // VAR="hello" exit $VAR (bash: exit: hello: numeric argument required)
 # define ERR_REDIR_SYNTAX "Syntax error: Unexpected token after redirection" // E.g., echo hello > without specifying a file.

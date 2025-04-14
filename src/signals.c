@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:01:37 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 13:28:40 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:13:54 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exit_signal(t_session *session, int code)
 	exit(code);
 }
 
-static void	handle_sigint(int signal)
+void	handle_sigint(int signal)
 {
 	(void)signal;
 	write(1, "\n", 1);
@@ -31,13 +31,8 @@ static void	handle_sigint(int signal)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
-void	setup_signals()
-{
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-}
 
-void heredoc_handle_sigint(int signo) 
+void heredoc_handle_sigint(int signo)
 {
 	if (signo == SIGINT) 
 	{
@@ -47,8 +42,46 @@ void heredoc_handle_sigint(int signo)
 	}
 }
 
-void	setup_heredoc_signals() 
+void	setup_signals(int mode)
 {
-	signal(SIGINT, heredoc_handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	if (mode == 0)
+	{
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (mode == 1)
+	{
+		signal(SIGINT, heredoc_handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	if (mode == 2)
+	{
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, SIG_DFL);
+	}
+}
+
+void	handle_signal_status(t_session *s, int pid, int status, int *si, int *sq)
+{
+	int sig;
+	int j;
+
+	sig = WTERMSIG(status);
+	j = 0;
+	if (sig == SIGINT && !(*si))
+	{
+		write(1, "\n", 1);
+		*si = 1;
+	}
+	if (sig == SIGQUIT && !(*sq))
+	{
+		write(STDERR_FILENO, "Quit (core dumped)\n", 20);
+		*sq = 1;
+	}
+	while (j < s->count->cmd_nb)
+	{
+		if (pid == s->cmds[j]->pid)
+			s->cmds[j]->status = 128 + sig;
+		j++;
+	}
 }

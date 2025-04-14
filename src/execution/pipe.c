@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 12:23:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:14:01 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	child(t_session *session, int *id, int runs, int num)
 {
+	setup_signals(2);
 	handle_in_out(session->cmds[*id]);
 	if (session->prev_fd != -1) // NOT FIRST PIPE
 	{
@@ -41,45 +42,37 @@ static void	parent(t_session *session, int *id, int runs)
 	}
 }
 
+static void	handle_exit_status(t_session *session, int pid, int status)
+{
+	int j = 0;
+
+	while (j < session->count->cmd_nb)
+	{
+		if (pid == session->cmds[j]->pid)
+			session->cmds[j]->status = WEXITSTATUS(status);
+		j++;
+	}
+}
+
 static void	status_wait(t_session *session, int runs)
 {
-	int		status;
-	int		pid;
-	int		j;
-	int		i;
+	int	status;
+	int	pid;
+	int	i = 0;
+	int	sigint_printed = 0;
+	int	sigquit_printed = 0;
 
-	i = 0;
 	while (i < runs)
 	{
 		pid = waitpid(-1, &status, 0);
 		if (WIFEXITED(status))
-		{
-			j = 0;
-			while (j < session->count->cmd_nb)
-			{
-				if (pid == session->cmds[j]->pid)
-					session->cmds[j]->status = WEXITSTATUS(status);
-				j++;
-			}
-		}
+			handle_exit_status(session, pid, status);
+		else if (WIFSIGNALED(status))
+			handle_signal_status(session, pid, status, &sigint_printed, &sigquit_printed);
 		i++;
 	}
 }
 
-int	num_pipes(t_session *session, int *id)
-{
-	int	count;
-	int	i;
-
-	i = *id;
-	count = 0;
-	while (session->cmds[i]->type == PIPE)
-	{
-		i++;
-		count++;
-	}
-	return (count);
-}
 
 void	run_pipe(t_session *session, int *id)
 {
@@ -104,5 +97,7 @@ void	run_pipe(t_session *session, int *id)
 		runs++;
 		(*id)++;
 	}
+	signal(SIGINT, SIG_IGN); 
 	status_wait(session, runs);
+	signal(SIGINT, handle_sigint);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/14 12:37:47 by mzhitnik         ###   ########.fr        #
+#    Updated: 2025/04/14 15:21:48 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ MAIN = main errors signals
 TOKENS = prompt parsing quotes token_check here_doc here_doc_lim skip_quotes\
 			delimiters tokens_parsing numbers redirection expansion wild_cards wild_utils history
 
-UTILS = utils linked_list_utils free
+UTILS = utils linked_list_utils free exec_utils
 
 SRCS := $(addsuffix .c, $(addprefix src/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix src/execution/, $(EXEC))) \
@@ -46,8 +46,7 @@ NORM	:= norminette
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline
-# -fsanitize=address
+	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline -fsanitize=address
 	@echo "$(NAME) building completed ..."
 
 $(OBJS_PATH):
