@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:45:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 11:06:32 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:36:17 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,27 @@ int	check_in(char **input)
 			free(input[id]);
 			input[id] = ft_strdup(thing.temp);
 			if (!input[id])
-				return (error_msg("ft_strdup Fail", NULL, NULL, NULL), -1);
+				return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
 		}
 		id++;
 	}
 	return (1);
 }
 
-int	check_last(char *input)
+int	check_last(char **input)
 {
 	t_temp	thing;
 
 	ft_memset(thing.temp, 0, MAX_PROMT);
 	thing.i = 0;
 	thing.j = 0;
-	if (ft_strchr(input, '\'') || ft_strchr(input, '\"'))
+	if (ft_strchr(*input, '\'') || ft_strchr(*input, '\"'))
 	{
-		skip_quotes(input, &thing);
-		free(input);
-		input = ft_strdup(thing.temp);
-		if (!input)
-			return (error_msg("ft_strdup Fail", NULL, NULL, NULL), -1);
+		skip_quotes(*input, &thing);
+		free(*input);
+		*input = ft_strdup(thing.temp);
+		if (!*input)
+			return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
 	}
 	return (1);
 }
@@ -113,9 +113,9 @@ int	skip(t_session *session)
 	{
 		if (check_case(session, session->cmds[id], id) < 0)
 			return (-1);
-		if (check_last(session->cmds[id]->last_in->name) < 0)
+		if (check_last(&session->cmds[id]->last_in->name) < 0)
 			return (-1);
-		if (check_last(session->cmds[id]->last_out->name) < 0)
+		if (check_last(&session->cmds[id]->last_out->name) < 0)
 			return (-1);
 		id++;
 	}

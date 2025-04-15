@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 17:27:51 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:18:33 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ static int	red_struct_alloc(t_session *session)
 		session->cmds[i]->last_in = ft_calloc(1, sizeof(t_file));
 		session->cmds[i]->last_out = ft_calloc(1, sizeof(t_file));
 		if (!session->cmds[i]->last_in || !session->cmds[i]->last_out)
-			return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
+			return (-1);
 		i++;
 	}
 	return (1);
@@ -153,7 +153,7 @@ int	commands(t_session *session, t_list **token)
 		if (is_del(curr->content) == false)
 		{
 			if (handle_command(session->cmds[i], &curr, 0) < 0)
-				return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
+				return (-1);
 			if (curr && is_del(curr->content) == true)
 				get_delimiter(session->cmds[i++], curr);
 		}
@@ -171,22 +171,22 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 
 	input = add_spaces(session, src);
 	if (!input)
-		return (error_msg("Something wrong add_spaces", NULL, NULL, NULL), -1);
+		return (error_msg(ERR_BASH, ERR_CRASH, "add_spaces", NULL), -1);
 	if (split_input(session, token, input) < 0)
-		return (free(input), error_msg("Something wrong split_input", NULL, NULL, NULL), -1);
+		return (free(input), error_msg(ERR_BASH, ERR_CRASH, "split_input", NULL), -1);
 	free(input);
 	if (delimiter_wrong_pos(*token) == true)
-		return (error_msg("Something wrong delimiter_wrong_pos", NULL, NULL, NULL), -1);
+		return (-1);
 	if (consecutive_delimiters(*token) == true)
-		return (error_msg("Something wrong consecutive_delimiters", NULL, NULL, NULL), -1);
+		return (-1);
 	status = here_doc_lim(session, token);
 	if (status < 0)
-		return (error_msg("Herre doc no lim problem", NULL, NULL, NULL), -1);
+		return (error_msg(ERR_BASH, ERR_CRASH, "here_doc_lim", NULL), -1);
 	if (status == 2 || status == 4)
 		return (status);
 	status = here_doc_no_lim(session, token);
 	if (status < 0)
-		return (error_msg("Herre doc lim problem", NULL, NULL, NULL), -1);
+		return (error_msg(ERR_BASH, ERR_CRASH, "here_doc_no_lim", NULL), -1);
 	if (status > 0)
 		return (status);
 	return (1);
@@ -201,7 +201,7 @@ static int	handle_tokenization(t_session *session, t_list **token)
 	{
 		if (*token)
 			ft_lstclear(token, free);
-		return (error_msg("Something wrong split_input", NULL, NULL, NULL), -1);
+		return (-1);
 	}
 	if (status == 3 || status == 4)
 	{

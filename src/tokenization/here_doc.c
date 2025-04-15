@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 14:25:31 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:46:08 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	here_doc_process(t_list **token, char **line, int stdin)
 		if (!*line && signalnum == 2)
 		{
 			if (dup2(stdin, STDIN_FILENO) == -1)
-				error_msg(ERR_DUP, NULL, NULL, NULL);
+				return (-1);
 			return (2);
 		}
 		if (!*line)
@@ -47,10 +47,7 @@ static int	here_doc_inp(t_session *session, t_list **token)
 	line = NULL;
 	stdin_copy = dup(STDIN_FILENO);
 	if (stdin_copy == -1)
-	{
-		error_msg(ERR_DUP, NULL, NULL, NULL);
 		return (-1);
-	}
 	status = here_doc_process(token, &line, stdin_copy);
 	close (stdin_copy);
 	if (status != 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:26:32 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/07 16:58:34 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:25:49 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	skip_sq(t_temp *thing, char *args)
 		}
 	}
 	if (is_closed == 0)
-		return (error_msg("Single quotes not closed quotes.c", NULL, NULL, NULL), -1);
+		return (-1);
 	return (1);
 }
 
@@ -44,7 +44,7 @@ static int	skip_dq(t_session *session, t_temp *thing, char *args, int closed)
 			if (session && args[thing->i] == '$')
 			{
 				if (expansion(session, thing, args) < 0)
-					return (error_msg("expansion in Double quotes", NULL, NULL, NULL), -1);
+					return (-1);
 			}
 			else
 				thing->temp[thing->j++] = args[thing->i++];
@@ -57,7 +57,7 @@ static int	skip_dq(t_session *session, t_temp *thing, char *args, int closed)
 		}
 	}
 	if (closed == 0)
-		return (error_msg("Double quotes not closed quotes_utils", NULL, NULL, NULL), -1);
+		return (-1);
 	return (1);
 }
 

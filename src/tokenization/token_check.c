@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:25:56 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/10 10:16:55 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:10:13 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,21 @@ bool	consecutive_delimiters(t_list *token)
 	while (curr && curr->next)
 	{
 		if (is_del(curr->content) && is_del(curr->next->content))
-			return (error_msg("syntax error near unexpected token `last valid token'", NULL, NULL, NULL), true);
+			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
 		if (is_red(curr->content) && is_red(curr->next->content))
-			return (error_msg("syntax error near unexpected token `last valid token'", NULL, NULL, NULL), true);
+			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
 		if (is_red(curr->content) && is_del(curr->next->content))
-			return (error_msg("syntax error near unexpected token `last valid token'", NULL, NULL, NULL), true);
+			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
 		if (ft_strchr(curr->content, '*') && ft_strchr(curr->next->content, '('))
-			return (error_msg("syntax error near unexpected token `('", NULL, NULL, NULL), true);
+			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
 		if (ft_strchr(curr->content, '*') \
 			&& ft_strchr(curr->next->content, ')'))
-			return (error_msg("syntax error near unexpected token `)'", NULL, NULL, NULL), true);
+			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
 		if (is_red_mini(curr->content) \
 			&& ((char *)curr->next->content)[0] == '*')
-			return (error_msg("bash: curr->next->content: ambiguous redirect", NULL, NULL, NULL), true);
+			return (error_msg(ERR_BASH, "*:", ERR_REDIR, NULL), true);
 		if (ft_strncmp(curr->content, "&", 2) == 0)
-			return (error_msg("& operator not implemented", NULL, NULL, NULL), true);
+			return (error_msg(ERR_BASH, ERR_EXCL, NULL, NULL), true);
 		curr = curr->next;
 	}
 	return (false);
@@ -83,20 +83,20 @@ bool	delimiter_wrong_pos(t_list *token)
 
 	last = ft_lstlast(token);
 	if ((ft_strncmp(token->content, "|", longer(token->content, "|")) == 0))
-		return (error_msg("syntax error near unexpected token `|'", NULL, NULL, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	if ((ft_strncmp(token->content, "||", longer(token->content, "||")) == 0))
-		return (error_msg("syntax error near unexpected token `||'", NULL, NULL, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	if ((ft_strncmp(token->content, "&&", longer(token->content, "&&")) == 0))
-		return (error_msg("syntax error near unexpected token `&&'", NULL, NULL, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	if ((ft_strncmp(last->content, "<<", longer(last->content, "<<")) == 0))
-		return (error_msg("syntax error near unexpected token `newline'", NULL, NULL, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	if ((ft_strncmp(last->content, "<", longer(last->content, "<")) == 0))
-		return (error_msg("syntax error near unexpected token `newline'", NULL, NULL, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	if ((ft_strncmp(last->content, ">>", longer(last->content, ">>")) == 0))
-		return (error_msg("syntax error near unexpected token `newline'", NULL, NULL, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	if ((ft_strncmp(last->content, ">", longer(last->content, ">")) == 0))
-		return (error_msg("syntax error near unexpected token `newline'", NULL, NULL, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	if ((ft_strncmp(last->content, "&", longer(last->content, "&")) == 0))
-		return (error_msg("syntax error near unexpected token `newline'", NULL, NULL, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	return (false);
 }

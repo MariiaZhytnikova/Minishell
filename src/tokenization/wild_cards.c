@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 17:28:29 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:16:59 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	skip_quotes_ast(char *pattern, t_list **args)
 	count = 0;
 	stream = opendir(".");
 	if (!stream)
-		return (error_msg("Smthg with opendir wild", NULL, NULL, NULL), -1);
+		return (error_msg(ERR_BASH, ERR_DIR, "'.'", ERR_PERM), -1);
 	entry = readdir(stream);
 	while (entry)
 	{
