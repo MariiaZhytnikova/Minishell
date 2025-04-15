@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/03/26 13:56:58 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:27:06 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	*reall(void *ptr, size_t old_size, size_t new_size)
 		copy_size = new_size;
 	else
 		copy_size = old_size;
-	memcpy(new_ptr, ptr, copy_size);
+	ft_memcpy(new_ptr, ptr, copy_size);
 	free(ptr);
 	return (new_ptr);
 }
