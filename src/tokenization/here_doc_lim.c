@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 17:26:12 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:17:40 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	handle_line_input(char **buffer, int *old_size, char *line)
 		ft_strlcat(*buffer, "\n", new_size);
 	*buffer = reall(*buffer, *old_size, new_size);
 	if (!*buffer)
-		return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
+		return (-1);
 	ft_strlcat(*buffer, line, new_size);
 	*old_size = new_size;
 	return (0);
@@ -60,7 +60,7 @@ static int	here_doc_lim_process(t_list *cur, int stdin, char *line, char **buf)
 		if (!line && signalnum == 2)
 		{
 			if (dup2(stdin, STDIN_FILENO) == -1)
-				error_msg(ERR_DUP, NULL, NULL, NULL);
+				return (-1);
 			return (2);
 		}
 		if (!line)
@@ -89,7 +89,6 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 	if (stdin_copy == -1)
 	{
 		close(stdin_copy);
-		error_msg(ERR_DUP, NULL, NULL, NULL);
 		return (-1);
 	}
 	status = here_doc_lim_process(current, stdin_copy, line, &buffer);

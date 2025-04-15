@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:28:21 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 17:26:53 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:18:16 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,6 @@ int	numbers(t_session *session, t_list **token, t_count *count)
 	count_delim_and_redir(token, count);
 	// print_me_num(count);
 	if (allocate_struct(session, count, 0) < 0)
-		return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
+		return (-1);
 	return (1);
 }

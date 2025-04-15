@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 16:38:32 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:17:26 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	create_new(t_list **args, t_list *new, char *str)
 	skip_quotes(str, &thing);
 	new = ft_lstnew(ft_strdup(thing.temp));
 	if (!new)
-		return (error_msg("ft_lstnew skip_quotes_no_ast", NULL, NULL, NULL), -1);
+		return (-1);
 	ft_lstadd_back(args, new);
 	return (1);
 }
