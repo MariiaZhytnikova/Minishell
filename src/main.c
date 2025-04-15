@@ -23,13 +23,13 @@ int	main(int argc, char **argv, char **env)
 	session.env_var = NULL;
 	session.status_last = 0;
 	create_env_list(&session.env_var, env);
-	setup_signals(0);
 	while (1)
 	{
 		session.input = NULL;
 		session.cmds = NULL;
 		session.count = NULL;
 		session.history_pipe = NULL;
+		setup_signals(0);
 		signalnum = 0;
 		if(prompt(&session) < 0)
 			exit_signal(&session, 0);
