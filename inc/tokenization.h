@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 14:27:34 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:17:40 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		prompt(t_session *session);
 int		history(t_session *session);
 int		add_pipe_history(t_session *session, char *line);
 
-char	*skip_quotes(const char *arg);
+void	skip_quotes(const char *arg, t_temp *thing);
 int		skip(t_session *session);
 int		create_new(t_list **args, t_list *new, char *str);
 bool	is_in_quotes(const char *str);
