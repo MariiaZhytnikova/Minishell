@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 14:32:10 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:37:06 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	run_cmd(t_session *session, t_command *cmd)
 {
 	if (!cmd->args[0])
 	{
+		ft_lstclear(&session->env_var, free);
+		free_session(session);
 		cmd->status = 0;
 		exit (cmd->status);
 	}
