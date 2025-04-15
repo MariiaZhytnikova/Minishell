@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 16:18:33 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:38:47 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,13 +233,13 @@ int	lexical_analyzer(t_session *session)
 	if (!cnt)
 		return (-1);
 	if (numbers(session, &token, cnt) < 0)
-		return (error_msg("Something wrong numbers", NULL, NULL, NULL), -1);
+		return (error_msg(ERR_BASH, ERR_CRASH, "numbers", NULL), -1);
 	session->count = cnt;
 	if (commands(session, &token) < 0)
 		return (ft_lstclear(&token, free), free_session(session), \
-				error_msg("Something wrong commands", NULL, NULL, NULL), -1);
+				error_msg(ERR_BASH, ERR_CRASH, "commands", NULL), -1);
 	ft_lstclear(&token, free);
 	if (skip(session) < 0)
-		return (error_msg("Wild skip problem", NULL, NULL, NULL), -1);
+		return (error_msg(ERR_BASH, ERR_CRASH, "skip", NULL), -1);
 	return (1);
 }
