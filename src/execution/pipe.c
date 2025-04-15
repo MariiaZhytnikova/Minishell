@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 17:16:34 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:46:43 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,26 @@
 static void	child(t_session *session, int *id, int runs, int num)
 {
 	setup_signals(2);
-	handle_in_out(session->cmds[*id]);
 	if (session->prev_fd != -1) // NOT FIRST PIPE
 	{
-		dup2(session->prev_fd, STDIN_FILENO);
+		dup2(session->prev_fd, STDIN_FILENO); // IN FILE FROM PREVIOUS PIPE /// HANDLE REDIRECTIONS HERE
 		close(session->prev_fd);
 	}
 	if (runs < num - 1) // IF NOT LAST
 	{
 		close(session->pipefd[0]);
-		dup2(session->pipefd[1], STDOUT_FILENO); // WRITE TO PIPE
+		dup2(session->pipefd[1], STDOUT_FILENO); // OUT WRITE TO THE NEXT PIPE /// HANDLE REDIRECTIONS HERE
 		close(session->pipefd[1]);
 	}
+	if (open_files(session, session->cmds[*id], *id) < 0)
+	{
+		ft_lstclear(&session->env_var, free);
+		free_session(session);
+		free(session->history_pipe); // not works in normal free
+		rl_clear_history();
+		exit(1);
+	}
+	handle_in_out(session->cmds[*id]);
 	run_cmd(session, session->cmds[*id]);
 	exit(1);
 }
@@ -84,11 +92,6 @@ void	run_pipe(t_session *session, int *id)
 	session->prev_fd = -1;
 	while (runs < num)
 	{
-		if (open_files(session, session->cmds[*id], *id) < 0)
-		{
-			(*id)++;
-			return ;
-		}
 		if (runs < num && pipe(session->pipefd) == -1) // NOT FOR LAST
 			return ((*id)++, error_msg(ERR_BASH, ERR_PIPE, NULL, NULL));
 		session->cmds[*id]->pid = fork();

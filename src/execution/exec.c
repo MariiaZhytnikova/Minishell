@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 17:37:06 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:37:13 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	run_cmd(t_session *session, t_command *cmd)
 void	exec(t_session *session, int *id)
 {
 	// printf("STATUS is: %d\n", *id);
-	if (session->count->args_nb[0] > 0 \
+	if (session->count->cmd_nb == 1 && session->count->args_nb[0] > 0 \
 		&& is_builtin(session->cmds[*id]) == true)
 	{
 		run_builtin(session, id);
