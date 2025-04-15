@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 15:14:01 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:16:34 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,15 @@ void	run_pipe(t_session *session, int *id)
 	while (runs < num)
 	{
 		if (open_files(session, session->cmds[*id], *id) < 0)
-			return ((*id)++, error_msg("open_files failed", NULL, NULL, NULL));
+		{
+			(*id)++;
+			return ;
+		}
 		if (runs < num && pipe(session->pipefd) == -1) // NOT FOR LAST
-			return ((*id)++, error_msg("pipe failed", NULL, NULL, NULL));
+			return ((*id)++, error_msg(ERR_BASH, ERR_PIPE, NULL, NULL));
 		session->cmds[*id]->pid = fork();
 		if (session->cmds[*id]->pid == -1)
-			return ((*id)++, error_msg("fork failed", NULL, NULL, NULL));
+			return ((*id)++, error_msg(ERR_BASH, ERR_FORK, NULL, NULL));
 		if (session->cmds[*id]->pid == 0)
 			child(session, id, runs, num);
 		parent(session, id, runs);

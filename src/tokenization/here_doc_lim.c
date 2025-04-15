@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 14:22:09 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:26:12 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	handle_line_input(char **buffer, int *old_size, char *line)
 		ft_strlcat(*buffer, "\n", new_size);
 	*buffer = reall(*buffer, *old_size, new_size);
 	if (!*buffer)
-		return (error_msg("Something wrong with realloc here_doc_lim_inp", NULL, NULL, NULL), -1);
+		return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
 	ft_strlcat(*buffer, line, new_size);
 	*old_size = new_size;
 	return (0);

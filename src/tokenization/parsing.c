@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 11:18:39 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:27:51 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ static int	red_struct_alloc(t_session *session)
 		session->cmds[i]->last_in = ft_calloc(1, sizeof(t_file));
 		session->cmds[i]->last_out = ft_calloc(1, sizeof(t_file));
 		if (!session->cmds[i]->last_in || !session->cmds[i]->last_out)
-			return (error_msg("ft_calloc in commands\n", NULL, NULL, NULL), -1);
+			return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
 		i++;
 	}
 	return (1);
@@ -153,7 +153,7 @@ int	commands(t_session *session, t_list **token)
 		if (is_del(curr->content) == false)
 		{
 			if (handle_command(session->cmds[i], &curr, 0) < 0)
-				return (error_msg("wrong with strdup\n", NULL, NULL, NULL), -1);
+				return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), -1);
 			if (curr && is_del(curr->content) == true)
 				get_delimiter(session->cmds[i++], curr);
 		}
