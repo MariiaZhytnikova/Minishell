@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 19:26:44 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:54:51 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	create_env_list(t_list **env_var, char **env)
 		if (create_node(env_var, env[i]))
 		{
 			error_msg("create_env_list", NULL, NULL, NULL);
-			// FREE previous allocs and exit
+			ft_lstclear(env_var, free);
+			return ;
 		}
 		i++;
 	}
