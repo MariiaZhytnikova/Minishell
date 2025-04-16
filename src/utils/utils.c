@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/15 19:27:06 by ekashirs         ###   ########.fr       */
-=======
-/*   Updated: 2025/04/16 13:04:51 by mzhitnik         ###   ########.fr       */
->>>>>>> 063ec21 (redirect new structure)
+/*   Updated: 2025/04/16 15:19:25 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

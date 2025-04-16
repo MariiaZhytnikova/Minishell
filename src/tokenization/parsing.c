@@ -6,11 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/15 19:38:47 by ekashirs         ###   ########.fr       */
-=======
-/*   Updated: 2025/04/16 15:09:31 by mzhitnik         ###   ########.fr       */
->>>>>>> 7dab464 (redirect new structure)
+/*   Updated: 2025/04/16 15:19:15 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,10 +246,7 @@ int	lexical_analyzer(t_session *session)
 	ft_lstclear(&token, free);
 	if (skip(session) < 0)
 		return (error_msg(ERR_BASH, ERR_CRASH, "skip", NULL), -1);
-<<<<<<< HEAD
-=======
 	// print_me(session);
->>>>>>> 7dab464 (redirect new structure)
 	return (1);
 }
 
