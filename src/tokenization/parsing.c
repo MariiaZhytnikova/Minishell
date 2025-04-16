@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/15 19:38:47 by ekashirs         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/16 15:09:31 by mzhitnik         ###   ########.fr       */
+>>>>>>> 7dab464 (redirect new structure)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +44,8 @@ void	print_me(t_session *session)
 //////////////////////TO DELETE//////////////////////////////////////////////////////////////////////////
 	int	i;
 	int	j;
+	int num_red;
+
 	printf("\n-->> WE HAVE COMMANDS!!! <<--\n");
 	i = 0;
 	j = 0;
@@ -67,12 +73,15 @@ void	print_me(t_session *session)
 	printf("\n-->> WE HAVE FILES!!! <<--%s\n", YELLOW);
 	while (i < session->count->cmd_nb)
 	{
+		num_red = session->count->red_in_nb[i] + \
+			session->count->red_out_nb[i] + session->count->red_app_nb[i];
+		
 		j = 0;
-		if (session->count->red_in_nb[i] > 0)
+		if (num_red > 0)
 		{
-			printf("IN FILES %d\n", session->count->red_in_nb[i]);
-			while (session->cmds[i]->in[j])
-				printf("%s\n", session->cmds[i]->in[j++]);
+			printf("FILES\n");
+			while (session->cmds[i]->files[j]->name)
+				printf("%s\n", session->cmds[i]->files[j++]->name);
 		}
 		j = 0;
 		if (session->count->red_h_doc_nb[i] > 0)
@@ -80,20 +89,6 @@ void	print_me(t_session *session)
 			printf("IN HERE_DOC %d\n", session->count->red_h_doc_nb[i]);
 			while (session->cmds[i]->h_doc[j])
 				printf("%s\n", session->cmds[i]->h_doc[j++]);
-		}
-		j = 0;
-		if (session->count->red_out_nb[i] > 0)
-		{
-			printf("OUT FILES %d\n", session->count->red_out_nb[i]);
-			while (session->cmds[i]->out[j])
-				printf("%s\n", session->cmds[i]->out[j++]);
-		}
-		j = 0;
-		if (session->count->red_app_nb[i] > 0)
-		{
-			printf("OUT APPEND FILES %d\n", session->count->red_app_nb[i]);
-			while (session->cmds[i]->out_app[j])
-				printf("%s\n", session->cmds[i]->out_app[j++]);
 		}
 		i++;
 	}
@@ -125,15 +120,30 @@ int	handle_command(t_command *command, t_list **current, int i)
 
 static int	red_struct_alloc(t_session *session)
 {
-	int		i;
+	int	i;
+	int	j;
+	int	num_red;
 
 	i = 0;
 	while (i < session->count->cmd_nb)
 	{
+		j = 0;
+		num_red = session->count->red_in_nb[i] + \
+			session->count->red_out_nb[i] + session->count->red_app_nb[i] + 1;
 		session->cmds[i]->last_in = ft_calloc(1, sizeof(t_file));
 		session->cmds[i]->last_out = ft_calloc(1, sizeof(t_file));
-		if (!session->cmds[i]->last_in || !session->cmds[i]->last_out)
+		session->cmds[i]->files = ft_calloc(num_red, sizeof(t_file *));
+		if (!session->cmds[i]->last_in || !session->cmds[i]->last_out || \
+			!session->cmds[i]->files)
 			return (-1);
+		while (j < num_red - 1)
+		{
+			session->cmds[i]->files[j] = ft_calloc(1, sizeof(t_file));
+			if (!session->cmds[i]->files[j])
+				return (-1);
+			j++;
+		}
+		session->cmds[i]->files[j] = NULL;
 		i++;
 	}
 	return (1);
@@ -160,7 +170,6 @@ int	commands(t_session *session, t_list **token)
 		if (curr)
 			curr = curr->next;
 	}
-	// print_me(session);
 	return (1);
 }
 
@@ -170,8 +179,8 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 	int		status;
 
 	input = add_spaces(session, src);
-	if (!input)
-		return (error_msg(ERR_BASH, ERR_CRASH, "add_spaces", NULL), -1);
+	if (!input || !input[0])
+		return (-1);
 	if (split_input(session, token, input) < 0)
 		return (free(input), error_msg(ERR_BASH, ERR_CRASH, "split_input", NULL), -1);
 	free(input);
@@ -241,5 +250,21 @@ int	lexical_analyzer(t_session *session)
 	ft_lstclear(&token, free);
 	if (skip(session) < 0)
 		return (error_msg(ERR_BASH, ERR_CRASH, "skip", NULL), -1);
+<<<<<<< HEAD
+=======
+	// print_me(session);
+>>>>>>> 7dab464 (redirect new structure)
 	return (1);
 }
+
+// /home/mzhitnik/Projects/Minishell$ echo $HOME$HOME
+// /home/mzhitnik$HOME
+
+// /home/mzhitnik/Projects/Minishell$ echo $USER'$USER'
+// mzhitnikmzhitnik
+
+// /home/mzhitnik/Projects/Minishell$ echo ''$USER'' | grep $USER
+
+// exit status for syntx errors, session->last_status = 2!
+
+// wildcard skip hidden files

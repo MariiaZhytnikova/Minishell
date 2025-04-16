@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_cards.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 16:16:59 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:31:20 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	skip_quotes_ast(char *pattern, t_list **args)
 		if (match(entry->d_name, pattern) == true)
 		{
 			count++;
-			printf("FILE NAME IS %s\n", entry->d_name);
+			// printf("FILE NAME IS %s\n", entry->d_name);
 			if (create_new(args, new, ft_strdup(entry->d_name)) < 0)
 				return (-1);
 		}

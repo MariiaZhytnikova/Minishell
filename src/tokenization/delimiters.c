@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/02 10:20:04 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:18:08 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,12 @@ char	*add_spaces(t_session *session, char *input)
 	thing.j = 0;
 	while (input[thing.i])
 	{
-		if (input[thing.i] == '\'' || input[thing.i] == '\"')
+		if (input[thing.i] == '$')
+		{
+			if (expansion(session, &thing, input) < 0) // Move to ADD SPACES
+				return (NULL);
+		}
+		else if (input[thing.i] == '\'' || input[thing.i] == '\"')
 		{
 			if (if_quotes(NULL, &thing, input) < 0)
 				return (NULL);
@@ -95,7 +100,5 @@ char	*add_spaces(t_session *session, char *input)
 	}
 	thing.temp[thing.j] = 0;
 	result = ft_strdup(thing.temp);
-	if (!*result || !result[0])
-		return (NULL);
 	return (result);
 }
