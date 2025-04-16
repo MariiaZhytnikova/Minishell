@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:26:32 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 16:25:49 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/15 16:45:05 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,7 @@ int	handle_quotes(t_session *session, t_temp *thing, char *args)
 {
 	while (args[thing->i] && args[thing->i] != ' ')
 	{
-		if (args[thing->i] == '$')
-		{
-			if (expansion(session, thing, args) < 0)
-				return (-1);
-		}
-		else if (args[thing->i] == '\'' || args[thing->i] == '\"')
+		if (args[thing->i] == '\'' || args[thing->i] == '\"')
 		{
 			if (if_quotes(session, thing, args) < 0)
 				return (-1);

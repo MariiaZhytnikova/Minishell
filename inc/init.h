@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 14:26:29 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:42:31 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ typedef enum
 {
 	NONE,
 	PIPE,
-	AND,							// "&&" (execution of the next cmd table only if the previous has a truthy exit_status)
-	OR,								// "||" (execution of the next cmd table only if the previous has a false exit_status)
+	AND,
+	OR,
 }	delimiter;
 
 typedef	struct s_file
@@ -70,9 +70,7 @@ typedef struct	s_command
 {
 	int			pid;
 	char		**args;
-	char		**in;
-	char		**out;
-	char		**out_app;
+	t_file		**files;
 	char		**h_doc;
 	t_file		*last_in;
 	t_file		*last_out;

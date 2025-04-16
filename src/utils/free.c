@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/11 17:56:12 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:26:21 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,30 @@ void	free_arr(char **arr)
 	free(arr);
 }
 
+void	free_tfile(t_file **arr) ///// BWA HA HA
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]->name);
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
 static void	free_command(t_command *cmd)
 {
 	if (!cmd)
 		return ;
 	if (cmd->args)
 		free_arr(cmd->args);
-	if (cmd->in)
-		free_arr(cmd->in);
-	if (cmd->out)
-		free_arr(cmd->out);
-	if (cmd->out_app)
-		free_arr(cmd->out_app);
+	if (cmd->files)
+		free_tfile(cmd->files); ///// BWA HA HA
 	if (cmd->h_doc)
 		free_arr(cmd->h_doc);
 	if (cmd->last_in)

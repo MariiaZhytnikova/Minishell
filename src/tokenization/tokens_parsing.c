@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens_parsing.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 16:13:10 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:45:47 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	get_redirection(t_command *command, t_list *current)
 {
 	int	size;
 
+	if (files(command, current) < 0)
+		return(error_msg(ERR_BASH, ERR_CRASH, "files", NULL), -1);
 	if (redirection_in(command, current) < 0)
 		return(error_msg(ERR_BASH, ERR_CRASH, "redirection_in", NULL), -1);
 	if (redirection_out(command, current) < 0)
@@ -40,12 +42,6 @@ static int	alloc_check(t_command *cmd, t_count *c, int i)
 {
 	if (c->args_nb[i] > 0 && !cmd->args)
 		return (-1);
-	if (c->red_in_nb[i] > 0 && !cmd->in)
-		return (-1);
-	if (c->red_out_nb[i] > 0 && !cmd->out)
-		return (-1);
-	if (c->red_app_nb[i] > 0 && !cmd->out_app)
-		return (-1);
 	if (c->red_h_doc_nb[i] > 0 && !cmd->h_doc)
 		return (-1);
 	return (1);
@@ -62,13 +58,6 @@ int	allocate_struct(t_session *s, t_count *c, int i)
 		if (!s->cmds)
 			return (-1);
 		s->cmds[i]->args = ft_calloc(c->args_nb[i] + 1, sizeof(char *));
-		if (c->red_in_nb[i] > 0)
-			s->cmds[i]->in = ft_calloc(c->red_in_nb[i] + 1, sizeof(char *));
-		if (c->red_out_nb[i] > 0)
-			s->cmds[i]->out = ft_calloc(c->red_out_nb[i] + 1, sizeof(char *));
-		if (c->red_app_nb[i] > 0)
-			s->cmds[i]->out_app = ft_calloc(c->red_app_nb[i] + 1, \
-				sizeof(char *));
 		if (c->red_h_doc_nb[i] > 0)
 			s->cmds[i]->h_doc = ft_calloc(c->red_h_doc_nb[i] + 1, \
 				sizeof(char *));

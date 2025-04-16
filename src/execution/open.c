@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:56:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 17:07:23 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:30:46 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int in_file(t_command *cmd, char *file)
+static int	in_file(t_command *cmd, char *file)
 {
 	int fd;
 
@@ -31,7 +31,7 @@ static int in_file(t_command *cmd, char *file)
 	return (1);
 }
 
-static int out_file(t_command *cmd, char *file)
+static int	out_file(t_command *cmd, char *file)
 {
 	int fd;
 
@@ -50,7 +50,7 @@ static int out_file(t_command *cmd, char *file)
 	return (1);
 }
 
-static int out_app_file(t_command *cmd, char *file)
+static int	out_app_file(t_command *cmd, char *file)
 {
 	int fd;
 
@@ -69,27 +69,35 @@ static int out_app_file(t_command *cmd, char *file)
 	return (1);
 }
 
-int open_files(t_session *session, t_command *cmd, int ind)
+int	open_files(t_session *session, t_command *cmd, int id)
 {
-	int i;
+	int	i;
+	// int	num;
 
 	i = 0;
-	while (i < session->count->red_in_nb[ind])
+	// num = session->count->red_in_nb[id] + \
+	// 	session->count->red_out_nb[id] + session->count->red_app_nb[id];
+	// while (i < num - 1)
+	while(cmd->files[i])
 	{
-		if (in_file(cmd, cmd->in[i++]) < 0)
-			return (-1);
-	}
-	i = 0;
-	while (i < session->count->red_out_nb[ind])
-	{
-		if (out_file(cmd, cmd->out[i++]) < 0)
-			return (-1);
-	}
-	i = 0;
-	while (i < session->count->red_app_nb[ind])
-	{
-		if (out_app_file(cmd, cmd->out_app[i++]) < 0)
-			return (-1);
+		if (cmd->files[i]->type == IN_FILE)
+		{
+			if (in_file(cmd, cmd->files[i]->name) < 0)
+				return (-1);
+		}
+		else if (cmd->files[i]->type == OUT_FILE)
+		{
+			if (out_file(cmd, cmd->files[i]->name) < 0)
+				return (-1);
+		}
+		else if (cmd->files[i]->type == OUT_APPEND)
+		{
+			if (out_app_file(cmd, cmd->files[i]->name) < 0)
+				return (-1);
+		}
+		i++;
 	}
 	return (1);
 }
+
+// grep hi <./test_files/infile
