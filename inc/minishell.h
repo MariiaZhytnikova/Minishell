@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:22:59 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/12 13:48:37 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/16 13:39:47 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <dirent.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 
 # include "libft.h"
 # include "init.h"
