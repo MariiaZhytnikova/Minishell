@@ -6,7 +6,11 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/15 19:27:06 by ekashirs         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/16 13:04:51 by mzhitnik         ###   ########.fr       */
+>>>>>>> 063ec21 (redirect new structure)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,4 +119,16 @@ int	longer(char *s1, char *s2)
 	if (len1 > len2)
 		return (len1);
 	return (len2);
+}
+
+int	array_size(t_file **array)
+{
+	int	size;
+
+	if (!array)
+		return (0);
+	size = 0;
+	while (array[size]->name)
+		size++;
+	return (size);
 }
