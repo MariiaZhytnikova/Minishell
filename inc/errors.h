@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/15 16:16:17 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:20:05 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define ERR_EXIT_USAGE "exit: numeric argument required"
 # define ERR_SYNTAX "syntax error near unexpected token "
 # define ERR_REDIR " ambiguous redirect"
-
+# define ERR_ISADIR ": Is a directory"
 
 
 #endif
