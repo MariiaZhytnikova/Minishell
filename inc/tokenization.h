@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 16:17:40 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/16 09:15:04 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		expansion_two(t_session *session, char **str);
 char	*add_spaces(t_session *session, char *input);
 int		split_and_check(t_session *session, t_list **token, char *src);
 
+int		files(t_command *command, t_list *current);
 int		redirection_in(t_command *command, t_list *current);
 int		redirection_out(t_command *command, t_list *current);
 
