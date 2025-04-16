@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 15:46:43 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:22:13 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	child(t_session *session, int *id, int runs, int num)
 	{
 		ft_lstclear(&session->env_var, free);
 		free_session(session);
-		free(session->history_pipe); // not works in normal free
 		rl_clear_history();
 		exit(1);
 	}

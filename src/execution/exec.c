@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/15 14:37:13 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/16 09:02:20 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,14 @@ void	run_cmd(t_session *session, t_command *cmd)
 
 void	exec(t_session *session, int *id)
 {
-	// printf("STATUS is: %d\n", *id);
 	if (session->count->cmd_nb == 1 && session->count->args_nb[0] > 0 \
 		&& is_builtin(session->cmds[*id]) == true)
 	{
 		run_builtin(session, id);
 		session->status_last = session->cmds[*id]->status;
-		// printf("STATUS OF LAST COMMAND [%d] is: %d\n", *id, session->status_last);
 		return ;
 	}
-	run_pipe(session, id); // if I have || or && I shouls run exec
+	run_pipe(session, id);
 	// printf("ID of next COMMAND is: %d\n", *id);
 	if (session->cmds[*id] && session->cmds[*id - 1]->type == AND)
 		run_and(session, id);
