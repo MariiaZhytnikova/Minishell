@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/14 15:18:50 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:42:46 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		ft_isspace(int c);
 size_t	ft_var_name_len(const char *s);
 void	free_session(t_session *session);
 void	*reall(void *ptr, size_t old_size, size_t new_size);
+int		array_size(t_file **array);
 
 // Linked list utils
 
