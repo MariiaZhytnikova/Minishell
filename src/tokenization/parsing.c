@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/16 15:19:15 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:39:17 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,9 +181,9 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 		return (free(input), error_msg(ERR_BASH, ERR_CRASH, "split_input", NULL), -1);
 	free(input);
 	if (delimiter_wrong_pos(*token) == true)
-		return (-1);
+		return (-2);
 	if (consecutive_delimiters(*token) == true)
-		return (-1);
+		return (-2);
 	status = here_doc_lim(session, token);
 	if (status < 0)
 		return (error_msg(ERR_BASH, ERR_CRASH, "here_doc_lim", NULL), -1);
@@ -204,6 +204,8 @@ static int	handle_tokenization(t_session *session, t_list **token)
 	status = split_and_check(session, token, session->input);
 	if (status < 0)
 	{
+		if (status == -2)
+			session->status_last = 2;
 		if (*token)
 			ft_lstclear(token, free);
 		return (-1);
@@ -249,15 +251,3 @@ int	lexical_analyzer(t_session *session)
 	// print_me(session);
 	return (1);
 }
-
-// /home/mzhitnik/Projects/Minishell$ echo $HOME$HOME
-// /home/mzhitnik$HOME
-
-// /home/mzhitnik/Projects/Minishell$ echo $USER'$USER'
-// mzhitnikmzhitnik
-
-// /home/mzhitnik/Projects/Minishell$ echo ''$USER'' | grep $USER
-
-// exit status for syntx errors, session->last_status = 2!
-
-// wildcard skip hidden files
