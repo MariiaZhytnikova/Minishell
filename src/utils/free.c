@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/16 14:26:21 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/22 13:31:43 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_arr(char **arr)
 	free(arr);
 }
 
-void	free_tfile(t_file **arr) ///// BWA HA HA
+void	free_tfile(t_file **arr)
 {
 	int	i;
 
@@ -50,9 +50,7 @@ static void	free_command(t_command *cmd)
 	if (cmd->args)
 		free_arr(cmd->args);
 	if (cmd->files)
-		free_tfile(cmd->files); ///// BWA HA HA
-	if (cmd->h_doc)
-		free_arr(cmd->h_doc);
+		free_tfile(cmd->files);
 	if (cmd->last_in)
 	{
 		if (cmd->last_in->name)
@@ -71,12 +69,12 @@ static void	free_command(t_command *cmd)
 static void	free_count(t_count *count)
 {
 	if (!count)
-		return;
+		return ;
 	if (count->args_nb)
 		free(count->args_nb);
 	if (count->red_in_nb)
 		free(count->red_in_nb);
-	if (count->red_out_nb)	
+	if (count->red_out_nb)
 		free(count->red_out_nb);
 	if (count->red_app_nb)
 		free(count->red_app_nb);

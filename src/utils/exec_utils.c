@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:11:29 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 15:12:00 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:39:48 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,11 @@ int	num_pipes(t_session *session, int *id)
 		count++;
 	}
 	return (count);
+}
+
+void	group_free(t_session *session)
+{
+	ft_lstclear(&session->env_var, free);
+	rl_clear_history();
+	free_session(session);
 }

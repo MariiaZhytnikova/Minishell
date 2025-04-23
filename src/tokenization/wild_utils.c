@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 16:17:26 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:27:07 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,9 @@ int	create_new(t_list **args, t_list *new, char *str)
 {
 	t_temp	thing;
 
-	ft_memset(thing.temp, 0, MAX_PROMT);
+	if (!str)
+		return (-1);
+	ft_memset(thing.temp, 0, MAX_PR);
 	thing.i = 0;
 	thing.j = 0;
 	skip_quotes(str, &thing);

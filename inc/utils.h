@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/16 10:42:46 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:37:39 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 void	error_msg(char *start, char *details, char *c, char *error);
 void	free_arr(char **arr);
 int		skip_whitespace(const char *str);
-size_t	word_count(char *str); // ?????????????????????????????????????????//////
 int		longer(char *s1, char *s2);
 long	ft_atol(const char *str);
 int		ft_isspace(int c);
@@ -40,6 +39,7 @@ char	**list_to_arr(t_list *list);
 
 // Execution utils
 
-int	num_pipes(t_session *session, int *id);
+int		num_pipes(t_session *session, int *id);
+void	group_free(t_session *session);
 
 #endif

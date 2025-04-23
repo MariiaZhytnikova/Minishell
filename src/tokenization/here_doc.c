@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 14:46:08 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:05:47 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	here_doc_process(t_list **token, char **line, int stdin)
 	*line = readline("> ");
 	while (1)
 	{
-		if (!*line && signalnum == 2)
+		if (!*line && g_signalnum == 2)
 		{
 			if (dup2(stdin, STDIN_FILENO) == -1)
 				return (-1);

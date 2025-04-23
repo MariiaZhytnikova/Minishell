@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:25:56 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 16:10:13 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:03:20 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,26 @@ bool	is_red(char *content)
 
 bool	consecutive_delimiters(t_list *token)
 {
-	t_list	*curr;
+	t_list	*c;
 
-	curr = token;
-	while (curr && curr->next)
+	c = token;
+	while (c && c->next)
 	{
-		if (is_del(curr->content) && is_del(curr->next->content))
-			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
-		if (is_red(curr->content) && is_red(curr->next->content))
-			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
-		if (is_red(curr->content) && is_del(curr->next->content))
-			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
-		if (ft_strchr(curr->content, '*') && ft_strchr(curr->next->content, '('))
-			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
-		if (ft_strchr(curr->content, '*') \
-			&& ft_strchr(curr->next->content, ')'))
-			return (error_msg(ERR_BASH, ERR_SYNTAX, curr->next->content, NULL), true);
-		if (is_red_mini(curr->content) \
-			&& ((char *)curr->next->content)[0] == '*')
+		if (is_del(c->content) && is_del(c->next->content))
+			return (error_msg(ERR_BASH, ERR_SYNTAX, c->next->content, 0), true);
+		if (is_red(c->content) && is_red(c->next->content))
+			return (error_msg(ERR_BASH, ERR_SYNTAX, c->next->content, 0), true);
+		if (is_red(c->content) && is_del(c->next->content))
+			return (error_msg(ERR_BASH, ERR_SYNTAX, c->next->content, 0), true);
+		if (ft_strchr(c->content, '*') && ft_strchr(c->next->content, '('))
+			return (error_msg(ERR_BASH, ERR_SYNTAX, c->next->content, 0), true);
+		if (ft_strchr(c->content, '*') && ft_strchr(c->next->content, ')'))
+			return (error_msg(ERR_BASH, ERR_SYNTAX, c->next->content, 0), true);
+		if (is_red_mini(c->content) && ((char *)c->next->content)[0] == '*')
 			return (error_msg(ERR_BASH, "*:", ERR_REDIR, NULL), true);
-		if (ft_strncmp(curr->content, "&", 2) == 0)
+		if (ft_strncmp(c->content, "&", 2) == 0)
 			return (error_msg(ERR_BASH, ERR_EXCL, NULL, NULL), true);
-		curr = curr->next;
+		c = c->next;
 	}
 	return (false);
 }
@@ -89,14 +87,14 @@ bool	delimiter_wrong_pos(t_list *token)
 	if ((ft_strncmp(token->content, "&&", longer(token->content, "&&")) == 0))
 		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
 	if ((ft_strncmp(last->content, "<<", longer(last->content, "<<")) == 0))
-		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, last->content, NULL), true);
 	if ((ft_strncmp(last->content, "<", longer(last->content, "<")) == 0))
-		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, last->content, NULL), true);
 	if ((ft_strncmp(last->content, ">>", longer(last->content, ">>")) == 0))
-		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, last->content, NULL), true);
 	if ((ft_strncmp(last->content, ">", longer(last->content, ">")) == 0))
-		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, last->content, NULL), true);
 	if ((ft_strncmp(last->content, "&", longer(last->content, "&")) == 0))
-		return (error_msg(ERR_BASH, ERR_SYNTAX, token->content, NULL), true);
+		return (error_msg(ERR_BASH, ERR_SYNTAX, last->content, NULL), true);
 	return (false);
 }

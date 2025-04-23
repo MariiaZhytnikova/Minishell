@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/11 16:46:48 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:01:39 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,32 +19,38 @@ int	ft_isalnum_plus(int c)
 		|| (c >= '0' && c <= '9') || c == '_');
 }
 
-int	expansion(t_session *session, t_temp *thing, char *str)
+static int	qwest(t_session *session, t_temp *thing)
 {
-	char	name[MAX_PROMT];
-	char	*env;
-	int		len_name;
 	char	*status_str;
 	int		k;
 
-	ft_memset(name, 0, MAX_PROMT);
+	status_str = ft_itoa(session->status_last);
+	if (!status_str)
+		return (-1);
+	thing->i += 2;
+	k = 0;
+	while (status_str[k] && thing->j < MAX_PR)
+		thing->temp[thing->j++] = status_str[k++];
+	free(status_str);
+	return (1);
+}
+
+static void	copy_sign(t_temp *thing, char *str)
+{
+	thing->temp[thing->j++] = str[thing->i++];
+}
+
+int	expansion(t_session *session, t_temp *thing, char *str)
+{
+	char	name[MAX_PR];
+	char	*env;
+	int		len_name;
+
+	ft_memset(name, 0, MAX_PR);
 	if (str[thing->i + 1] == '?')
-	{
-		status_str = ft_itoa(session->status_last);
-		if (!status_str)
-			return (-1);
-		thing->i += 2; // Skip $ and ?
-		k = 0;
-		while (status_str[k])
-			thing->temp[thing->j++] = status_str[k++];
-		free(status_str);
-		return (1);
-	}
+		return (qwest(session, thing));
 	if (!str[thing->i + 1] || !ft_isalnum_plus(str[thing->i + 1]))
-	{
-		thing->temp[thing->j++] = str[thing->i++];
-		return (1);
-	}
+		return (copy_sign(thing, str), 1);
 	len_name = 0;
 	thing->i++;
 	while (str[thing->i] && ft_isalnum_plus(str[thing->i]))
@@ -57,7 +63,7 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	}
 	else
 		return (1);
-	while (env[len_name + 1])
+	while (env[len_name + 1] && thing->j < MAX_PR)
 		thing->temp[thing->j++] = env[len_name++ + 1];
 	return (free(env), 1);
 }
@@ -66,10 +72,10 @@ int	expansion_two(t_session *session, char **str)
 {
 	t_temp	thing;
 
-	ft_memset(thing.temp, 0, MAX_PROMT);
+	ft_memset(thing.temp, 0, MAX_PR);
 	thing.i = 0;
 	thing.j = 0;
-	while ((*str)[thing.i])
+	while ((*str)[thing.i] && thing.j < MAX_PR)
 	{
 		if ((*str)[thing.i] == '$')
 		{

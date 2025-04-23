@@ -6,10 +6,9 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 11:34:31 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/02 11:24:51 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:06:53 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
