@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/16 13:42:31 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:26:10 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "minishell.h"
 
 # define LEN_PATH 4096
-# define MAX_PROMT 131072
+# define MAX_PR 231072
 
 # define RESET		"\033[0m"
 # define BLACK		"\033[30m"
@@ -28,33 +28,33 @@
 # define CYAN		"\033[36m"
 # define WHITE		"\033[37m"
 # define BOLD		"\033[1m"
-#define PROMPT	"\001" GREEN BOLD "\002minishell$ \001" RESET "\002"
+# define PROMPT		"\001\033[32m\033[1m\002minishell$ \001\033[0m\002"
 
-typedef enum
+typedef enum e_redir_type
 {
 	STD,
 	IN_FILE,
 	HERE_DOC,
 	OUT_FILE,
 	OUT_APPEND,
-}	redirection;
+}	t_redir_type;
 
-typedef enum
+typedef enum e_del_type
 {
 	NONE,
 	PIPE,
 	AND,
 	OR,
-}	delimiter;
+}	t_del_type;
 
-typedef	struct s_file
+typedef struct s_file
 {
-	int			fd;
-	char		*name;
-	redirection	type;
+	int				fd;
+	char			*name;
+	t_redir_type	type;
 }	t_file;
 
-typedef	struct s_count
+typedef struct s_count
 {
 	int			cmd_nb;
 	int			*args_nb;
@@ -66,19 +66,19 @@ typedef	struct s_count
 	int			here_doc;
 }	t_count;
 
-typedef struct	s_command
+typedef struct s_command
 {
 	int			pid;
 	char		**args;
 	t_file		**files;
-	char		**h_doc;
+	// char		**h_doc;
 	t_file		*last_in;
 	t_file		*last_out;
-	delimiter	type;
+	t_del_type	type;
 	int			status;
 }	t_command;
 
-typedef struct	s_session
+typedef struct s_session
 {
 	char		*input;
 	char		*history_pipe;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/16 15:19:25 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:46:32 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,11 @@
 int	skip_whitespace(const char *str)
 {
 	int	i;
-	
+
 	i = 0;
 	while (str[i] && str[i] == ' ')
 		i++;
 	return (i);
-}
-
-size_t	word_count(char *str)
-{
-	size_t	count;
-	size_t	in_word;
-
-	count = 0;
-	in_word = 0;
-	while (*str)
-	{
-		if (*str != ' ' && in_word == 0)
-		{
-			in_word = 1;
-			count++;
-		}
-		else if (*str == ' ')
-			in_word = 0;
-		str++;
-	}
-	return (count);
 }
 
 long	ft_atol(const char *str)
@@ -84,27 +63,6 @@ size_t	ft_var_name_len(const char *s)
 	return (counter);
 }
 
-void	*reall(void *ptr, size_t old_size, size_t new_size)
-{
-	void	*new_ptr;
-	size_t	copy_size;
-	
-	if (new_size == 0)
-		return (free(ptr), NULL);
-	if (!ptr)
-		return (ft_calloc(new_size, sizeof(char)));
-	new_ptr = ft_calloc(new_size, sizeof(char));
-	if (new_ptr == NULL)
-		return (NULL);
-	if (old_size > new_size)
-		copy_size = new_size;
-	else
-		copy_size = old_size;
-	ft_memcpy(new_ptr, ptr, copy_size);
-	free(ptr);
-	return (new_ptr);
-}
-
 int	longer(char *s1, char *s2)
 {
 	int	len1;
@@ -115,16 +73,4 @@ int	longer(char *s1, char *s2)
 	if (len1 > len2)
 		return (len1);
 	return (len2);
-}
-
-int	array_size(t_file **array)
-{
-	int	size;
-
-	if (!array)
-		return (0);
-	size = 0;
-	while (array[size]->name)
-		size++;
-	return (size);
 }

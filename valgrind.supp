@@ -1,6 +1,12 @@
 {
-   leak _rl_init_terminal_io
+   leak xrealloc
    Memcheck:Leak
    ...
    fun:readline
+}
+{
+   leak xrealloc
+   Memcheck:Leak
+   ...
+   fun:add_history
 }

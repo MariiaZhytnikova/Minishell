@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:41 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 14:52:31 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:26:00 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ static void	exit_with_code(t_session *session, t_command *cmd)
 		if (!ft_isdigit(cmd->args[1][i]))
 		{
 			error_msg(ERR_BASH, cmd->args[0], ERR_NUM, NULL);
-			ft_lstclear(&session->env_var, free);
-			rl_clear_history();
-			free_session(session);
+			close(session->in);
+			close(session->out);
+			group_free(session);
 			exit(2);
 		}
 		i++;
 	}
 	status = ft_atol(cmd->args[1]);
 	exit_status = (unsigned char)status;
-	ft_lstclear(&session->env_var, free);
-	rl_clear_history();
-	free_session(session);
+	close(session->in);
+	close(session->out);
+	group_free(session);
 	exit(exit_status);
 }
 
@@ -46,14 +46,14 @@ void	exit_builtin(t_session *session, t_command *cmd)
 	printf("exit\n");
 	if (!cmd->args[1])
 	{
-		ft_lstclear(&session->env_var, free);
-		rl_clear_history();
-		free_session(session);
+		close(session->in);
+		close(session->out);
+		group_free(session);
 		exit(0);
 	}
 	if (cmd->args[2])
 	{
-		error_msg(ERR_BASH,  cmd->args[0], ERR_MANY_ARGS, NULL);
+		error_msg(ERR_BASH, cmd->args[0], ERR_MANY_ARGS, NULL);
 		cmd->status = 1;
 		return ;
 	}

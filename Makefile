@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/14 17:08:56 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/04/22 14:44:57 by mzhitnik         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,10 @@ EXEC = exec processing pipe and_or open redirect
 MAIN = main errors signals
 
 TOKENS = prompt parsing quotes token_check here_doc here_doc_lim skip_quotes\
-			delimiters tokens_parsing numbers redirection expansion wild_cards wild_utils history
+			delimiters command_utils numbers redirection expansion \
+			split wild_cards wild_utils history print
 
-UTILS = utils linked_list_utils free exec_utils
+UTILS = utils_one utils_two ll_utils_one ll_utils_two free exec_utils
 
 SRCS := $(addsuffix .c, $(addprefix src/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix src/execution/, $(EXEC))) \

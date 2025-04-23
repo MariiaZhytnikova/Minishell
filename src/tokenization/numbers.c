@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   numbers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:28:21 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 16:18:16 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:52:02 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,26 +62,26 @@ void	count_arguments(t_list **token, t_count *count)
 
 static void	count_red(t_list **current, t_count *count, int i)
 {
-	if (ft_strncmp((*current)->content, "<", \
-		longer((*current)->content, "<")) == 0)
+	if (ft_strncmp((*current)->content, "<",
+			longer((*current)->content, "<")) == 0)
 	{
 		count->red_in_nb[i] += 1;
 		*current = (*current)->next;
 	}
-	if (ft_strncmp((*current)->content, ">", \
-		longer((*current)->content, ">")) == 0)
+	if (ft_strncmp((*current)->content, ">",
+			longer((*current)->content, ">")) == 0)
 	{
 		count->red_out_nb[i] += 1;
 		*current = (*current)->next;
 	}
-	if (ft_strncmp((*current)->content, ">>", \
-		longer((*current)->content, ">>")) == 0)
+	if (ft_strncmp((*current)->content, ">>",
+			longer((*current)->content, ">>")) == 0)
 	{
 		count->red_app_nb[i] += 1;
 		*current = (*current)->next;
 	}
-	if (ft_strncmp((*current)->content, "<<<", \
-		longer((*current)->content, ">>>")) == 0)
+	if (ft_strncmp((*current)->content, "<<<",
+			longer((*current)->content, ">>>")) == 0)
 	{
 		count->red_h_doc_nb[i] += 1;
 		*current = (*current)->next;
@@ -128,7 +128,6 @@ int	numbers(t_session *session, t_list **token, t_count *count)
 		return (-1);
 	count_arguments(token, count);
 	count_delim_and_redir(token, count);
-	// print_me_num(count);
 	if (allocate_struct(session, count, 0) < 0)
 		return (-1);
 	return (1);

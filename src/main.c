@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/16 13:31:53 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:05:28 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@ static int	init_session(int argc, char **argv, char **env, t_session *session)
 
 static void	process_input(t_session *session)
 {
-	int status;
-	int id;
+	int	status;
+	int	id;
 
 	status = lexical_analyzer(session);
 	if (status != 1)
 	{
 		if (status == 4)
-			{	
-				ft_lstclear(&session->env_var, free);
-				free_session(session);
-				rl_clear_history();
-				printf("exit\n");
-				exit(2);
-			}
+		{
+			ft_lstclear(&session->env_var, free);
+			free_session(session);
+			rl_clear_history();
+			printf("exit\n");
+			exit(2);
+		}
 		history(session);
 		free_session(session);
 		return ;
@@ -54,7 +54,6 @@ static void	process_input(t_session *session)
 	exec(session, &id);
 	free_session(session);
 }
-
 
 int	main(int argc, char **argv, char **env)
 {
@@ -69,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 		session.count = NULL;
 		session.history_pipe = NULL;
 		setup_signals(0);
-		signalnum = 0;
+		g_signalnum = 0;
 		if (prompt(&session) < 0)
 			exit_signal(&session, 0);
 		if (session.input[0] == '\0')

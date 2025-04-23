@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_lim.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/15 16:17:40 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:20:12 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	here_doc_lim_process(t_list *cur, int stdin, char *line, char **buf)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line && signalnum == 2)
+		if (!line && g_signalnum == 2)
 		{
 			if (dup2(stdin, STDIN_FILENO) == -1)
 				return (-1);
@@ -98,6 +98,8 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 		free(buffer);
 		return (status);
 	}
+	if (ft_strlen(buffer) > 65715)
+		return (error_msg(ERR_BUF, NULL, NULL, NULL), 4);
 	return (replace_token(session, current, buffer));
 }
 

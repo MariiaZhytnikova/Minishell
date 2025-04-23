@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:26:32 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/15 16:45:05 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:02:17 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	skip_sq(t_temp *thing, char *args)
 
 	is_closed = 0;
 	thing->temp[thing->j++] = args[thing->i++];
-	while (args[thing->i])
+	while (args[thing->i] && thing->j < MAX_PR)
 	{
 		if (args[thing->i] != '\'')
 			thing->temp[thing->j++] = args[thing->i++];
@@ -37,7 +37,7 @@ static int	skip_sq(t_temp *thing, char *args)
 static int	skip_dq(t_session *session, t_temp *thing, char *args, int closed)
 {
 	thing->temp[thing->j++] = args[thing->i++];
-	while (args[thing->i])
+	while (args[thing->i] && thing->j < MAX_PR)
 	{
 		if (args[thing->i] != '\"')
 		{
@@ -78,7 +78,7 @@ int	if_quotes(t_session *session, t_temp *thing, char *args)
 
 int	handle_quotes(t_session *session, t_temp *thing, char *args)
 {
-	while (args[thing->i] && args[thing->i] != ' ')
+	while (args[thing->i] && args[thing->i] != ' ' && thing->i < MAX_PR)
 	{
 		if (args[thing->i] == '\'' || args[thing->i] == '\"')
 		{

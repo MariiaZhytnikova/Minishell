@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:00 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 14:08:53 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:27:15 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	update_env(t_list *env_var, t_command *cmd)
 
 	if (!getcwd(cur_dir, LEN_PATH))
 	{
-		error_msg(ERR_GETCWD, ERR_NOFILE, NULL, NULL);
+		error_msg(ERR_GETCWD, ERR_NO, NULL, NULL);
 		cmd->status = EXIT_FAILURE;
 		return ;
 	}
@@ -108,7 +108,7 @@ void	cd_builtin(t_session *session, t_command *cmd)
 	}
 	if (cmd->args[2])
 	{
-		error_msg(ERR_BASH,  cmd->args[0], ERR_MANY_ARGS, NULL);
+		error_msg(ERR_BASH, cmd->args[0], ERR_MANY_ARGS, NULL);
 		cmd->status = 1;
 		return ;
 	}

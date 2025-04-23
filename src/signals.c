@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:01:37 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/14 15:13:54 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:16:59 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-sig_atomic_t signalnum;
+sig_atomic_t	g_signalnum;
 
 void	exit_signal(t_session *session, int code)
 {
@@ -32,11 +32,11 @@ void	handle_sigint(int signal)
 	rl_redisplay();
 }
 
-void heredoc_handle_sigint(int signo)
+void	heredoc_handle_sigint(int signo)
 {
-	if (signo == SIGINT) 
+	if (signo == SIGINT)
 	{
-		signalnum = 2;
+		g_signalnum = 2;
 		printf("\n");
 		close(STDIN_FILENO);
 	}
@@ -61,22 +61,22 @@ void	setup_signals(int mode)
 	}
 }
 
-void	handle_signal_status(t_session *s, int pid, int status, int *si, int *sq)
+void	handle_signal_status(t_session *s, int pid, int status, t_flags *flags)
 {
-	int sig;
-	int j;
+	int	sig;
+	int	j;
 
 	sig = WTERMSIG(status);
 	j = 0;
-	if (sig == SIGINT && !(*si))
+	if (sig == SIGINT && !(flags->sigint_printed))
 	{
 		write(1, "\n", 1);
-		*si = 1;
+		flags->sigint_printed = 1;
 	}
-	if (sig == SIGQUIT && !(*sq))
+	else if (sig == SIGQUIT && !(flags->sigquit_printed))
 	{
 		write(STDERR_FILENO, "Quit (core dumped)\n", 20);
-		*sq = 1;
+		flags->sigquit_printed = 1;
 	}
 	while (j < s->count->cmd_nb)
 	{

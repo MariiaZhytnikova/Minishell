@@ -6,32 +6,43 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/16 14:31:20 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:27:02 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	skip_quotes_ast(char *pattern, t_list **args)
+static int	copy_file_name(char *name, t_list **args, int *count)
+{
+	char	*temp;
+	t_list	*new;
+
+	(*count)++;
+	temp = ft_strdup(name);
+	if (create_new(args, new, temp) < 0)
+		return (-1);
+	free(temp);
+	return (1);
+}
+
+int	skip_quotes_ast(char *pattern, t_list **args, int count, t_list *new)
 {
 	struct dirent	*entry;
 	DIR				*stream;
-	t_list			*new;
-	int				count;
 
-	count = 0;
 	stream = opendir(".");
 	if (!stream)
-		return (error_msg(ERR_BASH, ERR_DIR, "'.'", ERR_PERM), -1);
+		return (error_msg(ERR_BASH, ERR_DIR, "'.'", ERR_PE), -1);
 	entry = readdir(stream);
 	while (entry)
 	{
 		if (match(entry->d_name, pattern) == true)
 		{
-			count++;
-			// printf("FILE NAME IS %s\n", entry->d_name);
-			if (create_new(args, new, ft_strdup(entry->d_name)) < 0)
-				return (-1);
+			if (entry->d_name[0] != '.')
+			{
+				if (copy_file_name(entry->d_name, args, &count) < 0)
+					return (-1);
+			}
 		}
 		entry = readdir(stream);
 	}
@@ -45,10 +56,13 @@ int	skip_quotes_ast(char *pattern, t_list **args)
 static int	wild_check(char *arg, t_list **args)
 {
 	t_list	*new;
+	int		count;
 
+	count = 0;
+	new = NULL;
 	if (ft_strchr(arg, '*') && !is_in_quotes(arg))
 	{
-		if (skip_quotes_ast(arg, args) < 0)
+		if (skip_quotes_ast(arg, args, count, new) < 0)
 			return (-1);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:45:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/16 11:18:52 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/22 18:02:50 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	skip_quotes(const char *arg, t_temp *thing)
 {
-	while (arg[thing->i])
+	while (arg[thing->i] && thing->j < MAX_PR)
 	{
 		if (arg[thing->i] == '\'')
 		{
@@ -43,7 +43,7 @@ int	check_in(char **input)
 	id = 0;
 	while (input[id])
 	{
-		ft_memset(thing.temp, 0, MAX_PROMT);
+		ft_memset(thing.temp, 0, MAX_PR);
 		thing.i = 0;
 		thing.j = 0;
 		if (ft_strchr(input[id], '\'') || ft_strchr(input[id], '\"'))
@@ -63,7 +63,7 @@ int	check_last(char **input)
 {
 	t_temp	thing;
 
-	ft_memset(thing.temp, 0, MAX_PROMT);
+	ft_memset(thing.temp, 0, MAX_PR);
 	thing.i = 0;
 	thing.j = 0;
 	if (ft_strchr(*input, '\'') || ft_strchr(*input, '\"'))
@@ -81,19 +81,13 @@ static int	check_case(t_session *session, t_command *cmd, int id)
 {
 	int	i;
 	int	num;
-	
+
 	i = 0;
 	while (cmd->files[i])
 	{
 		if (check_last(&cmd->files[i]->name) < 0)
 			return (-1);
-		// printf("check_last >%s<\n", cmd->files[i]->name);
 		i++;
-	}
-	if (session->count->red_h_doc_nb[id] > 0)
-	{
-		if (check_in(cmd->h_doc) < 0)
-			return (-1);
 	}
 	return (1);
 }
@@ -102,7 +96,6 @@ int	skip(t_session *session)
 {
 	int	id;
 
-	// printf("skip\n");
 	id = 0;
 	if (wild(session) < 0)
 		return (-1);
@@ -110,15 +103,11 @@ int	skip(t_session *session)
 	{
 		if (check_case(session, session->cmds[id], id) < 0)
 			return (-1);
-		// printf("after check_case\n");
 		if (check_last(&session->cmds[id]->last_in->name) < 0)
 			return (-1);
-		// printf("after check_last\n");
 		if (check_last(&session->cmds[id]->last_out->name) < 0)
 			return (-1);
-		// printf("after check_last\n");
 		id++;
 	}
-	// printf("after skip\n");
 	return (1);
 }
