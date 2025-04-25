@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/23 13:05:28 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 09:54:42 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static int	init_session(int argc, char **argv, char **env, t_session *session)
 	session->env_var = NULL;
 	session->status_last = 0;
 	create_env_list(&session->env_var, env);
-	if (!session->env_var)
-		return (1);
 	return (0);
 }
 
@@ -41,7 +39,7 @@ static void	process_input(t_session *session)
 			ft_lstclear(&session->env_var, free);
 			free_session(session);
 			rl_clear_history();
-			printf("exit\n");
+			//printf("exit\n");
 			exit(2);
 		}
 		history(session);
@@ -59,6 +57,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_session	session;
 
+	printf("💡 🧠 💡\n");
 	if (init_session(argc, argv, env, &session) != 0)
 		return (1);
 	while (1)

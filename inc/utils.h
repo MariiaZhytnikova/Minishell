@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 14:37:39 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:54:45 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		skip_whitespace(const char *str);
 int		longer(char *s1, char *s2);
 long	ft_atol(const char *str);
 int		ft_isspace(int c);
+int		ft_isalnum_plus(int c);
 size_t	ft_var_name_len(const char *s);
 void	free_session(t_session *session);
 void	*reall(void *ptr, size_t old_size, size_t new_size);

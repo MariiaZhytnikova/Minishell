@@ -6,38 +6,59 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 18:01:39 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:35:32 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_isalnum_plus(int c)
+bool	is_heredoc(t_temp *thing, char *str)
 {
-	return ((c >= 'a' && c <= 'z')
-		|| (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9') || c == '_');
+	int	i;
+
+	i = thing->i - 1;
+	while (str[i] && ft_isspace(str[i]))
+		i--;
+	if (str[i] == '<' && str[i - 1] && str[i - 1] == '<')
+		return (true);
+	return (false);
 }
 
-static int	qwest(t_session *session, t_temp *thing)
+static int	find_it(t_session *session, t_temp *thing)
 {
 	char	*status_str;
-	int		k;
 
 	status_str = ft_itoa(session->status_last);
 	if (!status_str)
 		return (-1);
 	thing->i += 2;
-	k = 0;
-	while (status_str[k] && thing->j < MAX_PR)
-		thing->temp[thing->j++] = status_str[k++];
+	dynstr_append_str(thing, status_str);
 	free(status_str);
 	return (1);
 }
 
-static void	copy_sign(t_temp *thing, char *str)
+static int	no_expansion(t_session *session, t_temp *thing, char *str)
 {
-	thing->temp[thing->j++] = str[thing->i++];
+	if (str[thing->i + 1] == '?')
+		return (find_it(session, thing), 0);
+	if (!str[thing->i + 1] || !ft_isalnum_plus(str[thing->i + 1]))
+	{
+		if (str[thing->i + 1] == '\"' || str[thing->i + 1] == '\'')
+		{
+			thing->i++;
+			return (0);
+		}
+			thing->temp[thing->j++] = str[thing->i++];
+		return (0);
+	}
+	if (is_heredoc(thing, str) == true)
+	{
+		dynstr_append_char(thing, str);
+		while (str[thing->i] && ft_isalnum_plus(str[thing->i]))
+			dynstr_append_char(thing, str);
+		return (0);
+	}
+	return (1);
 }
 
 int	expansion(t_session *session, t_temp *thing, char *str)
@@ -47,10 +68,8 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	int		len_name;
 
 	ft_memset(name, 0, MAX_PR);
-	if (str[thing->i + 1] == '?')
-		return (qwest(session, thing));
-	if (!str[thing->i + 1] || !ft_isalnum_plus(str[thing->i + 1]))
-		return (copy_sign(thing, str), 1);
+	if (no_expansion(session, thing, str) == 0)
+		return (1);
 	len_name = 0;
 	thing->i++;
 	while (str[thing->i] && ft_isalnum_plus(str[thing->i]))
@@ -63,8 +82,11 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	}
 	else
 		return (1);
-	while (env[len_name + 1] && thing->j < MAX_PR)
-		thing->temp[thing->j++] = env[len_name++ + 1];
+	ft_strlcat(thing->temp, "\'", thing->cap);
+	thing->j++;
+	dynstr_append_str(thing, &env[len_name + 1]);
+	ft_strlcat(thing->temp, "\'", thing->cap);
+	thing->j++;
 	return (free(env), 1);
 }
 
@@ -72,10 +94,9 @@ int	expansion_two(t_session *session, char **str)
 {
 	t_temp	thing;
 
-	ft_memset(thing.temp, 0, MAX_PR);
-	thing.i = 0;
-	thing.j = 0;
-	while ((*str)[thing.i] && thing.j < MAX_PR)
+	if (dynstr_init(&thing, *str) < 0)
+		return (1);
+	while ((*str)[thing.i])
 	{
 		if ((*str)[thing.i] == '$')
 		{
@@ -83,11 +104,12 @@ int	expansion_two(t_session *session, char **str)
 				return (-1);
 		}
 		else
-			thing.temp[thing.j++] = (*str)[thing.i++];
+			dynstr_append_char(&thing, *str);
 	}
 	free (*str);
 	*str = ft_strdup(thing.temp);
 	if (!*str)
 		return (-1);
+	free (thing.temp);
 	return (1);
 }

@@ -6,37 +6,11 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 12:02:16 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:56:28 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	get_redirection(t_command *command, t_list *current)
-{
-	int	size;
-
-	if (files(command, current) < 0)
-		return (error_msg(ERR_BASH, ERR_CRASH, "files", NULL), -1);
-	if (redirection_in(command, current) < 0)
-		return (error_msg(ERR_BASH, ERR_CRASH, "redirection_in", NULL), -1);
-	if (redirection_out(command, current) < 0)
-		return (error_msg(ERR_BASH, ERR_CRASH, "redirection_OUT", NULL), -1);
-	return (1);
-}
-
-void	get_delimiter(t_command *command, t_list *current)
-{
-	if ((ft_strncmp(current->content,
-				"|", longer(current->content, "|")) == 0))
-		command->type = PIPE;
-	else if ((ft_strncmp(current->content,
-				"||", longer(current->content, "||")) == 0))
-		command->type = OR;
-	else if ((ft_strncmp(current->content,
-				"&&", longer(current->content, "&&")) == 0))
-		command->type = AND;
-}
 
 static int	files_alloc(t_session *session, int num, int id)
 {
@@ -94,3 +68,53 @@ int	allocate_struct(t_session *s, t_count *c, int i)
 	}
 	return (1);
 }
+
+int	dynstr_init(t_temp *thing, char *input)
+{
+	thing->i = 0;
+	thing->j = 0;
+	thing->cap = ft_strlen(input) * 2;
+	thing->temp = ft_calloc(1, thing->cap);
+	if (!thing->temp)
+		return (-1);
+	return (1);
+}
+
+void	dynstr_append_char(t_temp *thing, char *str)
+{
+	if (thing->j + 2 >= thing->cap)
+	{
+		thing->temp = reall(thing->temp, thing->cap, thing->cap * 2);
+		thing->cap *= 2;
+	}
+	thing->temp[(thing->j)++] = str[(thing->i)++];
+	thing->temp[(thing->j)] = '\0';
+}
+
+void	dynstr_append_str(t_temp *thing, char *str)
+{
+	int	i;
+
+	if (!str || !*str)
+		return ;
+	if (thing->j + ft_strlen(str) + 1 >= thing->cap)
+	{
+		thing->temp = reall(thing->temp, thing->cap, thing->cap * 2);
+		thing->cap *= 2;
+	}
+	i = 0;
+	while (str[i])
+		thing->temp[(thing->j)++] = str[i++];
+	thing->temp[(thing->j)] = '\0';
+}
+
+// void dynstr_append_str(dynstr *ds, const char *s) {
+//     while (*s)
+//         dynstr_append_char(ds, *s++);
+// }
+
+// void dynstr_free(dynstr *ds) {
+//     free(ds->str);
+//     ds->str = NULL;
+//     ds->len = ds->cap = 0;
+// }

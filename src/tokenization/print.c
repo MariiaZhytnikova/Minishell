@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:21:09 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 16:39:21 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:12:19 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	print_me(t_session *session)
 		j = 0;
 		while (j < session->count->args_nb[i])
 		{
-			printf("%s%s %s", MAGENTA, session->cmds[i]->args[j], RESET);
+			printf("%s>%s< %s", MAGENTA, session->cmds[i]->args[j], RESET);
 			j++;
 		}
 		if (session->cmds[i]->type == 1)

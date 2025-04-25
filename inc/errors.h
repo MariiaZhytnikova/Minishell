@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/23 13:27:11 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:33:26 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 # define ERR_USAGE "Usage: ./minishell"
 # define ERR_EXCL "Handling of special characters like ';', '\\', '{}', '()', \
-'[]', '&' is not supported"
+'[]', '&' '\\n' is not supported"
 # define ERR_QUOTES "Quotes are not closed correctly"
 # define ERR_SYNT_END "syntax error: unexpected end of file"
 # define ERR_EOF_HEREDOC "warning: here-document delimited by end-of-file"

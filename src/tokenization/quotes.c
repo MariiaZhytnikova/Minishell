@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:26:32 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 18:02:17 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:32:15 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ static int	skip_sq(t_temp *thing, char *args)
 	int	is_closed;
 
 	is_closed = 0;
-	thing->temp[thing->j++] = args[thing->i++];
-	while (args[thing->i] && thing->j < MAX_PR)
+	dynstr_append_char(thing, args);
+	while (args[thing->i])
 	{
 		if (args[thing->i] != '\'')
-			thing->temp[thing->j++] = args[thing->i++];
+			dynstr_append_char(thing, args);
 		else
 		{
-			thing->temp[thing->j++] = args[thing->i++];
+			dynstr_append_char(thing, args);
 			is_closed = 1;
 			break ;
 		}
@@ -36,8 +36,8 @@ static int	skip_sq(t_temp *thing, char *args)
 
 static int	skip_dq(t_session *session, t_temp *thing, char *args, int closed)
 {
-	thing->temp[thing->j++] = args[thing->i++];
-	while (args[thing->i] && thing->j < MAX_PR)
+	dynstr_append_char(thing, args);
+	while (args[thing->i])
 	{
 		if (args[thing->i] != '\"')
 		{
@@ -47,11 +47,11 @@ static int	skip_dq(t_session *session, t_temp *thing, char *args, int closed)
 					return (-1);
 			}
 			else
-				thing->temp[thing->j++] = args[thing->i++];
+				dynstr_append_char(thing, args);
 		}
 		else
 		{
-			thing->temp[thing->j++] = args[thing->i++];
+			dynstr_append_char(thing, args);
 			closed = 1;
 			break ;
 		}
@@ -78,7 +78,7 @@ int	if_quotes(t_session *session, t_temp *thing, char *args)
 
 int	handle_quotes(t_session *session, t_temp *thing, char *args)
 {
-	while (args[thing->i] && args[thing->i] != ' ' && thing->i < MAX_PR)
+	while (args[thing->i] && !ft_isspace(args[thing->i]))
 	{
 		if (args[thing->i] == '\'' || args[thing->i] == '\"')
 		{
@@ -89,8 +89,8 @@ int	handle_quotes(t_session *session, t_temp *thing, char *args)
 		else
 		{
 			if (args[thing->i] == '\\' || args[thing->i] == ';')
-				return (error_msg(ERR_EXCL, NULL, NULL, NULL), -1);
-			thing->temp[thing->j++] = args[thing->i++];
+				return (free (thing->temp), error_msg(ERR_EXCL, NULL, NULL, NULL), -1);
+			dynstr_append_char(thing, args);
 		}
 	}
 	return (1);

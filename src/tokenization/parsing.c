@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/23 13:21:25 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:34:04 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ int	lexical_analyzer(t_session *session)
 	ft_lstclear(&token, free);
 	if (skip(session) < 0)
 		return (error_msg(ERR_BASH, ERR_CRASH, "skip", NULL), -1);
+	print_me(session);
 	return (1);
 }
