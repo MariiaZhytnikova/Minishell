@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/22 14:44:57 by mzhitnik         ###   ########.fr        #
+#    Updated: 2025/04/25 13:50:39 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= minishell
 
 CC = cc
-CFLAGS		:= -Wextra -Wall -Werror
+CFLAGS		:= -Wextra -Wall -Werror -Wunused
 
 HEADERS		:= -I ./inc
 
@@ -22,7 +22,7 @@ OBJS_PATH	:= ./obj
 LIBFT_PATH	:= ./libft
 LIBFT		:= $(LIBFT_PATH)/libft.a
 
-BUILTINS = cd echo env exit export export2 pwd unset
+BUILTINS = cd echo env exit export export2 export3 pwd unset
 
 EXEC = exec processing pipe and_or open redirect
 
@@ -47,7 +47,7 @@ NORM	:= norminette
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
+	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
 #-fsanitize=address
 	@echo "$(NAME) building completed ..."
 

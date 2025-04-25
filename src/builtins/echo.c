@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:16:47 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/03/25 15:00:29 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:46:14 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ void	echo_builtin(t_command *cmd)
 {
 	bool	n_flag;
 	int		i;
+	int		j;
 
 	n_flag = false;
 	i = 1;
-	if (cmd->args[i] && !(ft_strncmp(cmd->args[i], "-n", 2))
-		&& ft_strlen(cmd->args[i]) == 2)
+	while (cmd->args[i] && !ft_strncmp(cmd->args[i], "-n", 2))
 	{
+		j = 2;
+		while (cmd->args[i][j] == 'n')
+			j++;
+		if (cmd->args[i][j] != '\0')
+			break ;
 		n_flag = true;
 		i++;
 	}
@@ -31,7 +36,7 @@ void	echo_builtin(t_command *cmd)
 		if (cmd->args[++i])
 			printf(" ");
 	}
-	if (n_flag == false || cmd->args[1] == NULL)
+	if (!n_flag)
 		printf("\n");
-	cmd->status = EXIT_SUCCESS;
+	cmd->status = 0;
 }
