@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_lim.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 13:03:43 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:25:46 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	replace_token(t_session *session, t_list *current, char *buffer)
 {
-	t_list	*new_token;
 
 	free(current->content);
 	current->content = ft_strdup("<<<");

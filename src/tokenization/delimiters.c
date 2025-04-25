@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiters.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/24 11:40:47 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:35:41 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static bool	check_two(char *str, int i)
 {
 	if ((ft_strlen(str) >= 2 && str[i] == '|' && str[i + 1] == '|')
 		|| (ft_strlen(str) >= 2 && str[i] == '&' && str[i + 1] == '&')
-		|| ft_strlen(str) >= 2 && str[i] == '<' && str[i + 1] == '<'
+		|| (ft_strlen(str) >= 2 && str[i] == '<' && str[i + 1] == '<')
 		|| (ft_strlen(str) >= 2 && str[i] == '>' && str[i + 1] == '>'))
 		return (true);
 	return (false);
@@ -74,8 +74,6 @@ void	copy_delimeter(t_temp *thing, char *str)
 
 int	get_redirection(t_command *command, t_list *current)
 {
-	int	size;
-
 	if (files(command, current) < 0)
 		return (error_msg(ERR_BASH, ERR_CRASH, "files", NULL), -1);
 	if (redirection_in(command, current) < 0)

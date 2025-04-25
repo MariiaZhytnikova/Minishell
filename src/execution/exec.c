@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 10:31:18 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:31:48 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ static bool	is_builtin(t_command *cmd)
 
 static void	run_builtin(t_session *session, int *id)
 {
-	if (open_files(session, session->cmds[*id], *id) < 0)
+	if (open_files(session->cmds[*id]) < 0)
 	{
 		session->status_last = session->cmds[*id]->status;
 		return ;
 	}
 	session->in = dup(0);
 	session->out = dup(1);
-	handle_in_out(session, session->cmds[*id]);
+	handle_in_out(session->cmds[*id]);
 	exec_builtin(session, session->cmds[*id]);
 	session->status_last = session->cmds[*id]->status;
 	dup2(session->in, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 13:35:32 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:43:33 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,11 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	}
 	else
 		return (1);
-	ft_strlcat(thing->temp, "\'", thing->cap);
-	thing->j++;
+	// ft_strlcat(thing->temp, "\'", thing->cap);
+	// thing->j++;
 	dynstr_append_str(thing, &env[len_name + 1]);
-	ft_strlcat(thing->temp, "\'", thing->cap);
-	thing->j++;
+	// ft_strlcat(thing->temp, "\'", thing->cap);
+	// thing->j++;
 	return (free(env), 1);
 }
 

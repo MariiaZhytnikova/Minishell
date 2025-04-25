@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:19:54 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 13:59:09 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:31:31 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "minishell.h"
 
-void	handle_in_out(t_session *session, t_command *cmd);
-int		open_files(t_session *session, t_command *cmd, int ind);
+void	handle_in_out(t_command *cmd);
+int		open_files(t_command *cmd);
 int		is_not_directory(const char *path);
 
 void	run_and(t_session *session, int *id);

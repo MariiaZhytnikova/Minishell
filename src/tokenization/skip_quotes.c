@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:45:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 09:45:04 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:38:11 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	skip_quotes(char *arg, t_temp *thing)
 			thing->i++;
 			while (arg[thing->i] && arg[thing->i] != '\'')
 				dynstr_append_char(thing, arg);
-				// thing->temp[thing->j++] = arg[thing->i++];
 			thing->i++;
 		}
 		else if (arg[thing->i] == '\"')
@@ -29,12 +28,10 @@ void	skip_quotes(char *arg, t_temp *thing)
 			thing->i++;
 			while (arg[thing->i] && arg[thing->i] != '\"')
 				dynstr_append_char(thing, arg);
-				// thing->temp[thing->j++] = arg[thing->i++];
 			thing->i++;
 		}
 		else
 			dynstr_append_char(thing, arg);
-			// thing->temp[thing->j++] = arg[thing->i++];
 	}
 }
 
@@ -82,10 +79,9 @@ int	check_last(char **input)
 	return (1);
 }
 
-static int	check_case(t_session *session, t_command *cmd, int id)
+static int	check_case(t_command *cmd)
 {
 	int	i;
-	int	num;
 
 	i = 0;
 	while (cmd->files[i])
@@ -106,7 +102,7 @@ int	skip(t_session *session)
 		return (-1);
 	while (id < session->count->cmd_nb)
 	{
-		if (check_case(session, session->cmds[id], id) < 0)
+		if (check_case(session->cmds[id]) < 0)
 			return (-1);
 		if (check_last(&session->cmds[id]->last_in->name) < 0)
 			return (-1);

@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:41 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 12:46:26 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:23:49 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	exit_with_code(t_session *session, t_command *cmd)
 {
-	int		i;
 	long	status;
 	int		exit_status;
 

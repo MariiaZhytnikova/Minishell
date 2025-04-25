@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:33 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/23 13:27:43 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:30:10 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	open_last_out_append(t_command *cmd)
 	return (fd);
 }
 
-static void	handle_in(t_session *session, t_command *cmd)
+static void	handle_in(t_command *cmd)
 {
 	int	pipefd[2];
 
@@ -87,10 +87,10 @@ static void	handle_in(t_session *session, t_command *cmd)
 	close(cmd->last_in->fd);
 }
 
-void	handle_in_out(t_session *session, t_command *cmd)
+void	handle_in_out(t_command *cmd)
 {
 	if (cmd->last_in->type != STD)
-		handle_in(session, cmd);
+		handle_in(cmd);
 	if (cmd->last_out->type != STD)
 	{
 		if (cmd->last_out->type == OUT_FILE)

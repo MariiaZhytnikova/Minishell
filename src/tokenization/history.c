@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:05:01 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/11 18:03:07 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:33:02 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static int	is_unfinished(char *input)
 
 static int	read_multiline_input(t_session *session)
 {
-	char	*new_line;
 	char	*temp;
 
 	if (session->input && is_unfinished(session->input))

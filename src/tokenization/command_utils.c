@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/24 12:56:28 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:37:11 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	dynstr_init(t_temp *thing, char *input)
 
 void	dynstr_append_char(t_temp *thing, char *str)
 {
-	if (thing->j + 2 >= thing->cap)
+	if (thing->j + 2 >= (int)thing->cap)
 	{
 		thing->temp = reall(thing->temp, thing->cap, thing->cap * 2);
 		thing->cap *= 2;
@@ -107,14 +107,3 @@ void	dynstr_append_str(t_temp *thing, char *str)
 		thing->temp[(thing->j)++] = str[i++];
 	thing->temp[(thing->j)] = '\0';
 }
-
-// void dynstr_append_str(dynstr *ds, const char *s) {
-//     while (*s)
-//         dynstr_append_char(ds, *s++);
-// }
-
-// void dynstr_free(dynstr *ds) {
-//     free(ds->str);
-//     ds->str = NULL;
-//     ds->len = ds->cap = 0;
-// }
