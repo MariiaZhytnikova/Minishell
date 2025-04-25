@@ -6,14 +6,14 @@
 #    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/24 14:23:59 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/04/25 13:50:39 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= minishell
 
 CC = cc
-CFLAGS		:= -Wextra -Wall -Werror
+CFLAGS		:= -Wextra -Wall -Werror -Wunused
 
 HEADERS		:= -I ./inc
 
@@ -47,7 +47,7 @@ NORM	:= norminette
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
+	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
 #-fsanitize=address
 	@echo "$(NAME) building completed ..."
 
