@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:26:21 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 14:29:21 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:24:08 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void	export_content(t_session *s, t_command *cmd, char *val, char *var)
 
 static void	prepare_add_var(t_session *session, t_command *cmd, char *var)
 {
-	t_list	*ptr;
 	char	*new_value;
 
 	new_value = ft_strdup(var);

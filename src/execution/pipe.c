@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/23 13:29:41 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:32:28 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ static void	child(t_session *session, int *id, int runs, int num)
 		dup2(session->pipefd[1], STDOUT_FILENO);
 	close(session->pipefd[0]);
 	close(session->pipefd[1]);
-	if (open_files(session, session->cmds[*id], *id) < 0)
+	if (open_files(session->cmds[*id]) < 0)
 	{
 		group_free(session);
 		exit(1);
 	}
-	handle_in_out(session, session->cmds[*id]);
+	handle_in_out(session->cmds[*id]);
 	run_cmd(session, session->cmds[*id]);
 	exit(1);
 }
 
-static void	parent(t_session *session, int *id, int runs)
+static void	parent(t_session *session)
 {
 	if (session->prev_fd != -1)
 		close(session->prev_fd);
@@ -93,7 +93,7 @@ void	run_pipe(t_session *session, int *id)
 			return ((*id)++, error_msg(ERR_BASH, ERR_FORK, NULL, NULL));
 		if (session->cmds[*id]->pid == 0)
 			child(session, id, runs, num);
-		parent(session, id, runs);
+		parent(session);
 		runs++;
 		(*id)++;
 	}

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/23 13:05:47 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:39:09 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	here_doc_process(t_list **token, char **line, int stdin)
+static int	here_doc_process(char **line, int stdin)
 {
 	*line = readline("> ");
 	while (1)
@@ -39,7 +39,6 @@ static int	here_doc_process(t_list **token, char **line, int stdin)
 static int	here_doc_inp(t_session *session, t_list **token)
 {
 	char	*line;
-	char	*input;
 	int		stdin_copy;
 	int		status;
 
@@ -48,7 +47,7 @@ static int	here_doc_inp(t_session *session, t_list **token)
 	stdin_copy = dup(STDIN_FILENO);
 	if (stdin_copy == -1)
 		return (-1);
-	status = here_doc_process(token, &line, stdin_copy);
+	status = here_doc_process(&line, stdin_copy);
 	close (stdin_copy);
 	if (status != 0)
 		return (status);

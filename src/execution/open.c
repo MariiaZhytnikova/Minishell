@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:56:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 14:00:12 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:30:34 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	out_app_file(t_command *cmd, char *file)
 	return (1);
 }
 
-int	open_files(t_session *session, t_command *cmd, int id)
+int	open_files(t_command *cmd)
 {
 	int	i;
 

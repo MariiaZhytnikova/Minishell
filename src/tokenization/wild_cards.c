@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_cards.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/23 13:27:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:33:30 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	copy_file_name(char *name, t_list **args, int *count)
 	char	*temp;
 	t_list	*new;
 
+	new = NULL;
 	(*count)++;
 	temp = ft_strdup(name);
 	if (create_new(args, new, temp) < 0)

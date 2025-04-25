@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 09:54:42 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:14:58 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	process_input(t_session *session)
 			ft_lstclear(&session->env_var, free);
 			free_session(session);
 			rl_clear_history();
-			//printf("exit\n");
+			printf("exit\n");
 			exit(2);
 		}
 		history(session);
@@ -57,7 +57,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_session	session;
 
-	printf("💡 🧠 💡\n");
 	if (init_session(argc, argv, env, &session) != 0)
 		return (1);
 	while (1)
