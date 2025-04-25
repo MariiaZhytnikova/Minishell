@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:41 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 16:18:58 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:46:26 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	exit_with_code(t_session *session, t_command *cmd)
 	group_free(session);
 	exit(exit_status);
 }
-
 
 static void	check_non_numeric(t_session *session, char *arg)
 {

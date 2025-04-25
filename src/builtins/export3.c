@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 13:47:31 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 15:07:39 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:47:02 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	create_plus_var(t_session *session, char *name, char *value)
 	return (0);
 }
 
-static void	add_new_plus(t_session *session, t_command *cmd, char *var, size_t len)
+static void	add_new_plus(t_session *s, t_command *cmd, char *var, size_t len)
 {
 	char	*name;
 	char	*value;
@@ -42,14 +42,14 @@ static void	add_new_plus(t_session *session, t_command *cmd, char *var, size_t l
 		cmd->status = 1;
 		return ;
 	}
-	value = ft_substr(var, len + 1, ft_strlen(var) - len - 1); //check
+	value = ft_substr(var, len + 1, ft_strlen(var) - len - 1);
 	if (!value)
 	{
 		cmd->status = 1;
 		free(name);
 		return ;
 	}
-	status = create_plus_var(session, name, value);
+	status = create_plus_var(s, name, value);
 	if (status)
 		cmd->status = 1;
 	free(name);
