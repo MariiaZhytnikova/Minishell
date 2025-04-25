@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 11:34:31 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/22 10:06:53 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:24:41 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ void	echo_builtin(t_command *cmd);
 void	export_builtin(t_session *session, t_command *cmd);
 void	handle_args(t_session *session, t_command *cmd);
 t_list	*search_in_env(t_list *env_var, char *variable);
+void	append_env(t_session *session, t_command *cmd, char *var);
+int		check_for_plus(char *var);
 
 #endif
