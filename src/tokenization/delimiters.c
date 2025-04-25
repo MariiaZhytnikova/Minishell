@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 11:14:11 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:40:47 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,30 @@ void	copy_delimeter(t_temp *thing, char *str)
 		thing->temp[thing->j++] = str[thing->i++];
 		thing->temp[thing->j++] = ' ';
 	}
+}
+
+int	get_redirection(t_command *command, t_list *current)
+{
+	int	size;
+
+	if (files(command, current) < 0)
+		return (error_msg(ERR_BASH, ERR_CRASH, "files", NULL), -1);
+	if (redirection_in(command, current) < 0)
+		return (error_msg(ERR_BASH, ERR_CRASH, "redirection_in", NULL), -1);
+	if (redirection_out(command, current) < 0)
+		return (error_msg(ERR_BASH, ERR_CRASH, "redirection_OUT", NULL), -1);
+	return (1);
+}
+
+void	get_delimiter(t_command *command, t_list *current)
+{
+	if ((ft_strncmp(current->content,
+				"|", longer(current->content, "|")) == 0))
+		command->type = PIPE;
+	else if ((ft_strncmp(current->content,
+				"||", longer(current->content, "||")) == 0))
+		command->type = OR;
+	else if ((ft_strncmp(current->content,
+				"&&", longer(current->content, "&&")) == 0))
+		command->type = AND;
 }

@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 11:26:23 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/24 12:56:07 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@
 
 typedef struct s_temp
 {
-	char	temp[MAX_PR];
+	char	*temp;
 	int		i;
 	int		j;
+	size_t	cap;
 }	t_temp;
+
+int		dynstr_init(t_temp *thing, char *input);
+void	dynstr_append_char(t_temp *thing, char *str);
+void	dynstr_append_str(t_temp *thing, char *str);
 
 bool	delimiter_wrong_pos(t_list *token);
 bool	consecutive_delimiters(t_list *token);
@@ -59,7 +64,7 @@ int		prompt(t_session *session);
 int		history(t_session *session);
 int		add_pipe_history(t_session *session, char *line);
 
-void	skip_quotes(const char *arg, t_temp *thing);
+void	skip_quotes(char *arg, t_temp *thing);
 int		skip(t_session *session);
 int		create_new(t_list **args, t_list *new, char *str);
 bool	is_in_quotes(const char *str);

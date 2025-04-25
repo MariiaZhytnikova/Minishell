@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:38:27 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/23 13:27:36 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:03:56 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	*path_check(t_command *cmd, t_list *env)
 	path = ft_strdup(cmd->args[0]);
 	if (!path)
 		return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), NULL);
-	if (!access(path, F_OK) && !is_not_directory(path))
+	if (!access(path, F_OK && !is_not_directory(path)))
 	{
 		cmd->status = 126;
 		return (error_msg(ERR_BASH, path, ERR_ISADIR, NULL), free(path), NULL);

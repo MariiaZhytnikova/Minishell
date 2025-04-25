@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 16:39:12 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:42:45 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	create_env_list(t_list **env_var, char **env)
 	int	i;
 
 	i = 0;
+	if (!*env || !**env)								// FIX env - i
+	{
+		create_node(env_var, NULL);
+		return;
+	}
 	while (env[i])
 	{
 		if (create_node(env_var, env[i]))

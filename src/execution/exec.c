@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/22 14:50:28 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:31:18 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	run_cmd(t_session *session, t_command *cmd)
 {
 	int	status;
 
-	if (!cmd->args[0])
+	if (!cmd->args[0] || !cmd->args[0][0])
 	{
 		group_free(session);
 		exit (0);

@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 10:49:21 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:13:29 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,55 @@ static char	*create_prompt(void)
 	return (prompt);
 }
 
-int	prompt(t_session *session)
-{
-	char	*promt;
+// int	prompt(t_session *session)
+// {
+// 	char	*promt;
 
-	session->history_pipe = ft_calloc(1, sizeof(char *));
-	if (!session->history_pipe)
-		return (-1);
-	promt = create_prompt();
-	if (!promt)
-		return (-1);
-	session->input = readline(promt);
-	free(promt);
-	if (!session->input)
-		return (-1);
-	return (1);
+// 	session->history_pipe = ft_calloc(1, sizeof(char *));
+// 	if (!session->history_pipe)
+// 		return (-1);
+// 	promt = create_prompt();
+// 	if (!promt)
+// 		return (-1);
+// 	session->input = readline(promt);
+// 	free(promt);
+// 	if (!session->input)
+// 		return (-1);
+// 	return (1);
+// }
+
+
+int    prompt(t_session *session)
+{
+    char    *promt;
+    char    *line;
+
+    session->history_pipe = ft_calloc(1, sizeof(char *));
+    if (!session->history_pipe)
+        return (-1);
+
+    if (isatty(fileno(stdin)))
+    {
+        // Interactive mode
+        promt = create_prompt();
+        if (!promt)
+            return (-1);
+        session->input = readline(promt);
+        free(promt);
+        if (!session->input)
+            return (-1);
+    }
+    else
+    {
+        // Non-interactive mode (e.g. tester)
+        line = get_next_line(fileno(stdin));
+        if (!line)
+            return (-1);
+        session->input = ft_strtrim(line, "\n");
+        free(line);
+        if (!session->input)
+            return (-1);
+    }
+
+    return (1);
 }

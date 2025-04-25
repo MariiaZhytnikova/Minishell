@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 14:38:36 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:54:16 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,23 @@ int	array_size(t_file **array)
 	while (array[size]->name)
 		size++;
 	return (size);
+}
+
+long	ft_atol(const char *str)
+{
+	long		nbr;
+	int			sign;
+	size_t		i;
+
+	nbr = 0;
+	sign = 1;
+	i = 0;
+	while (ft_isspace(str[i]))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+		if (str[i++] == '-')
+			sign = -1;
+	while (str[i] >= '0' && str[i] <= '9')
+		nbr = (str[i++] - '0') * sign + nbr * 10;
+	return (nbr);
 }

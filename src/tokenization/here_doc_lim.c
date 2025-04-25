@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/23 13:20:12 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:03:43 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int	replace_token(t_session *session, t_list *current, char *buffer)
 		if (expansion_two(session, &buffer) < 0)
 			return (-1);
 	}
-	current->next->content = buffer;
+	current->next->content = ft_strdup(buffer);
+	free(buffer);
 	return (1);
 }
 
@@ -72,6 +73,8 @@ static int	here_doc_lim_process(t_list *cur, int stdin, char *line, char **buf)
 			return (-1);
 		free(line);
 	}
+	if (buf && *buf && **buf)
+		ft_strlcat(*buf, "\n", ft_strlen(*buf) + 2);
 	return (0);
 }
 
@@ -98,7 +101,7 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 		free(buffer);
 		return (status);
 	}
-	if (ft_strlen(buffer) > 65715)
+	if (buffer && ft_strlen(buffer) > 65715)
 		return (error_msg(ERR_BUF, NULL, NULL, NULL), 4);
 	return (replace_token(session, current, buffer));
 }
