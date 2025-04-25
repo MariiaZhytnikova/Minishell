@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:08:58 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 14:41:09 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:48:13 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ int	split_input(t_session *session, t_list **token, char *args)
 	t_temp	thing;
 
 	if (dynstr_init(&thing, args) < 0)
-		return (1);
+		return (-1);
 	thing.i = skip_whitespace(args);
 	if (!args[thing.i])
-		return (1);
+		return (free (thing.temp), 1);
 	if (handle_quotes(session, &thing, args) < 0)
-		return (-1);
+		return (free (thing.temp), -1);
 	new_token = ft_lstnew(ft_strdup(thing.temp));
 	free (thing.temp);
 	if (!new_token)

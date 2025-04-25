@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:05:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/11/13 09:21:34 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:49:55 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*new;
 
+	if (!content)
+		return (NULL);
 	new = (t_list *)malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
