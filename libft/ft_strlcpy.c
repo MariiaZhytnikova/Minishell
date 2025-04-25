@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/02 21:00:08 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/11/15 16:41:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:18:57 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlcpy(char *dest, const char *src, unsigned int size)
 	size_t	i;
 	size_t	len;
 
+	if (!src)
+		return (0);
 	len = ft_strlen(src);
 	i = 0;
 	if (size > 0)

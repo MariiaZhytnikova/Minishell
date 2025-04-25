@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 17:45:47 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/11/16 11:54:41 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 14:18:09 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	dest_l;
 	size_t	src_l;
 
+	if (!src)
+		return (0);
 	if (!dst)
 		dest_l = 0;
 	else
