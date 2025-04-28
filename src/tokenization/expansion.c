@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 14:43:33 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:16:22 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	no_expansion(t_session *session, t_temp *thing, char *str)
 			thing->temp[thing->j++] = str[thing->i++];
 		return (0);
 	}
-	if (is_heredoc(thing, str) == true)
+	if (thing->i - 1 > 0 && is_heredoc(thing, str) == true) // check for previous characters before is_heredoc
 	{
 		dynstr_append_char(thing, str);
 		while (str[thing->i] && ft_isalnum_plus(str[thing->i]))
@@ -82,11 +82,7 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	}
 	else
 		return (1);
-	// ft_strlcat(thing->temp, "\'", thing->cap);
-	// thing->j++;
-	dynstr_append_str(thing, &env[len_name + 1]);
-	// ft_strlcat(thing->temp, "\'", thing->cap);
-	// thing->j++;
+	dynstr_append_str(thing, &env[len_name + 1]);		// No strlcat before and after
 	return (free(env), 1);
 }
 

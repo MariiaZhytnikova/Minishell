@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/04/25 15:15:23 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/04/27 16:08:54 by mzhitnik         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ MAIN = main errors signals
 
 TOKENS = prompt parsing quotes token_check here_doc here_doc_lim skip_quotes\
 			delimiters command_utils numbers redirection expansion \
-			split wild_cards wild_utils history print
+			split wild_cards wild_utils history print skip_quotes_utils
 
 UTILS = utils_one utils_two ll_utils_one ll_utils_two free exec_utils
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 12:10:28 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:27:04 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ typedef struct s_count
 	int			*red_in_nb;
 	int			*red_out_nb;
 	int			*red_app_nb;
-	int			*red_h_doc_nb;
-	// int			here_doc;
+	// int			*red_nb; // remove completely
+	int			here_doc;
 }	t_count;
 
 typedef struct s_command
@@ -71,7 +71,7 @@ typedef struct s_command
 	int			pid;
 	char		**args;
 	t_file		**files;
-	// char		**h_doc;
+	// char		**h_doc; // remove it
 	t_file		*last_in;
 	t_file		*last_out;
 	t_del_type	type;

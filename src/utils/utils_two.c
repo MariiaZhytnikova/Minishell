@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 10:54:16 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:18:38 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,13 @@ long	ft_atol(const char *str)
 	while (str[i] >= '0' && str[i] <= '9')
 		nbr = (str[i++] - '0') * sign + nbr * 10;
 	return (nbr);
+}
+
+int	is_directory(const char *path) // Moved here from processing
+{
+	struct stat	path_stat;
+
+	if (stat(path, &path_stat) != 0)
+		return (-1);
+	return (!S_ISDIR(path_stat.st_mode));
 }
