@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:21:09 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 10:12:19 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:42:15 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	print_me_num(t_count *count)
 		printf("red_in_nb           : %d\n", count->red_in_nb[i]);
 		printf("red_out_nb          : %d\n", count->red_out_nb[i]);
 		printf("red_append_nb       : %d\n", count->red_app_nb[i]);
-		printf("red_here_doc_nb     : %d\n", count->red_h_doc_nb[i]);
 		i++;
 	}
 	printf("DONE...%s\n", RESET);
