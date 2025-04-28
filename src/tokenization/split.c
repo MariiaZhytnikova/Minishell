@@ -3,45 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:08:58 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 15:48:13 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:05:38 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*add_spaces(t_session *session, char *input)
+static char	*add_spaces(char *in)							// it static, new declaration
 {
-	t_temp	thing;
+	t_temp	buf;
 
-	if (dynstr_init(&thing, input) < 0)
+	if (dynstr_init(&buf, in) < 0)
 		return (NULL);
-	while (input[thing.i])
+	while (in[buf.i])
 	{
-		if (input[thing.i] == '\n')
-			return (free (thing.temp), error_msg(ERR_EXCL, NULL, NULL, NULL), NULL);
-		if (input[thing.i] == '$')
+		if (in[buf.i] == '\n' || in[buf.i] == '\\' || in[buf.i] == ';')		// NEW
+			return (free (buf.temp), error_msg(ERR_EXCL, 0, 0, 0), NULL);	// NEW
+		// if (in[buf.i] == '$')
+		// {
+		// 	if (expansion(session, &buf, in) < 0)
+		// 		return (NULL);
+		// }
+		else if (in[buf.i] == '\'' || in[buf.i] == '\"')
 		{
-			if (expansion(session, &thing, input) < 0)
+			if (if_quotes(NULL, &buf, in) < 0)
 				return (NULL);
 		}
-		else if (input[thing.i] == '\'' || input[thing.i] == '\"')
-		{
-			if (if_quotes(NULL, &thing, input) < 0)
-				return (NULL);
-		}
-		else if (is_delim_or_red(&input[thing.i]))
-			copy_delimeter(&thing, input);
-		else if (input[thing.i])
-			dynstr_append_char(&thing, input);
+		else if (is_delim_or_red(&in[buf.i]))
+			copy_delimeter(&buf, in);
+		else if (in[buf.i])
+			dynstr_append_char(&buf, in);
 	}
-	thing.temp[thing.j] = 0;
-	return (thing.temp);
+	buf.temp[buf.j] = 0;
+	return (buf.temp);
 }
 
-int	split_input(t_session *session, t_list **token, char *args)
+static int	split_input(t_session *session, t_list **token, char *args)
 {
 	t_list	*new_token;
 	t_temp	thing;
@@ -71,7 +71,8 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 	char	*input;
 	int		status;
 
-	input = add_spaces(session, src);
+	// input = add_spaces(session, src);
+	input = add_spaces(src); // NEW CALL
 	if (!input || !input[0])
 		return (-1);
 	if (split_input(session, token, input) < 0)
