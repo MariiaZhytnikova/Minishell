@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/22 13:31:43 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 16:52:38 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ static void	free_command(t_command *cmd)
 	if (!cmd)
 		return ;
 	if (cmd->args)
+	{
 		free_arr(cmd->args);
+		cmd->args = NULL;
+	}
 	if (cmd->files)
 		free_tfile(cmd->files);
 	if (cmd->last_in)
@@ -99,6 +102,7 @@ void	free_session(t_session *session)
 		while (session->cmds[i])
 		{
 			free_command(session->cmds[i]);
+			session->cmds[i] = NULL;
 			i++;
 		}
 		free(session->cmds);

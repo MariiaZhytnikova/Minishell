@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 15:32:28 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:13:54 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	child(t_session *session, int *id, int runs, int num)
 {
+	int	status;
+
 	setup_signals(2);
 	if (session->prev_fd != -1)
 	{
@@ -26,8 +28,9 @@ static void	child(t_session *session, int *id, int runs, int num)
 	close(session->pipefd[1]);
 	if (open_files(session->cmds[*id]) < 0)
 	{
+		status = session->cmds[*id]->status;
 		group_free(session);
-		exit(1);
+		exit(status);
 	}
 	handle_in_out(session->cmds[*id]);
 	run_cmd(session, session->cmds[*id]);

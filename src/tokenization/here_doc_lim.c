@@ -6,11 +6,13 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 15:25:46 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:17:37 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// FIX SOME MEMORY LEAKS
 
 static int	replace_token(t_session *session, t_list *current, char *buffer)
 {

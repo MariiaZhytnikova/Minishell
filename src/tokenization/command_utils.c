@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 15:37:11 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:08:52 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ int	allocate_struct(t_session *s, t_count *c, int i)
 	while (i < c->cmd_nb)
 	{
 		s->cmds[i] = ft_calloc(1, sizeof(t_command));
-		if (!s->cmds)
+		if (!s->cmds[i]) // check for test
 			return (-1);
 		s->cmds[i]->args = ft_calloc(c->args_nb[i] + 1, sizeof(char *));
-		if (! s->cmds[i]->args)
+		if (!s->cmds[i]->args)
 			return (error_msg(ERR_BASH, ERR_CRASH,
 					"allocate_struct", NULL), -1);
 		i++;
@@ -88,7 +88,6 @@ void	dynstr_append_char(t_temp *thing, char *str)
 		thing->cap *= 2;
 	}
 	thing->temp[(thing->j)++] = str[(thing->i)++];
-	thing->temp[(thing->j)] = '\0';
 }
 
 void	dynstr_append_str(t_temp *thing, char *str)
