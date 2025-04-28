@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 17:14:13 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 16:52:38 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:34:10 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ static void	free_count(t_count *count)
 		free(count->red_out_nb);
 	if (count->red_app_nb)
 		free(count->red_app_nb);
-	if (count->red_h_doc_nb)
-		free(count->red_h_doc_nb);
 	free(count);
 }
 

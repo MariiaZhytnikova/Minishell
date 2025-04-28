@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   numbers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:28:21 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 10:52:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:34:31 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,7 @@ static void	count_red(t_list **current, t_count *count, int i)
 	}
 	if (ft_strncmp((*current)->content, "<<<",
 			longer((*current)->content, ">>>")) == 0)
-	{
-		count->red_h_doc_nb[i] += 1;
 		*current = (*current)->next;
-	}
 }
 
 void	count_delim_and_redir(t_list **token, t_count *count)
@@ -122,9 +119,8 @@ int	numbers(t_session *session, t_list **token, t_count *count)
 	count->red_in_nb = (int *)ft_calloc(count->cmd_nb + 1, sizeof(int));
 	count->red_out_nb = (int *)ft_calloc(count->cmd_nb + 1, sizeof(int));
 	count->red_app_nb = (int *)ft_calloc(count->cmd_nb + 1, sizeof(int));
-	count->red_h_doc_nb = (int *)ft_calloc(count->cmd_nb + 1, sizeof(int));
 	if (!count->args_nb || !count->red_in_nb || !count->red_out_nb
-		|| !count->red_app_nb || !count->red_h_doc_nb)
+		|| !count->red_app_nb)
 		return (-1);
 	count_arguments(token, count);
 	count_delim_and_redir(token, count);

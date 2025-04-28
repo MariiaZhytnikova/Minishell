@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:56:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 17:12:21 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/28 12:33:27 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	in_file(t_command *cmd, char *file)
 {
 	int	fd;
 
-	if (!access(file, F_OK) && !is_not_directory(file))
+	if (!access(file, F_OK) && !is_directory(file))
 	{
 		cmd->status = 126;
 		return (error_msg(ERR_BASH, file, ERR_ISADIR, NULL), -1);
@@ -40,7 +40,7 @@ static int	out_file(t_command *cmd, char *file)
 {
 	int	fd;
 
-	if (!access(file, F_OK && !is_not_directory(file)))
+	if (!access(file, F_OK && !is_directory(file)))
 	{
 		cmd->status = 126;
 		return (error_msg(ERR_BASH, file, ERR_ISADIR, NULL), -1);
@@ -64,7 +64,7 @@ static int	out_app_file(t_command *cmd, char *file)
 {
 	int	fd;
 
-	if (!access(file, F_OK && !is_not_directory(file)))
+	if (!access(file, F_OK && !is_directory(file)))
 	{
 		cmd->status = 126;
 		return (error_msg(ERR_BASH, file, ERR_ISADIR, NULL), -1);
