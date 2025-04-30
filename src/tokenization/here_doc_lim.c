@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/30 14:07:42 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:31:47 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,12 @@ static int	here_doc_lim_process(t_list *cur, int stdin, char **buf)
 	char	*temp;
 	char	*lim;
 
-	(void)cur;
 	lim = ft_strjoin((char *)cur->next->content, "\n");
 	if (!lim)
 		return (-1);
 	while (1)
 	{
-	line = readline("> "); // minishell: warning: here-document delimited by end-of-file && EXIT
+		line = readline("> ");
 		if (!line && g_signalnum == 2)
 		{
 			if (dup2(stdin, STDIN_FILENO) == -1)

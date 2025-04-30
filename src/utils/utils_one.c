@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 13:22:41 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:26:34 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ int	longer(char *s1, char *s2)
 
 	if (!s1)
 		len1 = 0;
-	len1 = ft_strlen(s1);
+	else
+		len1 = ft_strlen(s1);
 	if (!s2)
 		len2 = 0;
-	len2 = ft_strlen(s2);
+	else
+		len2 = ft_strlen(s2);
 	if (len1 > len2)
 		return (len1);
 	return (len2);
