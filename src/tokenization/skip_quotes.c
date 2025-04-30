@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skip_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:45:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/27 17:13:00 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:51:05 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ int	check_last(char **input)
 	if (ft_strchr(*input, '\'') || ft_strchr(*input, '\"'))
 	{
 		if (dynstr_init(&thing, *input) < 0)
-			return (1);
-		skip_quotes(*input, &thing);
+			return (-1);
+		if (skip_quotes(*input, &thing) < 0)
+		{
+			free(thing.temp);
+			return (-1);
+		}
 		free(*input);
 		*input = ft_strdup(thing.temp);
 		free(thing.temp);
@@ -63,7 +67,8 @@ static int	check_exp_two(t_session *session, char *args, t_temp *thing)
 		}
 		else
 		{
-			dynstr_append_char(thing, args);
+			if (dynstr_append_char(thing, args) < 0)
+				return (-1);
 		}
 	}
 	return (1);
@@ -80,7 +85,11 @@ static int	check_exp(t_session *session, t_command *cmd) // NEW FUNCTION
 		if (dynstr_init(&thing, cmd->args[i]) < 0)
 			return (-1);
 		if (check_exp_two(session, cmd->args[i], &thing) < 0)
+		{
+			printf("%s\n", thing.temp);
+			free (thing.temp);
 			return (-1);
+		}
 		free(cmd->args[i]);
 		cmd->args[i] = ft_strdup(thing.temp);
 		free(thing.temp);
@@ -97,7 +106,10 @@ int	skip(t_session *session)
 	while (id < session->count->cmd_nb)
 	{
 		if (check_exp(session, session->cmds[id]) < 0)
+		{
+			printf("check_exp failed\n");
 			return (-1);
+		}
 		if (check_case(session->cmds[id]) < 0)
 			return (-1);
 		if (check_last(&session->cmds[id]->last_in->name) < 0)

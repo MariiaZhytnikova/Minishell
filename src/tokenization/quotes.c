@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:26:32 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 12:15:00 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:33:08 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,19 @@ static int	skip_sq(t_temp *thing, char *args)
 	int	is_closed;
 
 	is_closed = 0;
-	dynstr_append_char(thing, args);
+	if (dynstr_append_char(thing, args) < 0)
+		return (-1);
 	while (args[thing->i])
 	{
 		if (args[thing->i] != '\'')
-			dynstr_append_char(thing, args);
+		{
+			if (dynstr_append_char(thing, args) < 0)
+				return (-1);
+		}
 		else
 		{
-			dynstr_append_char(thing, args);
+			if (dynstr_append_char(thing, args) < 0)
+				return (-1);
 			is_closed = 1;
 			break ;
 		}
@@ -36,7 +41,8 @@ static int	skip_sq(t_temp *thing, char *args)
 
 static int	skip_dq(t_session *session, t_temp *thing, char *args, int closed)
 {
-	dynstr_append_char(thing, args);
+	if (dynstr_append_char(thing, args) < 0)
+		return (-1);
 	while (args[thing->i])
 	{
 		if (args[thing->i] != '\"')
@@ -47,11 +53,15 @@ static int	skip_dq(t_session *session, t_temp *thing, char *args, int closed)
 					return (-1);
 			}
 			else
-				dynstr_append_char(thing, args);
+			{
+				if (dynstr_append_char(thing, args) < 0)
+					return (-1);
+			}
 		}
 		else
 		{
-			dynstr_append_char(thing, args);
+			if (dynstr_append_char(thing, args) < 0)
+				return (-1);
 			closed = 1;
 			break ;
 		}
@@ -90,7 +100,9 @@ int	handle_quotes(t_session *session, t_temp *thing, char *args)
 		{
 			// if (args[thing->i] == '\\' || args[thing->i] == ';')
 			// 	return (free (thing->temp), error_msg(ERR_EXCL, NULL, NULL, NULL), -1);
-			dynstr_append_char(thing, args);
+			if (dynstr_append_char(thing, args) < 0)
+				return (-1);
+			
 		}
 	}
 	return (1);

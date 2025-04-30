@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 11:16:22 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:40:18 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ static int	find_it(t_session *session, t_temp *thing)
 	if (!status_str)
 		return (-1);
 	thing->i += 2;
-	dynstr_append_str(thing, status_str);
+	if (dynstr_append_str(thing, status_str) < 0)
+	{
+		free(status_str);
+		return (-1);
+	}
 	free(status_str);
 	return (1);
 }
@@ -53,9 +57,13 @@ static int	no_expansion(t_session *session, t_temp *thing, char *str)
 	}
 	if (thing->i - 1 > 0 && is_heredoc(thing, str) == true) // check for previous characters before is_heredoc
 	{
-		dynstr_append_char(thing, str);
+		if (dynstr_append_char(thing, str) < 0)
+			return (-1);
 		while (str[thing->i] && ft_isalnum_plus(str[thing->i]))
-			dynstr_append_char(thing, str);
+		{
+			if (dynstr_append_char(thing, str) < 0)
+				return (-1);
+		}
 		return (0);
 	}
 	return (1);
@@ -68,6 +76,8 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	int		len_name;
 
 	ft_memset(name, 0, MAX_PR);
+	if (no_expansion(session, thing, str) < 0)
+		return (-1);
 	if (no_expansion(session, thing, str) == 0)
 		return (1);
 	len_name = 0;
@@ -82,7 +92,12 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	}
 	else
 		return (1);
-	dynstr_append_str(thing, &env[len_name + 1]);		// No strlcat before and after
+	if (dynstr_append_str(thing, &env[len_name + 1]) < 0)
+		{
+			printf("expanstion returning -1 \n");
+			return (free(env), -1);
+		}
+
 	return (free(env), 1);
 }
 
@@ -97,15 +112,21 @@ int	expansion_two(t_session *session, char **str)
 		if ((*str)[thing.i] == '$')
 		{
 			if (expansion(session, &thing, *str) < 0)
-				return (-1);
+			{
+				printf("i am freeing\n");
+				return (free(thing.temp), -1);
+			}
 		}
 		else
-			dynstr_append_char(&thing, *str);
+		{	
+			if (dynstr_append_char(&thing, *str) < 0)
+				return (free(thing.temp), -1);
+		}
 	}
 	free (*str);
 	*str = ft_strdup(thing.temp);
+	free (thing.temp);
 	if (!*str)
 		return (-1);
-	free (thing.temp);
 	return (1);
 }

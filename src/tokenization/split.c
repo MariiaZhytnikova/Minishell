@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:08:58 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 11:05:38 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:16:16 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,23 @@ static char	*add_spaces(char *in)							// it static, new declaration
 		// 	if (expansion(session, &buf, in) < 0)
 		// 		return (NULL);
 		// }
+
+		// FREE buf.temp ??????????
 		else if (in[buf.i] == '\'' || in[buf.i] == '\"')
 		{
 			if (if_quotes(NULL, &buf, in) < 0)
-				return (NULL);
+				return (free(buf.temp), NULL);
 		}
 		else if (is_delim_or_red(&in[buf.i]))
-			copy_delimeter(&buf, in);
+		{
+			if (copy_delimeter(&buf, in) < 0)
+				return (free(buf.temp), NULL);
+		}
 		else if (in[buf.i])
-			dynstr_append_char(&buf, in);
+		{
+			if (dynstr_append_char(&buf, in) < 0)
+				return (free(buf.temp), NULL);
+		}
 	}
 	buf.temp[buf.j] = 0;
 	return (buf.temp);
@@ -71,7 +79,6 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 	char	*input;
 	int		status;
 
-	// input = add_spaces(session, src);
 	input = add_spaces(src); // NEW CALL
 	if (!input || !input[0])
 		return (-1);
@@ -85,7 +92,7 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 		return (-2);
 	status = here_doc_lim(session, token);
 	if (status < 0)
-		return (error_msg(ERR_BASH, ERR_CRASH, "here_doc_lim", NULL), -1);
+		return (-1);
 	if (status == 2 || status == 4)
 		return (status);
 	status = here_doc_no_lim(session, token);

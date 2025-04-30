@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 17:17:37 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:07:42 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ static int	replace_token(t_session *session, t_list *current, char *buffer)
 	free(current->content);
 	current->content = ft_strdup("<<<");
 	if (!current->content)
-		return (-1);
-	free(current->next->content);
+		return (free(buffer), -1);
 	if (!buffer || !buffer[0])
 		buffer = ft_calloc(1, sizeof(char));
 	if (!buffer)
@@ -29,65 +28,77 @@ static int	replace_token(t_session *session, t_list *current, char *buffer)
 	if (ft_strchr(buffer, '$'))
 	{
 		if (expansion_two(session, &buffer) < 0)
-			return (-1);
+			return (free(buffer), -1);
 	}
+	free(current->next->content);
 	current->next->content = ft_strdup(buffer);
 	free(buffer);
+	if (!current->next->content)
+		return (-1);
 	return (1);
-}
+	}
 
-static int	handle_line_input(char **buffer, int *old_size, char *line)
+
+static int	handle_line_input(char **buffer, char *line)
 {
 	int	new_size;
-
-	new_size = *old_size + ft_strlen(line) + 2;
-	if (*buffer)
-		ft_strlcat(*buffer, "\n", new_size);
-	*buffer = reall(*buffer, *old_size, new_size);
-	if (!*buffer)
-		return (-1);
-	ft_strlcat(*buffer, line, new_size);
-	*old_size = new_size;
-	return (0);
-}
-
-static int	here_doc_lim_process(t_list *cur, int stdin, char *line, char **buf)
-{
 	int	old_size;
 
 	old_size = 0;
+	new_size = ft_strlen(line) + 2;
+	*buffer = reall(*buffer, old_size, new_size);
+	if (!*buffer)
+		return (-1);
+	ft_strlcat(*buffer, line, new_size);
+	old_size = new_size;
+	free(line);
+	return (0);
+}
+
+static int	here_doc_lim_process(t_list *cur, int stdin, char **buf)
+{
+	char	*line;
+	char	*temp;
+	char	*lim;
+
+	(void)cur;
+	lim = ft_strjoin((char *)cur->next->content, "\n");
+	if (!lim)
+		return (-1);
 	while (1)
 	{
-		line = readline("> ");
+	line = readline("> "); // minishell: warning: here-document delimited by end-of-file && EXIT
 		if (!line && g_signalnum == 2)
 		{
 			if (dup2(stdin, STDIN_FILENO) == -1)
-				return (-1);
-			return (2);
+				return (free(lim), -1);
+			return (free(lim), 2);
 		}
 		if (!line)
-			return (4);
-		if ((line && *line) && ft_strncmp(line, cur->next->content,
-				longer(line, cur->next->content)) == 0)
-			break ;
-		if (handle_line_input(buf, &old_size, line) < 0)
-			return (-1);
+			return (free(lim), 3);
+		temp = ft_strjoin(line, "\n");
 		free(line);
+		if (!temp)
+			return (free(lim), -1);
+		if (ft_strncmp(temp, lim, longer(temp, lim)) == 0)
+		{
+			free(temp);
+			free(lim);
+			break ;
+		}
+		if (handle_line_input(buf, temp) < 0)
+			return (free(lim), free(temp), -1);
 	}
-	if (buf && *buf && **buf)
-		ft_strlcat(*buf, "\n", ft_strlen(*buf) + 2);
 	return (0);
 }
 
 static int	here_doc_lim_inp(t_session *session, t_list *current)
 {
-	char	*line;
 	char	*buffer;
 	int		stdin_copy;
 	int		status;
 
 	buffer = NULL;
-	line = NULL;
 	setup_signals(1);
 	stdin_copy = dup(STDIN_FILENO);
 	if (stdin_copy == -1)
@@ -95,7 +106,7 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 		close(stdin_copy);
 		return (-1);
 	}
-	status = here_doc_lim_process(current, stdin_copy, line, &buffer);
+	status = here_doc_lim_process(current, stdin_copy, &buffer);
 	close(stdin_copy);
 	if (status != 0)
 	{
@@ -110,7 +121,7 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 int	here_doc_lim(t_session *session, t_list **token)
 {
 	t_list	*curr;
-	int		status;
+	int	status;
 
 	curr = *token;
 	while (curr->next)
@@ -122,10 +133,10 @@ int	here_doc_lim(t_session *session, t_list **token)
 				return (-1);
 			if (status == 2)
 				return (2);
-			if (status == 4)
+			if (status == 3)
 			{
 				error_msg(ERR_BASH, ERR_EOF_HEREDOC, NULL, NULL);
-				return (4);
+				return (3);
 			}
 			curr = curr->next;
 		}

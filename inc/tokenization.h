@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 11:04:07 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:43:29 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ typedef struct s_temp
 }	t_temp;
 
 int		dynstr_init(t_temp *thing, char *input);
-void	dynstr_append_char(t_temp *thing, char *str);
-void	dynstr_append_str(t_temp *thing, char *str);
+int		dynstr_append_char(t_temp *thing, char *str);
+int		dynstr_append_str(t_temp *thing, char *str);
+int		dynstr_append_symb(t_temp *thing, char c);
 
 bool	delimiter_wrong_pos(t_list *token);
 bool	consecutive_delimiters(t_list *token);
@@ -42,7 +43,7 @@ int		handle_quotes(t_session *session, t_temp *thing, char *args);
 int		expansion(t_session *session, t_temp *thing, char *str);
 int		expansion_two(t_session *session, char **str);
 
-void	copy_delimeter(t_temp *thing, char *str);
+int	copy_delimeter(t_temp *thing, char *str);
 int		split_and_check(t_session *session, t_list **token, char *src); // remove add_spaces it is static
 
 int		files(t_command *command, t_list *current);
@@ -63,8 +64,8 @@ int		prompt(t_session *session);
 int		history(t_session *session);
 int		add_pipe_history(t_session *session, char *line);
 
-void	skip_copy(char *arg, t_temp *thing, char c); // new function
-void	skip_quotes(char *arg, t_temp *thing);
+int		skip_copy(char *arg, t_temp *thing, char c); // new function
+int		skip_quotes(char *arg, t_temp *thing);
 int		skip(t_session *session);
 int		create_new(t_list **args, t_list *new, char *str);
 bool	is_in_quotes(const char *str);
