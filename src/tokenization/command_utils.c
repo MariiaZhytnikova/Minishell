@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 12:08:52 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:53:30 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	allocate_struct(t_session *s, t_count *c, int i)
 	while (i < c->cmd_nb)
 	{
 		s->cmds[i] = ft_calloc(1, sizeof(t_command));
-		if (!s->cmds[i]) // check for test
+		if (!s->cmds[i])
 			return (-1);
 		s->cmds[i]->args = ft_calloc(c->args_nb[i] + 1, sizeof(char *));
 		if (!s->cmds[i]->args)
@@ -80,29 +80,52 @@ int	dynstr_init(t_temp *thing, char *input)
 	return (1);
 }
 
-void	dynstr_append_char(t_temp *thing, char *str)
+int	dynstr_append_char(t_temp *thing, char *str)
 {
 	if (thing->j + 2 >= (int)thing->cap)
 	{
 		thing->temp = reall(thing->temp, thing->cap, thing->cap * 2);
+		if (thing->temp == NULL)
+			return (-1);
 		thing->cap *= 2;
 	}
 	thing->temp[(thing->j)++] = str[(thing->i)++];
+	return (1);
 }
 
-void	dynstr_append_str(t_temp *thing, char *str)
+int	dynstr_append_str(t_temp *thing, char *str)
 {
 	int	i;
 
 	if (!str || !*str)
-		return ;
+		return (1);
 	if (thing->j + ft_strlen(str) + 1 >= thing->cap)
 	{
 		thing->temp = reall(thing->temp, thing->cap, thing->cap * 2);
+		if (thing->temp == NULL)
+			return (-1);
 		thing->cap *= 2;
 	}
 	i = 0;
 	while (str[i])
-		thing->temp[(thing->j)++] = str[i++];
+	{
+		printf("%c\n", str[i]);
+		if (dynstr_append_char(thing, str) < 0)
+			return (-1);
+	}
 	thing->temp[(thing->j)] = '\0';
+	return (1);
+}
+
+int	dynstr_append_symb(t_temp *thing, char c)
+{
+	if (thing->j + 2 >= (int)thing->cap)
+	{
+		thing->temp = reall(thing->temp, thing->cap, thing->cap * 2);
+		if (thing->temp == NULL)
+			return (-1);
+		thing->cap *= 2;
+	}
+	thing->temp[(thing->j)++] = c;
+	return (1);
 }

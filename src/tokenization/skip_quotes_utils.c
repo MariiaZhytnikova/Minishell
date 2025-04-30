@@ -3,34 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   skip_quotes_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:45:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/27 16:01:41 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:38:49 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	skip_copy(char *arg, t_temp *thing, char c)
+int	skip_copy(char *arg, t_temp *thing, char c)
 {
 	thing->i++;
 	while (arg[thing->i] && arg[thing->i] != c)
-		dynstr_append_char(thing, arg);
+	{
+		if (dynstr_append_char(thing, arg) < 0)
+			return (-1);
+	}
 	thing->i++;
+	return (1);
 }
 
-void	skip_quotes(char *arg, t_temp *thing)
+int	skip_quotes(char *arg, t_temp *thing)
 {
 	while (arg[thing->i])
 	{
 		if (arg[thing->i] == '\'')
-			skip_copy(arg, thing, '\'');
+		{
+			if (skip_copy(arg, thing, '\'') < 0)
+				return (-1);
+		}
 		else if (arg[thing->i] == '\"')
-			skip_copy(arg, thing, '\"');
+		{
+			if (skip_copy(arg, thing, '\"') < 0)
+				return (-1);
+		}
 		else if (arg[thing->i] == '\\')
-			skip_copy(arg, thing, '\\');
+		{
+			if (skip_copy(arg, thing, '\\') < 0)
+				return (-1);
+		}
 		else
-			dynstr_append_char(thing, arg);
+		{
+			if (dynstr_append_char(thing, arg) < 0)
+				return (-1);
+		}
 	}
+	return (1);
 }

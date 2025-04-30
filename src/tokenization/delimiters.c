@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 15:35:41 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:42:21 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,35 @@ static bool	check_two(char *str, int i)
 		return (true);
 	return (false);
 }
-
-void	copy_delimeter(t_temp *thing, char *str)
+int	copy_delimeter(t_temp *thing, char *str)
 {
 	if (ft_strlen(str) >= 3 && str[thing->i] == '<' && str[thing->i + 1] == '<'
 		&& str[thing->i + 2] == '<')
 	{
-		thing->temp[thing->j++] = ' ';
-		thing->temp[thing->j++] = str[thing->i++];
-		thing->temp[thing->j++] = str[thing->i++];
-		thing->temp[thing->j++] = str[thing->i++];
-		thing->temp[thing->j++] = ' ';
+		if (dynstr_append_symb(thing, ' ') == -1
+			|| dynstr_append_char(thing, str) == -1
+			|| dynstr_append_char(thing, str) == -1
+			|| dynstr_append_char(thing, str) == -1
+			|| dynstr_append_symb(thing, ' ') == -1)
+			return (-1);
 	}
 	else if (check_two(str, thing->i) == true)
 	{
-		thing->temp[thing->j++] = ' ';
-		thing->temp[thing->j++] = str[thing->i++];
-		thing->temp[thing->j++] = str[thing->i++];
-		thing->temp[thing->j++] = ' ';
+		if (dynstr_append_symb(thing, ' ') == -1
+			|| dynstr_append_char(thing, str) == -1
+			|| dynstr_append_char(thing, str) == -1
+			|| dynstr_append_symb(thing, ' ') == -1)
+			return (-1);
 	}
 	else if (str[thing->i] == '|' || str[thing->i] == '&'
 		|| str[thing->i] == '<' || str[thing->i] == '>')
 	{
-		thing->temp[thing->j++] = ' ';
-		thing->temp[thing->j++] = str[thing->i++];
-		thing->temp[thing->j++] = ' ';
+		if (dynstr_append_symb(thing, ' ') == -1
+			|| dynstr_append_char(thing, str) == -1
+			|| dynstr_append_symb(thing, ' ') == -1)
+			return (-1);
 	}
+	return (0);
 }
 
 int	get_redirection(t_command *command, t_list *current)

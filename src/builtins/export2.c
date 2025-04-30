@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:26:21 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 15:24:08 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:35:32 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void	prepare_add_var(t_session *session, t_command *cmd, char *var)
 {
 	char	*new_value;
 
+	if (!ft_strchr(var, '='))
+		return ;
 	new_value = ft_strdup(var);
 	if (!new_value)
 	{
