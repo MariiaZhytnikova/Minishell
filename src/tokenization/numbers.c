@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   numbers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:28:21 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 12:34:31 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/05 19:23:45 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,21 +110,22 @@ void	count_delim_and_redir(t_list **token, t_count *count)
 	}
 }
 
-int	numbers(t_session *session, t_list **token, t_count *count)
+int	numbers(t_session *s, t_list **token)
 {
-	count->cmd_nb = 0;
-	count->delimiter_nb = 0;
-	cmd_number(token, count);
-	count->args_nb = (int *)ft_calloc(count->cmd_nb + 1, sizeof(int));
-	count->red_in_nb = (int *)ft_calloc(count->cmd_nb + 1, sizeof(int));
-	count->red_out_nb = (int *)ft_calloc(count->cmd_nb + 1, sizeof(int));
-	count->red_app_nb = (int *)ft_calloc(count->cmd_nb + 1, sizeof(int));
-	if (!count->args_nb || !count->red_in_nb || !count->red_out_nb
-		|| !count->red_app_nb)
+	s->count = ft_calloc(1, sizeof(t_count));
+	cmd_number(token, s->count);
+	s->count->args_nb = (int *)ft_calloc(s->count->cmd_nb + 1, sizeof(int));
+	s->count->red_in_nb = (int *)ft_calloc(s->count->cmd_nb + 1, sizeof(int));
+	s->count->red_out_nb = (int *)ft_calloc(s->count->cmd_nb + 1, sizeof(int));
+	s->count->red_app_nb = (int *)ft_calloc(s->count->cmd_nb + 1, sizeof(int));
+	if (!s->count->args_nb || !s->count->red_in_nb || !s->count->red_out_nb
+		|| !s->count->red_app_nb)
 		return (-1);
-	count_arguments(token, count);
-	count_delim_and_redir(token, count);
-	if (allocate_struct(session, count, 0) < 0)
+	count_arguments(token, s->count);
+	count_delim_and_redir(token, s->count);
+	if (allocate_struct(s, 0) < 0)
+		return (-1);
+	if (red_struct_alloc(s) < 0)
 		return (-1);
 	return (1);
 }

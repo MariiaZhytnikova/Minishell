@@ -3,86 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   delimiters.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/29 16:42:21 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:47:18 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_delim_or_red(char *str)
+int	get_arguments(t_session *session, t_list *curr, t_list **args)
 {
-	if (ft_strlen(str) >= 3 && str[0] == '<' && str[1] == '<' && str[2] == '<')
-		return (true);
-	if (ft_strlen(str) >= 2 && str[0] == '|' && str[1] == '|')
-		return (true);
-	if (ft_strlen(str) >= 2 && str[0] == '&' && str[1] == '&')
-		return (true);
-	if (ft_strlen(str) >= 2 && str[0] == '<' && str[1] == '<')
-		return (true);
-	if (ft_strlen(str) >= 2 && str[0] == '>' && str[1] == '>')
-		return (true);
-	if (str[0] == '|')
-		return (true);
-	if (str[0] == '&')
-		return (true);
-	if (str[0] == '<')
-		return (true);
-	if (str[0] == '>')
-		return (true);
-	return (false);
+	t_list	*exp_args;
+	t_list	*new;
+	t_list	*current;
+
+	exp_args = get_exp(session, curr->content, 1);
+	if (!exp_args)
+		return (-1);
+	if (ft_strchr(curr->content, '*'))
+		if (wild(&exp_args) < 0)
+			return (-1);
+	current = exp_args;
+	while (current)
+	{
+		new = ft_lstnew(skip(current->content));
+		if (!new)
+		{
+			ft_lstclear(&exp_args, free);
+			return (-1);
+		}
+		ft_lstadd_back(args, new);
+		current = current->next;
+	}
+	ft_lstclear(&exp_args, free);
+	return (1);
 }
 
-static bool	check_two(char *str, int i)
+int	red_handler(t_session *session, t_list *curr, t_list **exp_red)
 {
-	if ((ft_strlen(str) >= 2 && str[i] == '|' && str[i + 1] == '|')
-		|| (ft_strlen(str) >= 2 && str[i] == '&' && str[i + 1] == '&')
-		|| (ft_strlen(str) >= 2 && str[i] == '<' && str[i + 1] == '<')
-		|| (ft_strlen(str) >= 2 && str[i] == '>' && str[i + 1] == '>'))
-		return (true);
-	return (false);
-}
-int	copy_delimeter(t_temp *thing, char *str)
-{
-	if (ft_strlen(str) >= 3 && str[thing->i] == '<' && str[thing->i + 1] == '<'
-		&& str[thing->i + 2] == '<')
+	if ((ft_strncmp(curr->content, "<<<",
+				longer(curr->content, "<<<")) == 0))
 	{
-		if (dynstr_append_symb(thing, ' ') == -1
-			|| dynstr_append_char(thing, str) == -1
-			|| dynstr_append_char(thing, str) == -1
-			|| dynstr_append_char(thing, str) == -1
-			|| dynstr_append_symb(thing, ' ') == -1)
+		*exp_red = get_exp(session, curr->next->content, 0);
+		if (!exp_red)
 			return (-1);
 	}
-	else if (check_two(str, thing->i) == true)
+	else
 	{
-		if (dynstr_append_symb(thing, ' ') == -1
-			|| dynstr_append_char(thing, str) == -1
-			|| dynstr_append_char(thing, str) == -1
-			|| dynstr_append_symb(thing, ' ') == -1)
+		*exp_red = get_exp(session, curr->next->content, 1);
+		if (!*exp_red)
 			return (-1);
+		if (ft_strchr(curr->next->content, '*'))
+			if (wild(exp_red) < 0)
+				return (-1);
 	}
-	else if (str[thing->i] == '|' || str[thing->i] == '&'
-		|| str[thing->i] == '<' || str[thing->i] == '>')
-	{
-		if (dynstr_append_symb(thing, ' ') == -1
-			|| dynstr_append_char(thing, str) == -1
-			|| dynstr_append_symb(thing, ' ') == -1)
-			return (-1);
-	}
-	return (0);
+	if (*exp_red && (*exp_red)->next)
+		return (ft_lstclear(exp_red, free),
+			error_msg(ERR_BASH, ERR_REDIR, NULL, NULL), -1);
+	return (1);
 }
 
-int	get_redirection(t_command *command, t_list *current)
+int	get_redirection(t_session *session, t_command *cmd, t_list *curr)
 {
-	if (files(command, current) < 0)
-		return (error_msg(ERR_BASH, ERR_CRASH, "files", NULL), -1);
-	if (redirection_in(command, current) < 0)
-		return (error_msg(ERR_BASH, ERR_CRASH, "redirection_in", NULL), -1);
-	if (redirection_out(command, current) < 0)
-		return (error_msg(ERR_BASH, ERR_CRASH, "redirection_OUT", NULL), -1);
+	char	*cont;
+	t_list	*exp_red;
+
+	exp_red = NULL;
+	if (red_handler(session, curr, &exp_red) < 0)
+		return (-1);
+	cont = skip(exp_red->content);
+	ft_lstclear(&exp_red, free);
+	if (!cont)
+		return (-1);
+	if (files(cmd, curr, cont) < 0)
+		return (free(cont), error_msg(ERR_BASH, ERR_CRASH, NULL, NULL), -1);
+	if (redirection_in(cmd, curr, cont) < 0)
+		return (free(cont), error_msg(ERR_BASH, ERR_CRASH, NULL, NULL), -1);
+	if (redirection_out(cmd, curr, cont) < 0)
+		return (free(cont), error_msg(ERR_BASH, ERR_CRASH, NULL, NULL), -1);
+	free(cont);
 	return (1);
 }
 

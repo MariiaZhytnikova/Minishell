@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 14:45:43 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:52:43 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**list_to_arr(t_list *list)
 
 	i = 0;
 	current = list;
-	arr = malloc(sizeof(char *) * (ft_lstsize(list) + 1));
+	arr = ft_calloc((ft_lstsize(list) + 1), sizeof(char *));
 	if (!arr)
 		return (NULL);
 	while (current)

@@ -6,11 +6,11 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:38:27 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 11:14:35 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:59:31 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"									 // Is directory moved to utils
+#include "minishell.h"
 
 static char	*access_path(char **paths, char *cmd)
 {
@@ -35,7 +35,7 @@ static char	*access_path(char **paths, char *cmd)
 	return (NULL);
 }
 
-static char	**split_path(t_command *cmd, t_list *current) // New functionn to handle empty PATH case
+static char	**split_path(t_command *cmd, t_list *current)
 {
 	char	**paths;
 	char	**temp;
@@ -44,9 +44,15 @@ static char	**split_path(t_command *cmd, t_list *current) // New functionn to ha
 	if (!temp)
 		return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), NULL);
 	if (!temp[1] && !is_directory(cmd->args[0]))
-		return (free_arr(temp), error_msg(ERR_BASH, cmd->args[0], ERR_ISADIR, 0), NULL);
+	{
+		free_arr(temp);
+		return (error_msg(ERR_BASH, cmd->args[0], ERR_ISADIR, 0), NULL);
+	}
 	else if (!temp[1])
-		return (free_arr(temp), error_msg(ERR_BASH, cmd->args[0], ERR_NO, 0), NULL);
+	{
+		free_arr(temp);
+		return (error_msg(ERR_BASH, cmd->args[0], ERR_NO, 0), NULL);
+	}
 	paths = ft_split(temp[1], ':');
 	free_arr(temp);
 	if (!paths)
@@ -61,16 +67,16 @@ static char	*get_path(t_command *cmd, t_list *env)
 	t_list	*current;
 
 	current = search_in_env(env, "PATH");
-	if (!current || !current->content)					 // Case where no path like env - i
+	if (!current || !current->content)
 	{
 		cmd->status = 127;
 		return (error_msg(ERR_BASH, cmd->args[0], ERR_NO, NULL), NULL);
 	}
-	paths = split_path(cmd, current);					 // New functionn to handle empty PATH case
+	paths = split_path(cmd, current);
 	if (!paths)
 		return (NULL);
 	cur_cmd = access_path(paths, cmd->args[0]);
-	free_arr(paths); 									// Save lines, move at the top 
+	free_arr(paths);
 	if (!cur_cmd)
 	{
 		cmd->status = 127;
@@ -88,7 +94,7 @@ static char	*path_check(t_command *cmd, t_list *env)
 	path = ft_strdup(cmd->args[0]);
 	if (!path)
 		return (error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL), NULL);
-	if (!access(path, F_OK) && !is_directory(path))			 // Funct rename
+	if (!access(path, F_OK) && !is_directory(path))
 	{
 		cmd->status = 126;
 		return (error_msg(ERR_BASH, path, ERR_ISADIR, NULL), free(path), NULL);
@@ -122,7 +128,7 @@ void	exec_norm(t_session *session, t_command *cmd)
 		exit (session->status_last);
 	}
 	env = list_to_arr(session->env_var);
-	if (execve(path, cmd->args, env) == -1) // Status for correct exit code
+	if (execve(path, cmd->args, env) == -1)
 	{
 		error_msg(ERR_BASH, cmd->args[0], ERR_CMD, NULL);
 		status = 127;
