@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 20:18:23 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:15:02 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		if_quotes(t_temp *thing, char *args);
 int		handle_quotes(t_temp *thing, char *args);
 
 int		status(t_session *session, t_temp *thing);
-int		expansion(t_session *session, t_temp *thing, char *str);
+int		expansion(t_session *session, t_temp *thing, char *str, int exp);
 
 int		copy_delimeter(t_temp *thing, char *str);
 int		split_input(t_list **token, char *args);
