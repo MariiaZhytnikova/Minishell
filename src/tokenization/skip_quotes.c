@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:45:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 18:07:30 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:57:02 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*skip(char *content)
 	t_temp	thing;
 	char	*res;
 
+	if (!content || !*content)
+		return (ft_calloc(1, sizeof(char *)));
 	if (dynstr_init(&thing, content) < 0)
 		return (NULL);
 	while (content[thing.i])

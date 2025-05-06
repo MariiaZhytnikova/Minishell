@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 18:23:14 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:48:24 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 static int	no_expansion(t_session *session, t_temp *thing, char *str)
 {
-	if (str[thing->i + 1] == '?')
+	if (!str[thing->i + 1])
+	{
+		if (dynstr_char(thing, str) < 0)
+			return (-1);
+		return (0);
+	}
+	if (str[thing->i + 1] && str[thing->i + 1] == '?')
 		return (status(session, thing), 0);
-	if (!str[thing->i + 1] || !ft_isalnum_plus(str[thing->i + 1]))
+	if (str[thing->i + 1] && !ft_isalnum_plus(str[thing->i + 1]))
 	{
 		if (str[thing->i + 1] == '\"' || str[thing->i + 1] == '\'')
 		{
 			thing->i++;
 			return (0);
 		}
-		thing->temp[thing->j++] = str[thing->i++];
-		return (0);
 	}
 	return (1);
 }
@@ -34,12 +38,14 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	char	name[MAX_PR];
 	char	*env;
 	int		len_name;
+	int		no_exp;
 
 	ft_memset(name, 0, MAX_PR);
-	if (no_expansion(session, thing, str) < 0)
-		return (-1);
-	if (no_expansion(session, thing, str) == 0)
+	no_exp = no_expansion(session, thing, str);
+	if (no_exp == 0)
 		return (1);
+	else if (no_exp < 0)
+		return (-1);
 	len_name = 0;
 	thing->i++;
 	while (str[thing->i] && ft_isalnum_plus(str[thing->i]))
@@ -138,6 +144,5 @@ t_list	*get_exp(t_session *session, char *content, int split)
 		if (!exp_args->content)
 			return (free(thing.temp), NULL);
 	}
-	free(thing.temp);
-	return (exp_args);
+	return (free(thing.temp), exp_args);
 }

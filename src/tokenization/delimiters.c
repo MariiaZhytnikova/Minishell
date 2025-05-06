@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 20:47:18 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:55:50 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	get_arguments(t_session *session, t_list *curr, t_list **args)
 
 	exp_args = get_exp(session, curr->content, 1);
 	if (!exp_args)
-		return (-1);
+		return (1);
 	if (ft_strchr(curr->content, '*'))
 		if (wild(&exp_args) < 0)
 			return (-1);
@@ -46,21 +46,26 @@ int	red_handler(t_session *session, t_list *curr, t_list **exp_red)
 				longer(curr->content, "<<<")) == 0))
 	{
 		*exp_red = get_exp(session, curr->next->content, 0);
-		if (!exp_red)
-			return (-1);
+		if (!*exp_red)
+		{
+			*exp_red = ft_calloc(1, sizeof(t_list));
+			return (1);
+		}
 	}
 	else
 	{
 		*exp_red = get_exp(session, curr->next->content, 1);
-		if (!*exp_red)
-			return (-1);
+		if (!exp_red)
+			return (error_msg(ERR_BASH, ERR_REDIR, NULL, NULL), -1);
 		if (ft_strchr(curr->next->content, '*'))
 			if (wild(exp_red) < 0)
 				return (-1);
 	}
-	if (*exp_red && (*exp_red)->next)
+	if (!*exp_red || (*exp_red && (*exp_red)->next))
+	{
 		return (ft_lstclear(exp_red, free),
 			error_msg(ERR_BASH, ERR_REDIR, NULL, NULL), -1);
+	}
 	return (1);
 }
 
@@ -68,14 +73,18 @@ int	get_redirection(t_session *session, t_command *cmd, t_list *curr)
 {
 	char	*cont;
 	t_list	*exp_red;
+	int		exp_status;
 
 	exp_red = NULL;
-	if (red_handler(session, curr, &exp_red) < 0)
+	exp_status = red_handler(session, curr, &exp_red);
+	if (exp_status < 0)
 		return (-1);
+	else if (exp_status == 0)
+		return (1);
 	cont = skip(exp_red->content);
 	ft_lstclear(&exp_red, free);
 	if (!cont)
-		return (-1);
+		return (1);
 	if (files(cmd, curr, cont) < 0)
 		return (free(cont), error_msg(ERR_BASH, ERR_CRASH, NULL, NULL), -1);
 	if (redirection_in(cmd, curr, cont) < 0)
