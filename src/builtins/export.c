@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:10 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 14:29:27 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:37:13 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,21 @@ static void	sort_export(t_list *copy)
 
 static t_list	*copy_list(t_list *start)
 {
-	t_list	*current;
-	t_list	*original;
-	t_list	*copy;
+	t_list	*copy = NULL;
+	t_list	*new_node;
+	char	*content;
 
-	if (!start)
-		return (NULL);
-	copy = ft_lstnew((char *)start->content);
-	if (!copy)
-		return (NULL);
-	current = copy;
-	original = start->next;
-	while (original)
+	while (start)
 	{
-		current->next = ft_lstnew((char *)original->content);
-		if (!current->next)
+		content = ft_strdup((char *)start->content);
+		if (!content || !(new_node = ft_lstnew(content)))
 		{
+			free(content);
 			ft_lstclear(&copy, free);
 			return (NULL);
 		}
-		current = current->next;
-		original = original->next;
+		ft_lstadd_back(&copy, new_node);
+		start = start->next;
 	}
 	return (copy);
 }

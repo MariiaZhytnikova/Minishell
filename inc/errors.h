@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 12:33:26 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:11:33 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ about this while testing. Don't put strings longer than \
 # define ERR_BASH "minishell: "
 # define ERR_ENV "env: "
 # define ERR_EXPORT "export: "
+# define ERR_UNSET "unset: "
+# define ERR_OPTION ": invalid option"
 # define ERR_CD "minishell: cd: "
 # define ERR_PIPE "Pipe creation failed"
 # define ERR_FORK "Fork failed"

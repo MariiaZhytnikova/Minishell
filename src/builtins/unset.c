@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:17 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 12:58:42 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:13:22 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ void	unset_builtin(t_session *session, t_command *cmd)
 	i = 1;
 	while (cmd->args[i])
 	{
+		if (cmd->args[i][0] == '-')
+		{
+			error_msg(ERR_BASH, ERR_UNSET, cmd->args[i], ERR_OPTION);
+			cmd->status = 1;
+			return ;
+		}
 		tmp = session->env_var;
 		var_to_unset = search_in_env(tmp, cmd->args[i]);
 		if (var_to_unset)
