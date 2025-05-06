@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:11:33 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 18:00:14 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:46:29 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ int	dynstr_str(t_temp *thing, char *str)
 		return (1);
 	if (thing->j + ft_strlen(str) + 1 >= thing->cap)
 	{
-		thing->temp = reall(thing->temp, thing->cap, thing->cap * 2);
+		thing->temp = reall(thing->temp, thing->cap, thing->j + ft_strlen(str) + 1);
 		if (thing->temp == NULL)
 			return (-1);
-		thing->cap *= 2;
+		thing->cap = thing->j + ft_strlen(str) + 1;
 	}
 	i = 0;
 	while (str[i])

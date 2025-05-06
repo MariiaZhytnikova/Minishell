@@ -6,14 +6,21 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/06 11:48:24 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:23:03 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	no_expansion(t_session *session, t_temp *thing, char *str)
+static int	no_expansion(t_session *session, t_temp *thing, char *str, int exp)
 {
+	if (!exp && str[thing->i + 1] && !ft_isalnum_plus(str[thing->i + 1]))
+	{
+		printf("Im here >%c<\n", str[thing->i]);
+		if (dynstr_char(thing, str) < 0)
+			return (-1);
+		return (0);
+	}
 	if (!str[thing->i + 1])
 	{
 		if (dynstr_char(thing, str) < 0)
@@ -33,7 +40,7 @@ static int	no_expansion(t_session *session, t_temp *thing, char *str)
 	return (1);
 }
 
-int	expansion(t_session *session, t_temp *thing, char *str)
+int	expansion(t_session *session, t_temp *thing, char *str, int exp)
 {
 	char	name[MAX_PR];
 	char	*env;
@@ -41,7 +48,7 @@ int	expansion(t_session *session, t_temp *thing, char *str)
 	int		no_exp;
 
 	ft_memset(name, 0, MAX_PR);
-	no_exp = no_expansion(session, thing, str);
+	no_exp = no_expansion(session, thing, str, exp);
 	if (no_exp == 0)
 		return (1);
 	else if (no_exp < 0)
@@ -73,7 +80,7 @@ static int	dq_exp(t_session *session, t_temp *thing, char *content)
 		{
 			if (session && content[thing->i] == '$')
 			{
-				if (expansion(session, thing, content) < 0)
+				if (expansion(session, thing, content, 0) < 0)
 					return (-1);
 			}
 			else
@@ -98,7 +105,7 @@ int	exp_loop(t_session *session, t_temp *thing, char *content)
 	{
 		if (content[thing->i] == '$')
 		{
-			if (expansion(session, thing, content) < 0)
+			if (expansion(session, thing, content, 1) < 0)
 				return (free(thing->temp), -1);
 		}
 		else if (content[thing->i] == '\'')

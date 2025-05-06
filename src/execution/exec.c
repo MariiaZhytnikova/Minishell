@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/05 17:57:48 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:30:20 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	run_cmd(t_session *session, t_command *cmd)
 	int	status;
 
 	if ((!cmd->args[0] || !cmd->args[0][0])
-			&& (cmd->last_in->type != STD || cmd->last_out->type != STD))
+			&& (cmd->last_in->type == STD || cmd->last_out->type == STD))
 	{
 		group_free(session);
 		exit (0);
