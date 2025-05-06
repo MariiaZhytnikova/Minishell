@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_cards.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 20:39:29 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:33:30 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,30 @@ static int	wild_check(char *arg, t_list **args)
 	else
 		if (create_new(args, new, arg) < 0)
 			return (-1);
-	
 	return (1);
 }
 
-int	wild(t_list **exp_red)
+int	wild(t_session *session)
 {
 	t_list	*args;
-	t_list	*current;
+	int		id;
+	int		i;
 
-	current = *exp_red;
+	id = 0;
 	args = NULL;
-	while (current)
+	while (id < session->count->cmd_nb)
 	{
-		if (wild_check(current->content, &args) < 0)
-			return (-1);
-		current = current->next;
+		i = 0;
+		while (session->cmds[id]->args[i])
+		{
+			if (wild_check(session->cmds[id]->args[i], &args) < 0)
+				return (-1);
+			i++;
+		}
+		free_arr(session->cmds[id]->args);
+		session->cmds[id]->args = list_to_arr(args);
+		ft_lstclear(&args, free);
+		id++;
 	}
-	ft_lstclear(exp_red, free);
-	*exp_red = args;
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:21:09 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 12:34:01 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:10:26 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	print_me_num(t_count *count)
 {
 	int	i;
 
-	///////////////////////TO DELETE///////////////////////////////////////////
 	printf("\n ***--- Statistic ---***\n");
 	printf("%scmd_number         : %d\n", CYAN, count->cmd_nb);
 	printf("delimiter_number   : %d\n", count->delimiter_nb);
@@ -43,15 +42,13 @@ void	print_me_num(t_count *count)
 		i++;
 	}
 	printf("DONE...%s\n", RESET);
-	//////////////////////////////////////////////////////////////////
 }
 
 void	print_me(t_session *session)
 {
-//////////////////////TO DELETE//////////////////////////////////////////////////////////////////////////
 	int	i;
 	int	j;
-	int num_red;
+	int	num_red;
 
 	printf("\n-->> WE HAVE COMMANDS!!! <<--\n");
 	i = 0;
@@ -80,9 +77,8 @@ void	print_me(t_session *session)
 	printf("\n-->> WE HAVE FILES!!! <<--%s\n", YELLOW);
 	while (i < session->count->cmd_nb)
 	{
-		num_red = session->count->red_in_nb[i] + \
-			session->count->red_out_nb[i] + session->count->red_app_nb[i];
-		
+		num_red = session->count->red_in_nb[i]
+			+ session->count->red_out_nb[i] + session->count->red_app_nb[i];
 		j = 0;
 		if (num_red > 0)
 		{
@@ -93,14 +89,7 @@ void	print_me(t_session *session)
 		j = 0;
 		printf("IN_FILE is: %s\n", session->cmds[i]->last_in->name);
 		printf("IN_FILE is: %s\n", session->cmds[i]->last_out->name);
-		// if (session->count->red_h_doc_nb[i] > 0)
-		// {
-		// 	printf("IN HERE_DOC %d\n", session->count->red_h_doc_nb[i]);
-		// 	while (session->cmds[i]->h_doc[j])
-		// 		printf("%s\n", session->cmds[i]->h_doc[j++]);
-		// }
 		i++;
 	}
 	printf("%s\n", RESET);
-/////////////////////////////////////////////////////////////////////////////////////////////////
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/28 12:07:39 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:57:48 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	exec_builtin(t_session *session, t_command *cmd)
 static bool	is_builtin(t_command *cmd)
 {
 	if (!cmd->args || !cmd->args[0])
-		return (false); // check for test
+		return (false);
 	if (!ft_strncmp(cmd->args[0], "exit", longer(cmd->args[0], "exit")))
 		return (true);
 	else if (!ft_strncmp(cmd->args[0], "cd", longer(cmd->args[0], "cd")))
@@ -76,7 +76,7 @@ void	run_cmd(t_session *session, t_command *cmd)
 	int	status;
 
 	if ((!cmd->args[0] || !cmd->args[0][0])
-			&& (cmd->last_in->type !=STD || cmd->last_out->type !=STD)) // ADDED CONDITION for case if no in/out files
+			&& (cmd->last_in->type != STD || cmd->last_out->type != STD))
 	{
 		group_free(session);
 		exit (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:16:47 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 12:46:14 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/02 10:26:24 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	echo_builtin(t_command *cmd)
 	}
 	while (cmd->args[i])
 	{
-		printf("%s", cmd->args[i]);
+		ft_putstr_fd(cmd->args[i], 1);
 		if (cmd->args[++i])
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 	}
 	if (!n_flag)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	cmd->status = 0;
 }

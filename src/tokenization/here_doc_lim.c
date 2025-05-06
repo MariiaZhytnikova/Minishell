@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_lim.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/30 15:31:47 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:36:38 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,16 @@
 
 // FIX SOME MEMORY LEAKS
 
-static int	replace_token(t_session *session, t_list *current, char *buffer)
-{
-
-	free(current->content);
-	current->content = ft_strdup("<<<");
-	if (!current->content)
-		return (free(buffer), -1);
-	if (!buffer || !buffer[0])
-		buffer = ft_calloc(1, sizeof(char));
-	if (!buffer)
-		return (-1);
-	if (ft_strchr(buffer, '$'))
-	{
-		if (expansion_two(session, &buffer) < 0)
-			return (free(buffer), -1);
-	}
-	free(current->next->content);
-	current->next->content = ft_strdup(buffer);
-	free(buffer);
-	if (!current->next->content)
-		return (-1);
-	return (1);
-	}
-
-
 static int	handle_line_input(char **buffer, char *line)
 {
 	int	new_size;
 	int	old_size;
 
-	old_size = 0;
-	new_size = ft_strlen(line) + 2;
+	if (!*buffer || !*buffer[0])
+		old_size = 0;
+	else
+		old_size = ft_strlen(*buffer);
+	new_size = old_size + ft_strlen(line) + 2;
 	*buffer = reall(*buffer, old_size, new_size);
 	if (!*buffer)
 		return (-1);
@@ -55,49 +33,58 @@ static int	handle_line_input(char **buffer, char *line)
 	return (0);
 }
 
-static int	here_doc_lim_process(t_list *cur, int stdin, char **buf)
+static int	limiter(t_list *cur, char **lim)
+{
+	char	*temp;
+
+	temp = skip(cur->next->content);
+	if (!temp)
+		return (-1);
+	*lim = ft_strjoin(temp, "\n");
+	free(temp);
+	if (!*lim)
+		return (-1);
+	return (1);
+}
+
+static int	here_doc_lim_process(int stdin, char **buf, char **lim)
 {
 	char	*line;
 	char	*temp;
-	char	*lim;
 
-	lim = ft_strjoin((char *)cur->next->content, "\n");
-	if (!lim)
-		return (-1);
 	while (1)
 	{
 		line = readline("> ");
 		if (!line && g_signalnum == 2)
 		{
 			if (dup2(stdin, STDIN_FILENO) == -1)
-				return (free(lim), -1);
-			return (free(lim), 2);
+				return (free(*lim), -1);
+			return (free(*lim), 2);
 		}
 		if (!line)
-			return (free(lim), 3);
+			return (free(*lim), 3);
 		temp = ft_strjoin(line, "\n");
 		free(line);
 		if (!temp)
-			return (free(lim), -1);
-		if (ft_strncmp(temp, lim, longer(temp, lim)) == 0)
-		{
-			free(temp);
-			free(lim);
-			break ;
-		}
+			return (free(*lim), -1);
+		if (ft_strncmp(temp, *lim, longer(temp, *lim)) == 0)
+			return (free(temp), free(*lim), 0);
 		if (handle_line_input(buf, temp) < 0)
-			return (free(lim), free(temp), -1);
+			return (free(*lim), free(temp), -1);
 	}
 	return (0);
 }
 
-static int	here_doc_lim_inp(t_session *session, t_list *current)
+static int	here_doc_lim_inp(t_list *current)
 {
 	char	*buffer;
 	int		stdin_copy;
 	int		status;
+	char	*lim;
 
 	buffer = NULL;
+	if (limiter(current, &lim) < 0)
+		return (-1);
 	setup_signals(1);
 	stdin_copy = dup(STDIN_FILENO);
 	if (stdin_copy == -1)
@@ -105,7 +92,7 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 		close(stdin_copy);
 		return (-1);
 	}
-	status = here_doc_lim_process(current, stdin_copy, &buffer);
+	status = here_doc_lim_process(stdin_copy, &buffer, &lim);
 	close(stdin_copy);
 	if (status != 0)
 	{
@@ -114,20 +101,20 @@ static int	here_doc_lim_inp(t_session *session, t_list *current)
 	}
 	if (buffer && ft_strlen(buffer) > 65715)
 		return (error_msg(ERR_BUF, NULL, NULL, NULL), 4);
-	return (replace_token(session, current, buffer));
+	return (replace_token(current, buffer));
 }
 
-int	here_doc_lim(t_session *session, t_list **token)
+int	here_doc_lim(t_list **token)
 {
 	t_list	*curr;
-	int	status;
+	int		status;
 
 	curr = *token;
 	while (curr->next)
 	{
 		if (ft_strncmp(curr->content, "<<", longer(curr->content, "<<")) == 0)
 		{
-			status = here_doc_lim_inp(session, curr);
+			status = here_doc_lim_inp(curr);
 			if (status < 0)
 				return (-1);
 			if (status == 2)

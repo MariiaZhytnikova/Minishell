@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 09:25:56 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/22 11:03:20 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:25:04 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,6 @@ bool	is_del(char *content)
 	if (ft_strncmp(content, "||", longer(content, "||")) == 0)
 		return (true);
 	if (ft_strncmp(content, "&&", longer(content, "&&")) == 0)
-		return (true);
-	return (false);
-}
-
-static bool	is_red_mini(char *content)
-{
-	if (ft_strncmp(content, ">", longer(content, ">")) == 0)
-		return (true);
-	if (ft_strncmp(content, ">>", longer(content, ">>")) == 0)
-		return (true);
-	if (ft_strncmp(content, "<", longer(content, "<")) == 0)
 		return (true);
 	return (false);
 }
@@ -66,8 +55,6 @@ bool	consecutive_delimiters(t_list *token)
 			return (error_msg(ERR_BASH, ERR_SYNTAX, c->next->content, 0), true);
 		if (ft_strchr(c->content, '*') && ft_strchr(c->next->content, ')'))
 			return (error_msg(ERR_BASH, ERR_SYNTAX, c->next->content, 0), true);
-		if (is_red_mini(c->content) && ((char *)c->next->content)[0] == '*')
-			return (error_msg(ERR_BASH, "*:", ERR_REDIR, NULL), true);
 		if (ft_strncmp(c->content, "&", 2) == 0)
 			return (error_msg(ERR_BASH, ERR_EXCL, NULL, NULL), true);
 		c = c->next;

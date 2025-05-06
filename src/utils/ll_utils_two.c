@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ll_utils_two.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 15:52:28 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:00:01 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	create_env_list(t_list **env_var, char **env)
 	if (!*env || !**env)
 	{
 		create_node(env_var, NULL);
-		return;
+		return ;
 	}
 	while (env[i])
 	{
