@@ -1,0 +1,41 @@
+
+
+/home/ekashirs/projects/Hive/Minishell$           
+zsh: segmentation fault (core dumped)  ./minishell
+
+----------------
+
+<< 1 ctrl+D ctrl+C extra newline
+
+/home/ekashirs/projects/Hive/Minishell$ <<1 << 2
+> interrupt here
+minishell: warning: here-document delimited by end-of-file
+minishell: : command not found
+
+
+cat << 1 << 2
+ctrl+D for the first
+type something
+2
+(exec success)
+
+
+cat << 1
+ctrl+D shouldn't exec the command
+
+
+/home/ekashirs/projects/Hive/Minishell$ bash
+ekashirs@c1r5p7:~/projects/Hive/Minishell$ env -i ./minishell 
+/home/ekashirs/projects/Hive/Minishell$ env
+/home/ekashirs/projects/Hive/Minishell$ ls                                                                
+minishell: ls: command not found
+/home/ekashirs/projects/Hive/Minishell$ export                                                            
+minishell: Memory allocation failed
+
+
+export name
+(Doesn't create var. Whithout equal sign)
+
+error_msg("create_env_list", NULL, NULL, NULL);
+
+create_env_list(&session->env_var, env); //check if memory allocation failed what do we do?

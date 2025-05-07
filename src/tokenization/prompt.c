@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 15:21:40 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:09:15 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,25 @@ static char	*create_prompt(void)
 	return (prompt);
 }
 
-// int	prompt(t_session *session)
-// {
-// 	char	*promt;
+/* int	prompt(t_session *session)
+{
+	char	*promt;
 
-// 	session->history_pipe = ft_calloc(1, sizeof(char *));
-// 	if (!session->history_pipe)
-// 		return (-1);
-// 	promt = create_prompt();
-// 	if (!promt)
-// 		return (-1);
-// 	session->input = readline(promt);
-// 	free(promt);
-// 	if (!session->input)
-// 		return (-1);
-// 	return (1);
-// }
+	session->history_pipe = ft_calloc(1, sizeof(char *));
+	if (!session->history_pipe)
+		return (-1);
+	promt = create_prompt();
+	if (!promt)
+		return (-1);
+	session->input = readline(promt);
+	free(promt);
+	if (!session->input)
+		return (-1);
+	return (1);
+} */
+
+
+// FOR TEST
 
 int	prompt(t_session *session)
 {
@@ -72,6 +75,9 @@ int	prompt(t_session *session)
 		free(promt);
 		if (!session->input)
 			return (-1);
+		char *temp = ft_strdup(session->input);
+		free(session->input);
+		session->input = temp;
 	}
 	else
 	{

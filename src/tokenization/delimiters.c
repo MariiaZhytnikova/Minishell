@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiters.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 13:43:26 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:16:51 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ int	get_content(t_list *curr, t_list *exp_red, char **cont)
 		*cont = ft_strdup(exp_red->content);
 		if (!cont)
 		{
-			printf("I am here\n");
+			//printf("I am here\n");
 			return (-1);
 		}
 		if (!*cont)
 			*cont = ft_strdup("\0");
 		if (!cont)
 		{
-			printf("I am here\n");
+			//printf("I am here\n");
 			return (-1);
 		}
 	}

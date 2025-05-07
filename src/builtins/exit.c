@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:41 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 14:50:47 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:41:12 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	exit_builtin(t_session *session, t_command *cmd)
 		close(session->in);
 		close(session->out);
 		group_free(session);
-		exit(0);
+		exit(session->status_last);
 	}
 	if (cmd->args[1][0] == '\0')
 	{

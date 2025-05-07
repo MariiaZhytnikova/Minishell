@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 14:58:27 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:03:00 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,6 @@ void	exec(t_session *session, int *id)
 	if (session->cmds[*id] && session->cmds[*id - 1]->type == OR)
 		run_or(session, id);
 	session->status_last = session->cmds[*id - 1]->status;
+	if (session->status_last == 139)
+		printf("Segmentation fault (core dumped)\n");
 }

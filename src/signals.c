@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:01:37 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 15:21:21 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:45:20 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_signal(t_session *session, int code)
 	ft_lstclear(&session->env_var, free);
 	free(session->history_pipe);
 	rl_clear_history();
-	printf("exit\n");
+	//printf("exit\n");
 	exit(code);
 }
 

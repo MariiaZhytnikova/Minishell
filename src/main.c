@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 15:21:13 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 18:01:23 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	process_input(t_session *session)
 			ft_lstclear(&session->env_var, free);
 			free_session(session);
 			rl_clear_history();
-			printf("exit\n");
+			//printf("exit\n");
 			exit(2);
 		}
 		history(session);
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 		setup_signals(0);
 		g_signalnum = 0;
 		if (prompt(&session) < 0)
-			exit_signal(&session, 0);
+			exit_signal(&session, session.status_last);
 		if (session.input[0] == '\0')
 		{
 			free_session(&session);
@@ -76,5 +76,5 @@ int	main(int argc, char **argv, char **env)
 		}
 		process_input(&session);
 	}
-	return (0);
+	return (session.status_last);
 }

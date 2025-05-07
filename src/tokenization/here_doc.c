@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 15:39:09 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 16:08:59 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,14 @@ static int	here_doc_process(char **line, int stdin)
 			break ;
 		else
 		{
+			char *temp = ft_strdup(*line);
+			free(*line);
+			*line = temp;
 			free(*line);
 			*line = readline("> ");
+			char *temp2 = ft_strdup(*line);
+			free(*line);
+			*line = temp2;
 		}
 	}
 	return (0);
