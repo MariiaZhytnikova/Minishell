@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/06 15:58:40 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:41:01 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,5 @@ int	lexical_analyzer(t_session *session)
 		return (ft_lstclear(&token, free), -1);
 	}
 	ft_lstclear(&token, free);
-	// print_me(session);
 	return (1);
 }
