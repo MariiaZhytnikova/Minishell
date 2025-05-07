@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 11:34:31 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 14:24:41 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:43:16 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ void	handle_args(t_session *session, t_command *cmd);
 t_list	*search_in_env(t_list *env_var, char *variable);
 void	append_env(t_session *session, t_command *cmd, char *var);
 int		check_for_plus(char *var);
+void	cd_no_path (t_session *session, t_command *cmd);
+void	update_env(t_list *env_var, t_command *cmd);
 
 #endif

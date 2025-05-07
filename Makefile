@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/05/05 17:54:04 by mzhitnik         ###   ########.fr        #
+#    Updated: 2025/05/07 13:41:10 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS_PATH	:= ./obj
 LIBFT_PATH	:= ./libft
 LIBFT		:= $(LIBFT_PATH)/libft.a
 
-BUILTINS = cd echo env exit export export2 export3 pwd unset
+BUILTINS = cd cd2 echo env exit export export2 export3 pwd unset
 
 EXEC = exec processing pipe and_or open redirect
 
