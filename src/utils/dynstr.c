@@ -6,9 +6,11 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 13:11:33 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 13:33:16 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:34:37 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// else if (ft_isspace(thing->i + 1))
 
 #include "minishell.h"
 

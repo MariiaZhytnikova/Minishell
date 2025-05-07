@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 13:36:22 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:43:17 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,17 @@
 
 static int	no_expansion(t_session *session, t_temp *thing, char *str, int exp)
 {
-	if (!exp && str[thing->i + 1] && !ft_isalnum_plus(str[thing->i + 1])
-		&& str[thing->i + 1] != '?')
+	if (str[thing->i + 1] && str[thing->i + 1] == '?')
+		return (status(session, thing), 0);
+	if (str[thing->i + 1] && !ft_isalnum_plus(str[thing->i + 1]))
 	{
-		printf("Im here >%c<\n", str[thing->i]);
+		if (exp && (str[thing->i + 1] == '\"' || str[thing->i + 1] == '\''))
+		{
+			thing->i++;
+			return (0);
+		}
+		
+		printf(">%c<\n", str[thing->i + 1]);
 		if (dynstr_char(thing, str) < 0)
 			return (-1);
 		return (0);
@@ -27,16 +34,6 @@ static int	no_expansion(t_session *session, t_temp *thing, char *str, int exp)
 		if (dynstr_char(thing, str) < 0)
 			return (-1);
 		return (0);
-	}
-	if (str[thing->i + 1] && str[thing->i + 1] == '?')
-		return (status(session, thing), 0);
-	if (str[thing->i + 1] && !ft_isalnum_plus(str[thing->i + 1]))
-	{
-		if (str[thing->i + 1] == '\"' || str[thing->i + 1] == '\'')
-		{
-			thing->i++;
-			return (0);
-		}
 	}
 	return (1);
 }
