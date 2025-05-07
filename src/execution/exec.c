@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 14:43:58 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:58:27 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ void	run_cmd(t_session *session, t_command *cmd)
 {
 	int	status;
 
-	// if ((!cmd->args[0] || !cmd->args[0][0])
-	// 		&& (cmd->last_in->type == STD || cmd->last_out->type == STD))
-	// {
-	// 	group_free(session);
-	// 	exit (0);
-	// }
+	if ((!cmd->args[0] || !cmd->args[0][0])
+			&& (cmd->last_in->type != STD || cmd->last_out->type != STD))
+	{
+		group_free(session);
+		exit (0);
+	}
 	if (is_builtin(cmd))
 	{
 		exec_builtin(session, cmd);

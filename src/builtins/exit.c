@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:41 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/06 17:26:15 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:50:47 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	check_non_numeric(t_session *session, char *arg)
 
 void	exit_builtin(t_session *session, t_command *cmd)
 {
-	printf("exit\n");
+	//printf("exit\n");
 	if (!cmd->args[1])
 	{
 		close(session->in);

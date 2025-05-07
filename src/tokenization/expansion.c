@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 14:43:17 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:52:47 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static int	no_expansion(t_session *session, t_temp *thing, char *str, int exp)
 			thing->i++;
 			return (0);
 		}
-		
-		printf(">%c<\n", str[thing->i + 1]);
 		if (dynstr_char(thing, str) < 0)
 			return (-1);
 		return (0);
