@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:38:27 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 17:59:31 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:31:07 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,7 @@ static char	*get_path(t_command *cmd, t_list *env)
 
 	current = search_in_env(env, "PATH");
 	if (!current || !current->content)
-	{
-		cmd->status = 127;
-		return (error_msg(ERR_BASH, cmd->args[0], ERR_NO, NULL), NULL);
-	}
+		return (get_current_path(cmd));
 	paths = split_path(cmd, current);
 	if (!paths)
 		return (NULL);

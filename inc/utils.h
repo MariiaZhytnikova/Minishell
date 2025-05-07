@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/28 12:31:54 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:28:22 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ char	**list_to_arr(t_list *list);
 
 int		num_pipes(t_session *session, int *id);
 void	group_free(t_session *session);
+char	*get_current_path(t_command *cmd);
 
 #endif

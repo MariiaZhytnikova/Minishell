@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/06 15:55:50 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:43:26 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,30 @@ int	red_handler(t_session *session, t_list *curr, t_list **exp_red)
 	return (1);
 }
 
+int	get_content(t_list *curr, t_list *exp_red, char **cont)
+{
+	if ((ft_strncmp(curr->content, "<<<",
+				longer(curr->content, "<<<")) == 0))
+	{
+		*cont = ft_strdup(exp_red->content);
+		if (!cont)
+		{
+			printf("I am here\n");
+			return (-1);
+		}
+		if (!*cont)
+			*cont = ft_strdup("\0");
+		if (!cont)
+		{
+			printf("I am here\n");
+			return (-1);
+		}
+	}
+	else
+		*cont = skip(exp_red->content);
+	return (1);
+}
+
 int	get_redirection(t_session *session, t_command *cmd, t_list *curr)
 {
 	char	*cont;
@@ -81,7 +105,8 @@ int	get_redirection(t_session *session, t_command *cmd, t_list *curr)
 		return (-1);
 	else if (exp_status == 0)
 		return (1);
-	cont = skip(exp_red->content);
+	if (get_content(curr, exp_red, &cont) < 0)
+		return (-1);
 	ft_lstclear(&exp_red, free);
 	if (!cont)
 		return (1);

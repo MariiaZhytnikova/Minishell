@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 10:46:24 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 20:39:29 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:43:47 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static int	wild_check(char *arg, t_list **args)
 	else
 		if (create_new(args, new, arg) < 0)
 			return (-1);
-	
 	return (1);
 }
 
