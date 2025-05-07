@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/06 17:11:33 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:45:45 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ about this while testing. Don't put strings longer than \
 # define ERR_UNSET "unset: "
 # define ERR_OPTION ": invalid option"
 # define ERR_CD "minishell: cd: "
+# define ERR_HOME "HOME not set"
 # define ERR_PIPE "Pipe creation failed"
 # define ERR_FORK "Fork failed"
 # define ERR_CMD ": command not found"

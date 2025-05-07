@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:00 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/24 13:20:17 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:43:11 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	update_pwd(t_list *env_var, t_command *cmd, char *cur_dir)
 	}
 }
 
-static void	update_env(t_list *env_var, t_command *cmd)
+void	update_env(t_list *env_var, t_command *cmd)
 {
 	char	cur_dir[LEN_PATH];
 
@@ -103,7 +103,7 @@ void	cd_builtin(t_session *session, t_command *cmd)
 {
 	if (!cmd->args[1])
 	{
-		cmd->status = 0;
+		cd_no_path(session, cmd);
 		return ;
 	}
 	if (cmd->args[2])
