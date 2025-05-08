@@ -3,15 +3,10 @@
 /home/ekashirs/projects/Hive/Minishell$           (spaces)
 zsh: segmentation fault (core dumped)  ./minishell
 
-
 2)
-/home/ekashirs/projects/Hive/Minishell$ /bin/echo 1 && /bin/echo 2 |
-zsh: segmentation fault (core dumped)  ./minishell
-
-3)
 check dup in exec
 
-4)
+3)
 here_doc.c: Error!
 
 Error: WRONG_SCOPE_VAR      (line:  32, col:   1):	Variable declared in incorrect scope
@@ -22,7 +17,7 @@ Error: SPACE_REPLACE_TAB    (line:  37, col:  17):	Found space when expecting ta
 Error: DECL_ASSIGN_LINE     (line:  37, col:  25):	Declaration and assignation on a single line
 Error: TOO_MANY_LINES       (line:  43, col:   1):	Function has more than 25 lines
 
-5)
+4)
 expansion.c: Error!
 
 Error: TOO_MANY_LINES       (line:  67, col:   1):	Function has more than 25 lines
