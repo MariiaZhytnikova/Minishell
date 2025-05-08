@@ -6,13 +6,11 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 16:04:09 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:28:20 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// FIX SOME MEMORY LEAKS
 
 static int	handle_line_input(char **buffer, char *line)
 {
@@ -115,19 +113,19 @@ int	here_doc_lim(t_list **token)
 		if (ft_strncmp(curr->content, "<<", longer(curr->content, "<<")) == 0)
 		{
 			status = here_doc_lim_inp(curr);
-			if (status < 0)
-				return (-1);
-			if (status == 2)
-				return (2);
+			if (status < 0 || status == 2)
+				return (status);
 			if (status == 3)
 			{
 				error_msg(ERR_BASH, ERR_EOF_HEREDOC, NULL, NULL);
-				return (3);
+				g_signalnum = 3;
 			}
 			curr = curr->next;
 		}
 		if (curr->next)
 			curr = curr->next;
 	}
+	if (g_signalnum == 3)
+		return (3);
 	return (1);
 }

@@ -6,11 +6,20 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 18:01:23 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:21:28 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	exit_signal(t_session *session, int code)
+{
+	ft_lstclear(&session->env_var, free);
+	free(session->history_pipe);
+	rl_clear_history();
+	//printf("exit\n");
+	exit(code);
+}
 
 static int	init_session(int argc, char **argv, char **env, t_session *session)
 {
@@ -22,7 +31,8 @@ static int	init_session(int argc, char **argv, char **env, t_session *session)
 	}
 	session->env_var = NULL;
 	session->status_last = 0;
-	create_env_list(&session->env_var, env);
+	if (create_env_list(&session->env_var, env))
+		return (1);
 	return (0);
 }
 
@@ -65,7 +75,10 @@ int	main(int argc, char **argv, char **env)
 		session.cmds = NULL;
 		session.count = NULL;
 		session.history_pipe = NULL;
-		setup_signals(0);
+		if (g_signalnum == 3)
+			setup_signals(3);
+		else
+			setup_signals(0);
 		g_signalnum = 0;
 		if (prompt(&session) < 0)
 			exit_signal(&session, session.status_last);

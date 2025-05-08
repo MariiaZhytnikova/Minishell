@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 13:28:22 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:32:17 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		array_size(t_file **array);
 void	print_linked_list(t_list *lst);
 void	delete_node_by_content(t_list **list, char *variable);
 int		create_node(t_list **env_var, char *content);
-void	create_env_list(t_list **env_var, char **env);
+int		create_env_list(t_list **env_var, char **env);
 void	swap_content(t_list *a, t_list *b);
 void	add_new_var(t_session *session, t_command *cmd, char *val);
 char	**list_to_arr(t_list *list);

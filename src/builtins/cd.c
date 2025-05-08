@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:00 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 13:43:11 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:54:41 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	update_oldpwd(t_list *env_var, t_command *cmd)
 	current = env_var;
 	while (current)
 	{
-		if (!ft_strncmp(current->content, "OLDPWD=", 7))
+		if (!ft_strncmp(current->content, "OLDPWD", 6))
 		{
 			free(current->content);
 			current->content = NULL;

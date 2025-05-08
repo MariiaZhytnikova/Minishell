@@ -6,22 +6,13 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:01:37 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 16:45:20 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:31:50 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 sig_atomic_t	g_signalnum;
-
-void	exit_signal(t_session *session, int code)
-{
-	ft_lstclear(&session->env_var, free);
-	free(session->history_pipe);
-	rl_clear_history();
-	//printf("exit\n");
-	exit(code);
-}
 
 void	handle_sigint(int signal)
 {
@@ -32,7 +23,17 @@ void	handle_sigint(int signal)
 	rl_redisplay();
 }
 
-void	heredoc_handle_sigint(int signo)
+static void	handle_sigint_after(int signal)
+{
+	(void)signal;
+	write(1, "\n", 1);
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+static void	heredoc_handle_sigint(int signo)
 {
 	if (signo == SIGINT)
 	{
@@ -58,6 +59,11 @@ void	setup_signals(int mode)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_DFL);
+	}
+	if (mode == 3)
+	{
+		signal(SIGINT, handle_sigint_after);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
 

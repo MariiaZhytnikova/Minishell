@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:17 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/06 17:13:22 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:23:57 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_list	*search_in_env(t_list *env_var, char *variable)
 	while (current)
 	{
 		if (!ft_strncmp(current->content, variable, len)
-			&& ((char *)current->content)[len] == '=')
+			&& (((char *)current->content)[len] == '='
+			|| ((char *)current->content)[len] == '\0'))
 			return (current);
 		current = current->next;
 	}

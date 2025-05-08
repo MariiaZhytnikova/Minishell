@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:08:58 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 19:27:48 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/08 18:37:23 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 	status = here_doc_lim(token);
 	if (status < 0)
 		return (-1);
-	if (status == 2 || status == 4)
+	if (status > 0)
 		return (status);
 	status = here_doc_no_lim(session, token);
 	if (status < 0)

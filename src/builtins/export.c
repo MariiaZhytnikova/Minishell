@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:17:10 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 16:17:54 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/08 13:53:57 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,20 @@ static t_list	*copy_list(t_list *start)
 static void	print_export(t_list *copy)
 {
 	t_list	*ptr;
+	char	*eq;
 
 	ptr = copy;
 	while (ptr)
 	{
-		printf("declare -x \"%s\"\n", (char *)ptr->content);
+		eq = ft_strchr((char *)ptr->content, '=');
+		if (eq)
+		{
+			*eq = '\0';
+			printf("declare -x %s=\"%s\"\n", (char *)ptr->content, eq + 1);
+			*eq = '=';
+		}
+		else
+			printf("declare -x %s\n", (char *)ptr->content);
 		ptr = ptr->next;
 	}
 }

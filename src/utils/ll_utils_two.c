@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ll_utils_two.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:33:01 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 18:00:01 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:30:49 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,50 @@ int	create_node(t_list **env_var, char *value)
 	return (0);
 }
 
-void	create_env_list(t_list **env_var, char **env)
+static int	create_basic_env(t_list **env_var)
+{
+	char	cwd[1024];
+	char	*pwd;
+
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		pwd = ft_strjoin("PWD=", cwd);
+		if (pwd == NULL)
+			return (1);
+		if (create_node(env_var, pwd))
+			return (1);
+		free(pwd);
+	}
+	else
+		return (1);
+	if (create_node(env_var, "SHLVL=2"))
+		return (ft_lstclear(env_var, free), 1);
+	if (create_node(env_var, "OLDPWD"))
+		return (ft_lstclear(env_var, free), 1);
+	return (0);
+}
+
+int	create_env_list(t_list **env_var, char **env)
 {
 	int	i;
 
 	i = 0;
 	if (!*env || !**env)
 	{
-		create_node(env_var, NULL);
-		return ;
+		if (create_basic_env(env_var) != 0)
+			return (error_msg(ERR_BASH, ERR_MALLOC, " in basic_env", NULL), 1);
 	}
 	while (env[i])
 	{
 		if (create_node(env_var, env[i]))
 		{
-			error_msg("create_env_list", NULL, NULL, NULL);
+			error_msg(ERR_BASH, ERR_MALLOC, " in create_env_list", NULL);
 			ft_lstclear(env_var, free);
-			return ;
+			return (1);
 		}
 		i++;
 	}
+	return (0);
 }
 
 void	delete_node_by_content(t_list **list, char *variable)

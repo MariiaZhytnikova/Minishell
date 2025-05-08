@@ -1,41 +1,46 @@
 
-
-/home/ekashirs/projects/Hive/Minishell$           
+1)
+/home/ekashirs/projects/Hive/Minishell$           (spaces)
 zsh: segmentation fault (core dumped)  ./minishell
+
+
+2)
+/home/ekashirs/projects/Hive/Minishell$ /bin/echo 1 && /bin/echo 2 |
+zsh: segmentation fault (core dumped)  ./minishell
+
+3)
+check dup in exec
+
+4)
+here_doc.c: Error!
+
+Error: WRONG_SCOPE_VAR      (line:  32, col:   1):	Variable declared in incorrect scope
+Error: SPACE_REPLACE_TAB    (line:  32, col:  17):	Found space when expecting tab
+Error: DECL_ASSIGN_LINE     (line:  32, col:  24):	Declaration and assignation on a single line
+Error: WRONG_SCOPE_VAR      (line:  37, col:   1):	Variable declared in incorrect scope
+Error: SPACE_REPLACE_TAB    (line:  37, col:  17):	Found space when expecting tab
+Error: DECL_ASSIGN_LINE     (line:  37, col:  25):	Declaration and assignation on a single line
+Error: TOO_MANY_LINES       (line:  43, col:   1):	Function has more than 25 lines
+
+5)
+expansion.c: Error!
+
+Error: TOO_MANY_LINES       (line:  67, col:   1):	Function has more than 25 lines
+
 
 ----------------
 
-<< 1 ctrl+D ctrl+C extra newline
+the last one works incorrect. Have to think together
 
-/home/ekashirs/projects/Hive/Minishell$ <<1 << 2
-> interrupt here
+c3r1p6% ./minishell 
+/home/ekashirs/projects/Hive/Minishell$ << 1
+> 
 minishell: warning: here-document delimited by end-of-file
-minishell: : command not found
-
-
-cat << 1 << 2
-ctrl+D for the first
-type something
-2
-(exec success)
-
-
-cat << 1
-ctrl+D shouldn't exec the command
-
-
-/home/ekashirs/projects/Hive/Minishell$ bash
-ekashirs@c1r5p7:~/projects/Hive/Minishell$ env -i ./minishell 
-/home/ekashirs/projects/Hive/Minishell$ env
-/home/ekashirs/projects/Hive/Minishell$ ls                                                                
-minishell: ls: command not found
-/home/ekashirs/projects/Hive/Minishell$ export                                                            
-minishell: Memory allocation failed
-
-
-export name
-(Doesn't create var. Whithout equal sign)
-
-error_msg("create_env_list", NULL, NULL, NULL);
-
-create_env_list(&session->env_var, env); //check if memory allocation failed what do we do?
+/home/ekashirs/projects/Hive/Minishell$ << 1 << 2
+> 
+minishell: warning: here-document delimited by end-of-file
+> 2
+/home/ekashirs/projects/Hive/Minishell$ ls << 2
+> 
+minishell: warning: here-document delimited by end-of-file
+/home/ekashirs/projects/Hive/Minishell$ 

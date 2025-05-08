@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 16:07:40 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/23 13:17:38 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:31:38 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_flags
 	int	sigquit_printed;
 }	t_flags;
 
-void	exit_signal(t_session *session, int code);
 void	setup_signals(int mode);
 void	handle_sigint(int signal);
 void	handle_signal_status(t_session *s, int pid, int status, t_flags *flags);

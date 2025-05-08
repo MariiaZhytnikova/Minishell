@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:26:21 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/06 17:10:09 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/08 19:38:25 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	export_content(t_session *s, t_command *cmd, char *val, char *var)
 	while (ptr)
 	{
 		if (!ft_strncmp(ptr->content, var, len)
-			&& ((char *)ptr->content)[len] == '=')
+			&& (((char *)ptr->content)[len] == '='
+			|| ((char *)ptr->content)[len] == '\0'))
 		{
 			free(ptr->content);
 			ptr->content = val;
@@ -52,12 +53,33 @@ static void	export_content(t_session *s, t_command *cmd, char *val, char *var)
 		return ;
 }
 
+static void	without_equal(t_session *session, t_command *cmd, char *var)
+{
+	char	*new_value;
+
+	if (search_in_env(session->env_var, var))
+		return ;
+	new_value = ft_strdup(var);
+	if (!new_value)
+	{
+		error_msg(ERR_BASH, ERR_MALLOC, NULL, NULL);
+		cmd->status = 1;
+		return ;
+	}
+	add_new_var(session, cmd, new_value);
+	if (cmd->status == 1)
+		free(new_value);
+}
+
 static void	prepare_add_var(t_session *session, t_command *cmd, char *var)
 {
 	char	*new_value;
 
 	if (!ft_strchr(var, '='))
+	{
+		without_equal(session, cmd, var);
 		return ;
+	}
 	new_value = ft_strdup(var);
 	if (!new_value)
 	{
@@ -94,7 +116,7 @@ void	handle_args(t_session *session, t_command *cmd)
 		else
 		{
 			error_msg(ERR_BASH, ERR_EXPORT, cmd->args[i], ERR_IDEN);
-			cmd->status = 1;
+			cmd->status = 2;
 			return ;
 		}
 		i++;
