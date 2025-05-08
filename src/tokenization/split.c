@@ -108,7 +108,7 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 	status = here_doc_lim(token);
 	if (status < 0)
 		return (-1);
-	if (status > 0)
+	if (status > 1)
 		return (status);
 	status = here_doc_no_lim(session, token);
 	if (status < 0)
