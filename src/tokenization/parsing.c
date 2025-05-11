@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 19:26:12 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 17:05:08 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,6 @@ static int	split_cmd(t_session *s, t_command *cmd, t_list **cur, t_list **arg)
 	return (1);
 }
 
-static int	copy_args(t_command *cmd, t_list **args)
-{
-	cmd->args = list_to_arr(*args);
-	ft_lstclear(args, free);
-	if (!cmd->args)
-		return (-1);
-	*args = NULL;
-	return (1);
-}
-
 int	commands(t_session *session, t_list **token)
 {
 	t_list	*curr;
@@ -56,7 +46,7 @@ int	commands(t_session *session, t_list **token)
 	curr = *token;
 	while (curr)
 	{
-		if (is_del(curr->content) == false)
+		if (is_del(curr->content) == false) // | || &&
 		{
 			if (split_cmd(session, session->cmds[i], &curr, &args) < 0)
 				return (ft_lstclear(&args, free), -1);
@@ -83,7 +73,7 @@ static int	handle_tokenization(t_session *session, t_list **token)
 			session->status_last = 2;
 		if (*token)
 			ft_lstclear(token, free);
-		return (-1);
+		return (status); // CHANGED from -1
 	}
 	if (status == 3 || status == 4)
 	{
@@ -118,6 +108,6 @@ int	lexical_analyzer(t_session *session)
 	if (commands(session, &token) < 0)
 		return (ft_lstclear(&token, free), -1);
 	ft_lstclear(&token, free);
-	//print_me(session);
+	print_me(session);
 	return (1);
 }

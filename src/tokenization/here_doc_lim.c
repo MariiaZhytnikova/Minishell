@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_lim.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/08 19:28:20 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 16:29:16 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static int	here_doc_lim_inp(t_list *current)
 	return (replace_token(current, buffer));
 }
 
-int	here_doc_lim(t_list **token)
+int	here_doc_lim(t_list **token) // Ctrl D do the same as lim but with message bash: warning: here-document at line 13 delimited by end-of-file
 {
 	t_list	*curr;
 	int		status;

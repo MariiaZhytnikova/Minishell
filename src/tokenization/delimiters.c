@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delimiters.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 19:25:36 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:53:06 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,10 @@ int	get_redirection(t_session *session, t_command *cmd, t_list *curr)
 	ft_lstclear(&exp_red, free);
 	if (!cont)
 		return (1);
-	if (files(cmd, curr, cont) < 0)
-		return (free(cont), error_msg(ERR_BASH, ERR_CRASH, NULL, NULL), -1);
+	if (!(ft_strncmp(curr->content, "<<<",
+				longer(curr->content, "<<<")) == 0))
+		if (files(cmd, curr, cont) < 0)
+			return (free(cont), error_msg(ERR_BASH, ERR_CRASH, NULL, NULL), -1);
 	if (redirection_in(cmd, curr, cont) < 0)
 		return (free(cont), error_msg(ERR_BASH, ERR_CRASH, NULL, NULL), -1);
 	if (redirection_out(cmd, curr, cont) < 0)

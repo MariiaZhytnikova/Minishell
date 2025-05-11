@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 19:21:28 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:47:23 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void	process_input(t_session *session)
 			//printf("exit\n");
 			exit(2);
 		}
+		if (status < 0 && status != -5)			// STATUS 1 for ours functions FAIL (-5 for spases and tabs, split returns -5)
+			session->status_last = 1;			// STATUS 1 for ours functions FAIL (-5 not inner error) WE need ERROR NSG for FAIL, I remove it from lex
 		history(session);
 		free_session(session);
 		return ;

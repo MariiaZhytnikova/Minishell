@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:52:33 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/25 15:30:10 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:18:35 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	open_last_out_append(t_command *cmd)
 	return (fd);
 }
 
-static void	handle_in(t_command *cmd)
+static int	handle_in(t_command *cmd)
 {
 	int	pipefd[2];
 
@@ -78,26 +78,35 @@ static void	handle_in(t_command *cmd)
 	else if (cmd->last_in->type == HERE_DOC)
 	{
 		if (pipe(pipefd) == -1)
-			return (error_msg(ERR_BASH, ERR_PIPE, NULL, NULL));
+			return (error_msg(ERR_BASH, ERR_PIPE, NULL, NULL), -1);
 		write(pipefd[1], cmd->last_in->name, ft_strlen(cmd->last_in->name));
 		close(pipefd[1]);
 		cmd->last_in->fd = pipefd[0];
 	}
-	dup2(cmd->last_in->fd, STDIN_FILENO);
+	if (dup2(cmd->last_in->fd, STDIN_FILENO) < 0)
+		return (-1);
 	close(cmd->last_in->fd);
+	return (1);
 }
 
-void	handle_in_out(t_command *cmd)
+int	handle_in_out(t_command *cmd)
 {
 	if (cmd->last_in->type != STD)
-		handle_in(cmd);
+	{
+		if (handle_in(cmd) < 0)
+			return (-1);
+	}
 	if (cmd->last_out->type != STD)
 	{
 		if (cmd->last_out->type == OUT_FILE)
 			cmd->last_out->fd = open_last_out(cmd);
 		else if (cmd->last_out->type == OUT_APPEND)
 			cmd->last_out->fd = open_last_out_append(cmd);
-		dup2(cmd->last_out->fd, STDOUT_FILENO);
+		if (cmd->last_out->fd < 0)
+			return (-1);
+		if (dup2(cmd->last_out->fd, STDOUT_FILENO) < 0)
+			return (-1);
 		close(cmd->last_out->fd);
 	}
+	return (1);
 }

@@ -25,6 +25,10 @@ Error: TOO_MANY_LINES       (line:  67, col:   1):	Function has more than 25 lin
 
 ----------------
 
+// Ctrl D do the same as lim but with message bash: warning: here-document at line 13 delimited by end-of-file
+
+
+
 the last one works incorrect. Have to think together
 
 c3r1p6% ./minishell 
@@ -39,3 +43,30 @@ minishell: warning: here-document delimited by end-of-file
 > 
 minishell: warning: here-document delimited by end-of-file
 /home/ekashirs/projects/Hive/Minishell$ 
+
+
+
+--------------------------------------------------------------
+OURS:
+/home/mzhitnik/Projects/Minishell$ cat << 2
+> ^C
+/home/mzhitnik/Projects/Minishell$ echo $?
+1
+BASH:
+mzhitnik@c1r5p5:~/Projects/Minishell$ cat << 1
+> ^C
+mzhitnik@c1r5p5:~/Projects/Minishell$ echo $?
+130
+--------------------------------------------------------------
+
+mzhitnik@c1r5p5:~/Projects/Minishell$ exportVER=5
+mzhitnik@c1r5p5:~/Projects/Minishell$ echo $?
+0
+mzhitnik@c1r5p5:~/Projects/Minishell$ echo $VER
+
+mzhitnik@c1r5p5:~/Projects/Minishell$ 
+
+---------------------------------------------------------------
+
+
+_____________________________________________________________

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:17:38 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 18:03:00 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:21:17 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,16 @@ static void	run_builtin(t_session *session, int *id)
 	}
 	session->in = dup(0);
 	session->out = dup(1);
-	handle_in_out(session->cmds[*id]);
+	if (session->in < 0 || session->out < 0)
+		return ;
+	if (handle_in_out(session->cmds[*id]) < 0)
+		return ;
 	exec_builtin(session, session->cmds[*id]);
 	session->status_last = session->cmds[*id]->status;
-	dup2(session->in, 0);
-	dup2(session->out, 1);
+	if (dup2(session->in, 0) < 0)
+		return ;
+	if (dup2(session->out, 1) < 0)
+		return ;
 	close(session->in);
 	close(session->out);
 }

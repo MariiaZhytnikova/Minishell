@@ -3,36 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 17:20:15 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:58:36 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	child(t_session *session, int *id, int runs, int num)
+static void	child_files(t_session *session, int *id)
 {
 	int	status;
 
-	setup_signals(2);
-	if (session->prev_fd != -1)
-	{
-		dup2(session->prev_fd, STDIN_FILENO);
-		close(session->prev_fd);
-	}
-	if (runs < num - 1)
-		dup2(session->pipefd[1], STDOUT_FILENO);
-	close(session->pipefd[0]);
-	close(session->pipefd[1]);
 	if (open_files(session->cmds[*id]) < 0)
 	{
 		status = session->cmds[*id]->status;
 		group_free(session);
 		exit(status);
 	}
-	handle_in_out(session->cmds[*id]);
+	if (handle_in_out(session->cmds[*id]) < 0)
+	{
+		group_free(session);
+		error_msg(ERR_BASH, "dup2 failed", NULL, NULL);
+		exit (1);
+	}
+}
+
+static void	child(t_session *session, int *id, int runs, int num)
+{
+	setup_signals(2);
+	if (session->prev_fd != -1)
+	{
+		if (dup2(session->prev_fd, STDIN_FILENO) < 0)
+		{
+			group_free(session);
+			error_msg(ERR_BASH, "dup2 failed", NULL, NULL);
+			exit (1);
+		}
+		close(session->prev_fd);
+	}
+	if (runs < num - 1)
+	{
+		if (dup2(session->pipefd[1], STDOUT_FILENO) < 0)
+		{
+			group_free(session);
+			error_msg(ERR_BASH, "dup2 failed", NULL, NULL);
+			exit (1);
+		}
+	}
+	close(session->pipefd[0]);
+	close(session->pipefd[1]);
+	child_files(session, id);
 	run_cmd(session, session->cmds[*id]);
 	exit(1);
 }
@@ -45,24 +67,12 @@ static void	parent(t_session *session)
 	session->prev_fd = session->pipefd[0];
 }
 
-static void	handle_exit_status(t_session *session, int pid, int status)
-{
-	int	j;
-
-	j = 0;
-	while (j < session->count->cmd_nb)
-	{
-		if (pid == session->cmds[j]->pid)
-			session->cmds[j]->status = WEXITSTATUS(status);
-		j++;
-	}
-}
-
 static void	status_wait(t_session *session, int runs)
 {
 	int		status;
 	int		pid;
 	int		i;
+	int		j;
 	t_flags	flags;
 
 	i = 0;
@@ -72,7 +82,14 @@ static void	status_wait(t_session *session, int runs)
 	{
 		pid = waitpid(-1, &status, 0);
 		if (WIFEXITED(status))
-			handle_exit_status(session, pid, status);
+		{
+			j = -1;
+			while (++j < session->count->cmd_nb)
+			{
+				if (pid == session->cmds[j]->pid)
+					session->cmds[j]->status = WEXITSTATUS(status);
+			}
+		}
 		else if (WIFSIGNALED(status))
 			handle_signal_status(session, pid, status, &flags);
 		i++;

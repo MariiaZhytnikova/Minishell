@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
+#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/05/07 13:41:10 by ekashirs         ###   ########.fr        #
+#    Updated: 2025/05/11 15:07:38 by mzhitnik         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,32 +22,33 @@ OBJS_PATH	:= ./obj
 LIBFT_PATH	:= ./libft
 LIBFT		:= $(LIBFT_PATH)/libft.a
 
-BUILTINS = cd cd2 echo env exit export export2 export3 pwd unset
+BUILTINS	:= cd cd2 echo env exit export export2 export3 pwd unset
 
-EXEC = exec processing pipe and_or open redirect
+EXEC		:= exec processing pipe and_or open redirect
 
-MAIN = main errors signals
+MAIN		:= main errors signals
 
-TOKENS = prompt parsing quotes token_check here_doc here_doc_lim skip_quotes\
-			delimiters cmd_utils_one cmd_utils_two numbers redirection expansion \
-			split wild_cards wild_utils history print
+TOKENS		:= prompt parsing quotes token_check here_doc here_doc_lim skip_quotes\
+				delimiters numbers redirection expansion split wild_cards\
+				wild_utils history print
 
-UTILS = utils_one utils_two ll_utils_one ll_utils_two free exec_utils dynstr
+UTILS		:= utils_one utils_two ll_utils_one ll_utils_two free exec_utils dynstr\
+				cmd_utils_one cmd_utils_two 
 
-SRCS := $(addsuffix .c, $(addprefix src/, $(MAIN))) \
-	  $(addsuffix .c, $(addprefix src/execution/, $(EXEC))) \
-	  $(addsuffix .c, $(addprefix src/builtins/, $(BUILTINS))) \
-	  $(addsuffix .c, $(addprefix src/tokenization/, $(TOKENS))) \
-	  $(addsuffix .c, $(addprefix src/utils/, $(UTILS)))
+SRCS	:= $(addsuffix .c, $(addprefix src/, $(MAIN))) \
+			$(addsuffix .c, $(addprefix src/execution/, $(EXEC))) \
+			$(addsuffix .c, $(addprefix src/builtins/, $(BUILTINS))) \
+			$(addsuffix .c, $(addprefix src/tokenization/, $(TOKENS))) \
+			$(addsuffix .c, $(addprefix src/utils/, $(UTILS)))
 
-OBJS	:= $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
+OBJS		:= $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 
-NORM	:= norminette
+NORM		:= norminette
 
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
+	$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
 #-fsanitize=address
 	@echo "$(NAME) building completed ..."
 
