@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:38:27 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 13:31:07 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:19:45 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static char	**split_path(t_command *cmd, t_list *current)
 	else if (!temp[1])
 	{
 		free_arr(temp);
+		cmd->status = 127;
 		return (error_msg(ERR_BASH, cmd->args[0], ERR_NO, 0), NULL);
 	}
 	paths = ft_split(temp[1], ':');

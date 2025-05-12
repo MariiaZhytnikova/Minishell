@@ -1,80 +1,9 @@
 
-1)
-/home/ekashirs/projects/Hive/Minishell$           (spaces)
-zsh: segmentation fault (core dumped)  ./minishell
 
-2)
-check dup in exec
-
-3)
-here_doc.c: Error!
-
-Error: WRONG_SCOPE_VAR      (line:  32, col:   1):	Variable declared in incorrect scope
-Error: SPACE_REPLACE_TAB    (line:  32, col:  17):	Found space when expecting tab
-Error: DECL_ASSIGN_LINE     (line:  32, col:  24):	Declaration and assignation on a single line
-Error: WRONG_SCOPE_VAR      (line:  37, col:   1):	Variable declared in incorrect scope
-Error: SPACE_REPLACE_TAB    (line:  37, col:  17):	Found space when expecting tab
-Error: DECL_ASSIGN_LINE     (line:  37, col:  25):	Declaration and assignation on a single line
-Error: TOO_MANY_LINES       (line:  43, col:   1):	Function has more than 25 lines
-
-4)
-expansion.c: Error!
-
-Error: TOO_MANY_LINES       (line:  67, col:   1):	Function has more than 25 lines
-
-
-----------------
-
-// Ctrl D do the same as lim but with message bash: warning: here-document at line 13 delimited by end-of-file
-
-
-
-the last one works incorrect. Have to think together
-
-c3r1p6% ./minishell 
-/home/ekashirs/projects/Hive/Minishell$ << 1
-> 
-minishell: warning: here-document delimited by end-of-file
-/home/ekashirs/projects/Hive/Minishell$ << 1 << 2
-> 
-minishell: warning: here-document delimited by end-of-file
-> 2
-/home/ekashirs/projects/Hive/Minishell$ ls << 2
-> 
-minishell: warning: here-document delimited by end-of-file
-/home/ekashirs/projects/Hive/Minishell$ 
-
-
-
---------------------------------------------------------------
-OURS:
-/home/mzhitnik/Projects/Minishell$ cat << 2
-> ^C
-/home/mzhitnik/Projects/Minishell$ echo $?
-1
-BASH:
-mzhitnik@c1r5p5:~/Projects/Minishell$ cat << 1
-> ^C
-mzhitnik@c1r5p5:~/Projects/Minishell$ echo $?
-130
---------------------------------------------------------------
-
+-------------------------------------------------------
 mzhitnik@c1r5p5:~/Projects/Minishell$ exportVER=5
 mzhitnik@c1r5p5:~/Projects/Minishell$ echo $?
 0
 mzhitnik@c1r5p5:~/Projects/Minishell$ echo $VER
 
 mzhitnik@c1r5p5:~/Projects/Minishell$ 
-
----------------------------------------------------------------
-
-SPACE ---->
-
-env -i ./minishell
-minishell$ cd                                                                   
-minishell: cdHOME not set
-minishell$ 
-
-
-
-_____________________________________________________________

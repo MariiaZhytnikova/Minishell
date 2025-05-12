@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:56:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/02 10:21:04 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:32:08 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	out_file(t_command *cmd, char *file)
 		cmd->status = 1;
 		return (error_msg(ERR_BASH, file, ERR_PE, NULL), -1);
 	}
-	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	if (fd == -1)
 	{
 		cmd->status = 1;
@@ -74,7 +74,7 @@ static int	out_app_file(t_command *cmd, char *file)
 		cmd->status = 1;
 		return (error_msg(ERR_BASH, file, ERR_PE, NULL), -1);
 	}
-	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0666);
 	if (fd == -1)
 	{
 		cmd->status = 1;

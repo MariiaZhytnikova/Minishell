@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 12:26:21 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/08 19:38:25 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:01:23 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	handle_args(t_session *session, t_command *cmd)
 		else
 		{
 			error_msg(ERR_BASH, ERR_EXPORT, cmd->args[i], ERR_IDEN);
-			cmd->status = 2;
+			cmd->status = 1;
 			return ;
 		}
 		i++;

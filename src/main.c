@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:17:41 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/12 13:36:55 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:54:13 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	process_input(t_session *session)
 			//printf("exit\n");
 			exit(2);
 		}
-		if (status < 0 && status != -5)
+		if (status < 0 && status != -5 && status != -2)
 			session->status_last = 1;
 		history(session);
 		free_session(session);
