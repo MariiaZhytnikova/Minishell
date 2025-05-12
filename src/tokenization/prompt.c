@@ -6,7 +6,7 @@
 /*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/12 13:41:43 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:01:06 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,64 +34,26 @@ static char	*create_prompt(void)
 	return (prompt);
 }
 
-// int	prompt(t_session *session)
-// {
-// 	char	*prompt;
-
-// 	session->history_pipe = ft_calloc(1, sizeof(char *));
-// 	if (!session->history_pipe)
-// 		return (-1);
-// 	if (search_in_env(session->env_var, "TERM") == NULL)
-// 	{
-// 		prompt = ft_strdup(PROMPT);
-// 		if (!prompt)
-// 			return (-1);
-// 	}
-// 	else
-// 		prompt = create_prompt();
-// 	if (!prompt)
-// 		return (-1);
-// 	session->input = readline(prompt);
-// 	free(prompt);
-// 	if (!session->input)
-// 		return (-1);
-// 	return (1);
-// }
-
-// FOR TEST
-
 int	prompt(t_session *session)
 {
-	char	*promt;
-	char	*line;
+	char	*prompt;
 
 	session->history_pipe = ft_calloc(1, sizeof(char *));
 	if (!session->history_pipe)
 		return (-1);
-	if (isatty(fileno(stdin)))
+	if (search_in_env(session->env_var, "TERM") == NULL)
 	{
-		// Interactive mode
-		promt = create_prompt();
-		if (!promt)
+		prompt = ft_strdup(PROMPT);
+		if (!prompt)
 			return (-1);
-		session->input = readline(promt);
-		free(promt);
-		if (!session->input)
-			return (-1);
-		char *temp = ft_strdup(session->input);
-		free(session->input);
-		session->input = temp;
 	}
 	else
-	{
-		// Non-interactive mode (e.g. tester)
-		line = get_next_line(fileno(stdin));
-		if (!line)
-			return (-1);
-		session->input = ft_strtrim(line, "\n");
-		free(line);
-		if (!session->input)
-			return (-1);
-	}
+		prompt = create_prompt();
+	if (!prompt)
+		return (-1);
+	session->input = readline(prompt);
+	free(prompt);
+	if (!session->input)
+		return (-1);
 	return (1);
 }

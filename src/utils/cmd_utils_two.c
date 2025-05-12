@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils_two.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 15:02:57 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 15:06:54 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

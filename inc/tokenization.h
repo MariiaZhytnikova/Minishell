@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 15:08:58 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:57:47 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,5 @@ int		create_new(t_list **args, t_list *new, char *str);
 bool	is_in_quotes(const char *str);
 bool	match(const char *str, const char *pattern);
 int		wild(t_list **exp_red);
-
-////////////////////////DELETE/////////////
-void	print_me_num(t_count *count);
-void	print_me(t_session *session);
-///////////////////////////////////////
 
 #endif

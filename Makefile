@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/17 16:25:58 by mzhitnik          #+#    #+#              #
-#    Updated: 2025/05/11 15:07:38 by mzhitnik         ###   ########.fr        #
+#    Updated: 2025/05/12 15:12:45 by ekashirs         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= minishell
 
 CC = cc
-CFLAGS		:= -Wextra -Wall -Werror -Wunused
+CFLAGS		:= -Wextra -Wall -Werror
 
 HEADERS		:= -I ./inc
 
@@ -30,7 +30,7 @@ MAIN		:= main errors signals
 
 TOKENS		:= prompt parsing quotes token_check here_doc here_doc_lim skip_quotes\
 				delimiters numbers redirection expansion split wild_cards\
-				wild_utils history print
+				wild_utils history
 
 UTILS		:= utils_one utils_two ll_utils_one ll_utils_two free exec_utils dynstr\
 				cmd_utils_one cmd_utils_two 
@@ -48,8 +48,7 @@ NORM		:= norminette
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline 
-#-fsanitize=address
+	$(CC) $(CFLAGS) $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME) -lreadline
 	@echo "$(NAME) building completed ..."
 
 $(OBJS_PATH):

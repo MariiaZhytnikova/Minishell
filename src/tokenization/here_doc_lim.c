@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_lim.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/12 13:26:44 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:49:54 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	here_doc_lim_inp(t_list *current)
 	if (stdin_copy == -1)
 	{
 		close(stdin_copy);
-		return (-1);
+		return (error_msg(ERR_BASH, ERR_DUP, NULL, NULL), -1);
 	}
 	status = here_doc_lim_process(stdin_copy, &buffer, &lim);
 	close(stdin_copy);

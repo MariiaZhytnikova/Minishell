@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 10:23:26 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 14:58:36 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:48:42 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	child_files(t_session *session, int *id)
 	if (handle_in_out(session->cmds[*id]) < 0)
 	{
 		group_free(session);
-		error_msg(ERR_BASH, "dup2 failed", NULL, NULL);
+		error_msg(ERR_BASH, ERR_DUP, NULL, NULL);
 		exit (1);
 	}
 }
@@ -38,7 +38,7 @@ static void	child(t_session *session, int *id, int runs, int num)
 		if (dup2(session->prev_fd, STDIN_FILENO) < 0)
 		{
 			group_free(session);
-			error_msg(ERR_BASH, "dup2 failed", NULL, NULL);
+			error_msg(ERR_BASH, ERR_DUP, NULL, NULL);
 			exit (1);
 		}
 		close(session->prev_fd);
@@ -48,7 +48,7 @@ static void	child(t_session *session, int *id, int runs, int num)
 		if (dup2(session->pipefd[1], STDOUT_FILENO) < 0)
 		{
 			group_free(session);
-			error_msg(ERR_BASH, "dup2 failed", NULL, NULL);
+			error_msg(ERR_BASH, ERR_DUP, NULL, NULL);
 			exit (1);
 		}
 	}

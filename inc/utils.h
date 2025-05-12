@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/12 13:27:44 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:58:01 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	d_return(void);
 
 // Linked list utils
 
-void	print_linked_list(t_list *lst);
 void	delete_node_by_content(t_list **list, char *variable);
 int		create_node(t_list **env_var, char *content);
 int		create_env_list(t_list **env_var, char **env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 17:17:22 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/12 12:52:37 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:53:00 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,10 @@ about this while testing. Don't put strings longer than \
 
 # define ERR_MALLOC "Memory allocation failed"
 # define ERR_DUP "dup2 function has failed"
-# define ERR_CLOSE "close function has failed"
-# define ERR_EXECVE "execve function has failed"
-# define ERR_SPLIT "ft_split function has failed"
 # define ERR_GETCWD "pwd: error retrieving current directory: getcwd: cannot \
 access parent directories"
 
 # define ERR_MANY_ARGS ": too many arguments"
-# define ERR_EXIT_USAGE "exit: numeric argument required"
 # define ERR_SYNTAX "syntax error near unexpected token "
 # define ERR_REDIR " ambiguous redirect"
 # define ERR_ISADIR ": Is a directory"
