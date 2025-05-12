@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 12:38:39 by mzhitnik          #+#    #+#             */
-/*   Updated: 2024/11/30 17:46:18 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:42:27 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	read_from_file(char **big_buffer, int fd)
 	if (!buff)
 		return ;
 	bytes_read = 1;
-	while (bytes_read > 0)
+	while (bytes_read > 0 || !(ft_strchr(buff, '\n')))
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read < 0)
@@ -32,10 +32,10 @@ static void	read_from_file(char **big_buffer, int fd)
 		}
 		buff[bytes_read] = 0;
 		temp = ft_strjoin(*big_buffer, buff);
+		if (!temp)
+			return ;
 		free(*big_buffer);
 		*big_buffer = temp;
-		if (ft_strchr(buff, '\n'))
-			break ;
 	}
 	free(buff);
 }
@@ -60,12 +60,13 @@ static void	ft_line_res(char **big_buffer, char **line, size_t line_len)
 	if ((*big_buffer)[i])
 	{
 		next = ft_strjoin(*big_buffer + i, "");
+		if (!next)
+			return ;
 		free(*big_buffer);
 		*big_buffer = next;
 		return ;
 	}
 	free(*big_buffer);
-	*big_buffer = NULL;
 }
 
 char	*get_next_line(int fd)

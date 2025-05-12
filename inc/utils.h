@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 19:25:05 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:27:44 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ size_t	ft_var_name_len(const char *s);
 void	free_session(t_session *session);
 void	*reall(void *ptr, size_t old_size, size_t new_size);
 int		array_size(t_file **array);
+void	d_return(void);
 
 // Linked list utils
 

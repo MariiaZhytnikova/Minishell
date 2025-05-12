@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 10:33:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 14:40:31 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:05:55 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,8 @@ static int	here_doc_process(char **line, int stdin)
 			break ;
 		else
 		{
-			// char *temp = ft_strdup(*line);
-			// free(*line);
-			// *line = temp;
 			free(*line);
 			*line = readline("> ");
-			// char *temp2 = ft_strdup(*line);
-			// free(*line);
-			// *line = temp2;
 		}
 	}
 	return (0);

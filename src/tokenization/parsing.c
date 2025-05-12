@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 17:05:08 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:20:45 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	commands(t_session *session, t_list **token)
 	curr = *token;
 	while (curr)
 	{
-		if (is_del(curr->content) == false) // | || &&
+		if (is_del(curr->content) == false)
 		{
 			if (split_cmd(session, session->cmds[i], &curr, &args) < 0)
 				return (ft_lstclear(&args, free), -1);
@@ -73,7 +73,7 @@ static int	handle_tokenization(t_session *session, t_list **token)
 			session->status_last = 2;
 		if (*token)
 			ft_lstclear(token, free);
-		return (status); // CHANGED from -1
+		return (status);
 	}
 	if (status == 3 || status == 4)
 	{
@@ -81,12 +81,12 @@ static int	handle_tokenization(t_session *session, t_list **token)
 			ft_lstclear(token, free);
 		return (status);
 	}
-	if (g_signalnum == 2)
+	if (g_signalnum == 2 || status == 2)
 	{
 		if (*token)
 			ft_lstclear(token, free);
 		session->status_last = 130;
-		return (-1);
+		return (2);
 	}
 	return (1);
 }
@@ -108,6 +108,5 @@ int	lexical_analyzer(t_session *session)
 	if (commands(session, &token) < 0)
 		return (ft_lstclear(&token, free), -1);
 	ft_lstclear(&token, free);
-	print_me(session);
 	return (1);
 }

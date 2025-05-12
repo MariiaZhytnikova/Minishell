@@ -68,5 +68,13 @@ mzhitnik@c1r5p5:~/Projects/Minishell$
 
 ---------------------------------------------------------------
 
+SPACE ---->
+
+env -i ./minishell
+minishell$ cd                                                                   
+minishell: cdHOME not set
+minishell$ 
+
+
 
 _____________________________________________________________

@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:08:58 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 19:25:33 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:28:30 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	split_input(t_list **token, char *args)
 	if (!args[thing.i] && *token)
 		return (free (thing.temp), 1);
 	if (!args[thing.i] && !*token)
-		return (free (thing.temp), -5); // NEED RETURN WITH NO ERROR CODE (BUT not 1), JUST STOP PROGRAM
+		return (free (thing.temp), -5);
 	if (handle_quotes(&thing, args) < 0)
 		return (free (thing.temp), -1);
 	new_token = ft_lstnew(ft_strdup(thing.temp));
@@ -99,10 +99,10 @@ int	split_and_check(t_session *session, t_list **token, char *src)
 	input = add_spaces(src);
 	if (!input || !input[0])
 		return (-1);
-	status = split_input(token, input); // STATUS 
+	status = split_input(token, input);
 	free(input);
-	if (status < 0)						// STATUS 
-		return (status);				// STATUS  // REMOVED ERROR MSG because of -5
+	if (status < 0)
+		return (status);
 	if (delimiter_wrong_pos(*token) == true)
 		return (-2);
 	if (consecutive_delimiters(*token) == true)

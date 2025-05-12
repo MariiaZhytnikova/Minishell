@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 14:09:22 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 19:53:06 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:59:21 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	red_handler(t_session *session, t_list *curr, t_list **exp_red)
 		if (!*exp_red)
 		{
 			*exp_red = ft_calloc(1, sizeof(t_list));
+			if (!*exp_red)
+				return (-1);
 			return (1);
 		}
 	}
@@ -62,10 +64,8 @@ int	red_handler(t_session *session, t_list *curr, t_list **exp_red)
 				return (-1);
 	}
 	if (!*exp_red || (*exp_red && (*exp_red)->next))
-	{
 		return (ft_lstclear(exp_red, free),
 			error_msg(ERR_BASH, ERR_REDIR, NULL, NULL), -1);
-	}
 	return (1);
 }
 
@@ -76,15 +76,11 @@ int	get_content(t_list *curr, t_list *exp_red, char **cont)
 	{
 		*cont = ft_strdup(exp_red->content);
 		if (!cont)
-		{
 			return (-1);
-		}
 		if (!*cont)
 			*cont = ft_strdup("\0");
 		if (!cont)
-		{
 			return (-1);
-		}
 	}
 	else
 		*cont = skip(exp_red->content);

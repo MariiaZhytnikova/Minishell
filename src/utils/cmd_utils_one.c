@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/11 19:52:51 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:27:24 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,10 @@ bool	not_valid(char c)
 {
 	return (c == '\n' || c == '\\' || c == ';' || c == '(' || c == ')'
 		|| c == '{' || c == '}' || c == '[' || c == ']');
+}
+
+void	d_return(void)
+{
+	error_msg(ERR_BASH, ERR_EOF_HEREDOC, NULL, NULL);
+	g_signalnum = 3;
 }

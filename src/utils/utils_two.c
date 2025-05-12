@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:33:30 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 14:22:17 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:38:49 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ void	*reall(void *ptr, size_t old_size, size_t new_size)
 	if (new_size == 0)
 		return (free(ptr), NULL);
 	if (!ptr)
-		return (ft_calloc(new_size, sizeof(char)));
+	{
+		new_ptr = ft_calloc(new_size, sizeof(char));
+		if (new_ptr == NULL)
+			return (NULL);
+		return (new_ptr);
+	}
 	new_ptr = ft_calloc(new_size, sizeof(char));
 	if (new_ptr == NULL)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd2.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:36:00 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/07 13:48:21 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:52:25 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	cd_no_path(t_session *session, t_command *cmd)
 	home = get_env_value(session->env_var, "HOME");
 	if (!home)
 	{
-		error_msg(ERR_BASH, cmd->args[0], ERR_HOME, NULL);
+		error_msg(ERR_CD, ERR_HOME, NULL, NULL);
 		cmd->status = 1;
 		return ;
 	}
