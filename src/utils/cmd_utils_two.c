@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 18:18:23 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:02:57 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,15 @@ int	replace_token(t_list *current, char *buffer)
 	free(buffer);
 	if (!current->next->content)
 		return (-1);
+	return (1);
+}
+
+int	copy_args(t_command *cmd, t_list **args)
+{
+	cmd->args = list_to_arr(*args);
+	ft_lstclear(args, free);
+	if (!cmd->args)
+		return (-1);
+	*args = NULL;
 	return (1);
 }

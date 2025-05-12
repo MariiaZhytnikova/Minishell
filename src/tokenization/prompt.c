@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 19:48:15 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:47:07 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ int	prompt(t_session *session)
 	if (!session->history_pipe)
 		return (-1);
 	if (search_in_env(session->env_var, "TERM") == NULL)
+	{
 		prompt = ft_strdup(PROMPT);
+		if (!prompt)
+			return (-1);
+	}
 	else
 		prompt = create_prompt();
 	if (!prompt)

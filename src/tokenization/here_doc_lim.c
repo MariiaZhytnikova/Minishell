@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_lim.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:19:27 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/08 19:28:20 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:26:44 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	here_doc_lim_process(int stdin, char **buf, char **lim)
 			return (free(*lim), 2);
 		}
 		if (!line)
-			return (free(*lim), 3);
+			return (d_return(), free(*lim), 0);
 		temp = ft_strjoin(line, "\n");
 		free(line);
 		if (!temp)
@@ -115,11 +115,6 @@ int	here_doc_lim(t_list **token)
 			status = here_doc_lim_inp(curr);
 			if (status < 0 || status == 2)
 				return (status);
-			if (status == 3)
-			{
-				error_msg(ERR_BASH, ERR_EOF_HEREDOC, NULL, NULL);
-				g_signalnum = 3;
-			}
 			curr = curr->next;
 		}
 		if (curr->next)

@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 11:21:09 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 18:10:26 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/11 19:41:45 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	print_me(t_session *session)
 	printf("\n-->> WE HAVE FILES!!! <<--%s\n", YELLOW);
 	while (i < session->count->cmd_nb)
 	{
+		printf("-------------------------\n");
 		num_red = session->count->red_in_nb[i]
 			+ session->count->red_out_nb[i] + session->count->red_app_nb[i];
 		j = 0;
@@ -84,11 +85,12 @@ void	print_me(t_session *session)
 		{
 			printf("FILES\n");
 			while (session->cmds[i]->files[j])
-				printf("%s\n", session->cmds[i]->files[j++]->name);
+				printf("for cmd %d: %s\n", i, session->cmds[i]->files[j++]->name);
 		}
 		j = 0;
+		printf("Will be Handled:\n");
 		printf("IN_FILE is: %s\n", session->cmds[i]->last_in->name);
-		printf("IN_FILE is: %s\n", session->cmds[i]->last_out->name);
+		printf("OUT_FILE is: %s\n", session->cmds[i]->last_out->name);
 		i++;
 	}
 	printf("%s\n", RESET);

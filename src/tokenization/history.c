@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 15:05:01 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/25 15:33:02 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:29:06 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static int	read_multiline_input(t_session *session)
 	{
 		temp = ft_strjoin(session->input, session->history_pipe);
 		free(session->input);
-		session->input = temp;
-		if (!session->input)
+		if (!temp)
 			return (-1);
+		session->input = temp;
 	}
 	return (0);
 }
@@ -73,6 +73,8 @@ int	history(t_session *session)
 	if (status < 0)
 		return (-1);
 	clean_command = ft_strtrim(session->input, "\n");
+	if (!clean_command)
+		return (-1);
 	if (clean_command && *clean_command)
 	{
 		add_history(clean_command);

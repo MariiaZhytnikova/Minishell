@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:43:38 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 17:20:44 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:08:58 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 # define TOKENIZATION_H
 
 # include "minishell.h"
-
-typedef struct s_temp
-{
-	char	*temp;
-	int		i;
-	int		j;
-	size_t	cap;
-}	t_temp;
 
 int		dynstr_init(t_temp *thing, char *input);
 int		dynstr_char(t_temp *thing, char *str);

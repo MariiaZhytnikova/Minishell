@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   numbers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:28:21 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 18:18:37 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:34:31 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ void	count_delim_and_redir(t_list **token, t_count *count)
 int	numbers(t_session *s, t_list **token)
 {
 	s->count = ft_calloc(1, sizeof(t_count));
+	if (!s->count)
+		return (-1);
 	cmd_number(token, s->count);
 	s->count->args_nb = (int *)ft_calloc(s->count->cmd_nb + 1, sizeof(int));
 	s->count->red_in_nb = (int *)ft_calloc(s->count->cmd_nb + 1, sizeof(int));

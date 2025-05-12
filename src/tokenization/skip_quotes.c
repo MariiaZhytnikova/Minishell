@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 09:45:50 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/06 15:57:02 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 11:57:17 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,43 @@ int	skip_quotes(t_temp *thing, char *arg)
 	return (1);
 }
 
+static int	skip_loop(char *content, t_temp *thing)
+{
+	while (content[thing->i])
+	{
+		if (content[thing->i] == '\'' || content[thing->i] == '\"')
+		{
+			if (skip_quotes(thing, content) < 0)
+				return (-1);
+		}
+		else
+		{
+			if (dynstr_char(thing, content) < 0)
+				return (-1);
+		}
+	}
+	return (1);
+}
+
 char	*skip(char *content)
 {
 	t_temp	thing;
 	char	*res;
 
 	if (!content || !*content)
-		return (ft_calloc(1, sizeof(char *)));
+	{
+		res = ft_calloc(1, sizeof(char *));
+		if (!res)
+			return (NULL);
+		return (res);
+	}
 	if (dynstr_init(&thing, content) < 0)
 		return (NULL);
-	while (content[thing.i])
-	{
-		if (content[thing.i] == '\'' || content[thing.i] == '\"')
-		{
-			if (skip_quotes(&thing, content) < 0)
-				return (NULL);
-		}
-		else
-		{
-			if (dynstr_char(&thing, content) < 0)
-				return (NULL);
-		}
-	}
+	if (skip_loop(content, &thing) < 0)
+		return (NULL);
 	res = ft_strdup(thing.temp);
 	free(thing.temp);
+	if (!res)
+		return (NULL);
 	return (res);
 }

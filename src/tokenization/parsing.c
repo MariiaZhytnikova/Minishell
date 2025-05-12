@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 16:32:49 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 19:26:12 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:20:45 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ static int	split_cmd(t_session *s, t_command *cmd, t_list **cur, t_list **arg)
 			*cur = (*cur)->next;
 		}
 	}
-	return (1);
-}
-
-static int	copy_args(t_command *cmd, t_list **args)
-{
-	cmd->args = list_to_arr(*args);
-	ft_lstclear(args, free);
-	if (!cmd->args)
-		return (-1);
-	*args = NULL;
 	return (1);
 }
 
@@ -83,7 +73,7 @@ static int	handle_tokenization(t_session *session, t_list **token)
 			session->status_last = 2;
 		if (*token)
 			ft_lstclear(token, free);
-		return (-1);
+		return (status);
 	}
 	if (status == 3 || status == 4)
 	{
@@ -91,12 +81,12 @@ static int	handle_tokenization(t_session *session, t_list **token)
 			ft_lstclear(token, free);
 		return (status);
 	}
-	if (g_signalnum == 2)
+	if (g_signalnum == 2 || status == 2)
 	{
 		if (*token)
 			ft_lstclear(token, free);
 		session->status_last = 130;
-		return (-1);
+		return (2);
 	}
 	return (1);
 }
@@ -118,6 +108,5 @@ int	lexical_analyzer(t_session *session)
 	if (commands(session, &token) < 0)
 		return (ft_lstclear(&token, free), -1);
 	ft_lstclear(&token, free);
-	//print_me(session);
 	return (1);
 }

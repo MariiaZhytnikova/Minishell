@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 10:09:19 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/04/30 16:03:56 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/11 15:09:18 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,6 @@
 # define BOLD		"\033[1m"
 # define PROMPT		"\001\033[32m\033[1m\002minishell$ \001\033[0m\002"
 
-// typedef enum e_token_type
-// {
-// 	WORD,
-// 	DEL,
-// 	REDIR,
-// }	t_token_type;
-
 typedef enum e_redir_type
 {
 	STD,
@@ -54,14 +47,13 @@ typedef enum e_del_type
 	OR,
 }	t_del_type;
 
-// typedef struct s_token
-// {
-// 	char			content;
-// 	t_token_type	type;
-// 	t_redir_type	redir;
-// 	t_del_type		delim;
-// 	struct s_token	*next;
-// }	t_token;
+typedef struct s_temp
+{
+	char	*temp;
+	int		i;
+	int		j;
+	size_t	cap;
+}	t_temp;
 
 typedef struct s_file
 {

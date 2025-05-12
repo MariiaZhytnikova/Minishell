@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:19:54 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/04/28 11:02:41 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:15:43 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "minishell.h"
 
-void	handle_in_out(t_command *cmd);
+int		handle_in_out(t_command *cmd);
 int		open_files(t_command *cmd);
 int		is_directory(const char *path); // rename function
 

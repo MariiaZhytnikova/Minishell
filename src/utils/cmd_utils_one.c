@@ -6,7 +6,7 @@
 /*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 16:31:53 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/05 19:28:23 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:27:24 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,16 @@ int	allocate_struct(t_session *session, int i)
 		i++;
 	}
 	return (1);
+}
+
+bool	not_valid(char c)
+{
+	return (c == '\n' || c == '\\' || c == ';' || c == '(' || c == ')'
+		|| c == '{' || c == '}' || c == '[' || c == ']');
+}
+
+void	d_return(void)
+{
+	error_msg(ERR_BASH, ERR_EOF_HEREDOC, NULL, NULL);
+	g_signalnum = 3;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 17:18:00 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/07 14:52:47 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/11 14:37:30 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,18 @@ int	expansion(t_session *session, t_temp *thing, char *str, int exp)
 {
 	char	name[MAX_PR];
 	char	*env;
-	int		len_name;
-	int		no_exp;
+	int		res[2];
 
 	ft_memset(name, 0, MAX_PR);
-	no_exp = no_expansion(session, thing, str, exp);
-	if (no_exp == 0)
+	res[0] = no_expansion(session, thing, str, exp);
+	if (res[0] == 0)
 		return (1);
-	else if (no_exp < 0)
+	else if (res[0] < 0)
 		return (-1);
-	len_name = 0;
+	res[1] = 0;
 	thing->i++;
 	while (str[thing->i] && ft_isalnum_plus(str[thing->i]))
-		name[len_name++] = str[thing->i++];
+		name[res[1]++] = str[thing->i++];
 	if (search_in_env(session->env_var, name))
 	{
 		env = ft_strdup(search_in_env(session->env_var, name)->content);
@@ -61,7 +60,7 @@ int	expansion(t_session *session, t_temp *thing, char *str, int exp)
 	}
 	else
 		return (1);
-	if (dynstr_str(thing, &env[len_name + 1]) < 0)
+	if (dynstr_str(thing, &env[res[1] + 1]) < 0)
 		return (free(env), -1);
 	return (free(env), 1);
 }

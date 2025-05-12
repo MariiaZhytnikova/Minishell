@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 11:39:43 by mzhitnik          #+#    #+#             */
-/*   Updated: 2025/05/08 16:32:17 by ekashirs         ###   ########.fr       */
+/*   Updated: 2025/05/12 13:27:44 by mzhitnik         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ size_t	ft_var_name_len(const char *s);
 void	free_session(t_session *session);
 void	*reall(void *ptr, size_t old_size, size_t new_size);
 int		array_size(t_file **array);
+void	d_return(void);
 
 // Linked list utils
 
@@ -42,5 +43,15 @@ char	**list_to_arr(t_list *list);
 int		num_pipes(t_session *session, int *id);
 void	group_free(t_session *session);
 char	*get_current_path(t_command *cmd);
+
+// Tokenization utils
+
+int		red_struct_alloc(t_session *session);
+int		allocate_struct(t_session *session, int i);
+int		copy_args(t_command *cmd, t_list **args);
+int		copy_delimeter(t_temp *thing, char *str);
+int		status(t_session *session, t_temp *thing);
+int		replace_token(t_list *current, char *buffer);
+bool	not_valid(char c);
 
 #endif
