@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhitnik <mzhitnik@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ekashirs <ekashirs@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/26 15:19:54 by ekashirs          #+#    #+#             */
-/*   Updated: 2025/05/11 14:15:43 by mzhitnik         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:04:53 by ekashirs         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int		handle_in_out(t_command *cmd);
 int		open_files(t_command *cmd);
-int		is_directory(const char *path); // rename function
+int		is_directory(const char *path);
 
 void	run_and(t_session *session, int *id);
 void	run_or(t_session *session, int *id);
