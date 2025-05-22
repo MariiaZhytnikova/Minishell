@@ -24,8 +24,10 @@ This project provided hands-on experience with process control, file descriptors
 ## 🔧 Compilation & Usage
 
 To compile the project, run:
-make
-./minishell
+
+`make`
+
+`./minishell`
 
 ## 🛠️ Features
 
